@@ -24,7 +24,9 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
 }
 .ss-box h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-.ss-box .ss-id { font-size: 10px; color: #666; margin-bottom: 8px; font-family: monospace; }
+.ss-box .ss-id { font-size: 10px; color: #666; margin-bottom: 4px; font-family: monospace; }
+.ss-box .ss-id-full { font-size: 9px; color: #555; margin-bottom: 8px; font-family: monospace; word-break: break-all; }
+.ss-box .ss-detail { font-size: 11px; color: #aaa; margin-bottom: 8px; line-height: 1.4; }
 .ss-box ul { list-style: none; padding: 0; }
 .ss-box li { font-size: 11px; color: #aaa; padding: 2px 0 2px 12px; position: relative; }
 .ss-box li::before { content: '·'; position: absolute; left: 0; font-weight: bold; }
@@ -51,6 +53,44 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 }
 .section-divider.gas2 { border-left-color: #f87171; }
 .section-divider.gas3 { border-left-color: #34d399; }
+
+/* ===== Data Flow Overview ===== */
+.data-flow-overview {
+  max-width: 1200px; margin: 0 auto 40px;
+  padding: 14px 16px; border-radius: 8px;
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08);
+  font-family: monospace; font-size: 12px; color: #34d399;
+  line-height: 1.6; overflow-x: auto;
+}
+
+/* ===== Trigger Table ===== */
+.trigger-table {
+  max-width: 1200px; margin: 0 auto 32px;
+  overflow-x: auto;
+}
+.trigger-table table {
+  width: 100%; border-collapse: collapse;
+  background: rgba(255,255,255,0.02); border-radius: 8px;
+  overflow: hidden;
+}
+.trigger-table th {
+  background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2);
+  padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 700;
+  color: #f87171;
+}
+.trigger-table td {
+  border: 1px solid rgba(255,255,255,0.08); padding: 10px 12px;
+  font-size: 11px; color: #aaa;
+}
+.trigger-table tr:nth-child(even) { background: rgba(255,255,255,0.01); }
+.trigger-table tr:hover { background: rgba(255,255,255,0.03); }
+.trigger-table tr.error-row { background: rgba(248,113,113,0.08); }
+.trigger-table tr.error-row td { border-color: rgba(248,113,113,0.2); }
+.trigger-table .error-badge {
+  display: inline-block; background: rgba(248,113,113,0.5);
+  color: #fca5a5; padding: 2px 6px; border-radius: 3px; font-weight: 600;
+}
+.trigger-table .owner-other { color: #94a3b8; }
 
 /* ===== Flow Section ===== */
 .flow-section { max-width: 1200px; margin: 0 auto 40px; }
@@ -139,6 +179,40 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   border: 1px dashed rgba(255,255,255,0.1);
 }
 
+/* ===== Reference Section ===== */
+.reference-section {
+  max-width: 1200px; margin: 48px auto 0;
+  padding: 24px 20px; border-radius: 10px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+}
+.reference-section h2 {
+  font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+}
+.reference-subsection { margin-bottom: 24px; }
+.reference-subsection h3 {
+  font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 12px;
+}
+.reference-section table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 12px;
+}
+.reference-section th {
+  background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.2);
+  padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700;
+  color: #cbd5e1;
+}
+.reference-section td {
+  border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px;
+  font-size: 11px; color: #aaa; font-family: monospace;
+}
+.reference-section tr:nth-child(even) { background: rgba(255,255,255,0.01); }
+.reference-note {
+  font-size: 10px; color: #666; margin-top: 8px; padding: 6px 10px;
+  background: rgba(255,255,255,0.01); border-radius: 4px;
+  border-left: 2px solid rgba(148,163,184,0.3);
+}
+
 /* ===== Footer ===== */
 .footer {
   max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
@@ -152,11 +226,12 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 <h1>GAS システム相関図</h1>
 <p class="subtitle">EC多モール売上・CV・配送データ自動処理パイプライン</p>
 
-<!-- ===== SS Overview ===== -->
+<!-- ===== SS Overview（拡張版） ===== -->
 <div class="ss-overview">
   <div class="ss-box ss1">
     <h3>SS① Tik管理シート</h3>
-    <div class="ss-id">GAS① — Rhinoランタイム</div>
+    <div class="ss-id">SS ID: 1Qulrn5kLK...</div>
+    <div class="ss-detail">GAS① Rhinoランタイム<br>ライブラリ: zaiko<br>サービス: Drive API<br><strong style="color:#60a5fa;">トリガー: 0件（手動実行のみ）</strong></div>
     <ul>
       <li>成果物一時から出力APIFY.gs</li>
       <li>担当者毎に集計APIFY.gs</li>
@@ -168,7 +243,8 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
   <div class="ss-box ss2">
     <h3>SS② モールCV管理元データ</h3>
-    <div class="ss-id">GAS② — 24ファイル（うち多数deprecated）</div>
+    <div class="ss-id">SS ID: 1yT1vidaJC...</div>
+    <div class="ss-detail">GAS② 24ファイル（うち多数deprecated）<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 10件（時間ベース）</strong></div>
     <ul>
       <li>楽天① ドライブから取り込む.gs</li>
       <li>楽天② CSV整理と出力.gs</li>
@@ -180,7 +256,8 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
   <div class="ss-box ss3">
     <h3>SS③ 楽天Qoo10CV管理</h3>
-    <div class="ss-id">GAS③ — ファイル1つのみ / GAS②からも書込あり</div>
+    <div class="ss-id">SS ID: 15wtvBZHZ...</div>
+    <div class="ss-detail">GAS③ 1ファイル / GAS②からも書込あり<br>サービス: Sheets API<br><strong style="color:#34d399;">トリガー: 1件（varis集計表出力）</strong></div>
     <ul>
       <li>Varis反映.gs（GAS③唯一のファイル）</li>
       <li>varis整理結果を各モール(Qoo10/楽天/TTS)のCV行に書込</li>
@@ -203,7 +280,14 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>ユーティリティ</div>
 </div>
 
-<!-- ========================================== -->
+<!-- ===== Data Flow Overview ===== -->
+<div class="data-flow-overview">[外部データソース]
+  ├─ Apify → GAS①
+  ├─ Drive CSV/XLSX → GAS②
+  ├─ Drive Excel (TTS) → GAS①
+  └─ 外部スプシ → GAS①</div>
+
+<!-- ============================================= -->
 <!-- GAS① Tik管理シート 関連フロー               -->
 <!-- ========================================== -->
 <div class="section-divider">GAS① Tik管理シート 関連フロー</div>
@@ -515,6 +599,95 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 <!-- ========================================== -->
 <div class="section-divider gas2">GAS② モールCV管理元データ 関連フロー</div>
 
+<!-- GAS② Trigger Table -->
+<div class="trigger-table">
+  <table>
+    <thead>
+      <tr>
+        <th>関数名</th>
+        <th>オーナー</th>
+        <th>前回の実行</th>
+        <th>エラー率</th>
+        <th>推定役割</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>全媒体商材毎</td>
+        <td>自分</td>
+        <td>21:01</td>
+        <td>0%</td>
+        <td>全モール横断の商材別データ集計</td>
+      </tr>
+      <tr>
+        <td>全媒体在庫</td>
+        <td>自分</td>
+        <td>20:50</td>
+        <td>0%</td>
+        <td>全モール横断の在庫データ更新</td>
+      </tr>
+      <tr>
+        <td>Amazonポータルデータ取込</td>
+        <td>自分</td>
+        <td>7:52</td>
+        <td>0%</td>
+        <td>Amazonポータルからのデータ自動取込</td>
+      </tr>
+      <tr>
+        <td>Qoo10集計まとめ2</td>
+        <td>自分</td>
+        <td>9:37</td>
+        <td>0%</td>
+        <td>Qoo10売上データ集計</td>
+      </tr>
+      <tr>
+        <td>Qoo10確認用</td>
+        <td><span class="owner-other">他のユーザー</span></td>
+        <td>10:34</td>
+        <td>0%</td>
+        <td>Qoo10データ確認・検証用</td>
+      </tr>
+      <tr>
+        <td>キュ配送ファイル作成</td>
+        <td>自分</td>
+        <td>8:40</td>
+        <td>0%</td>
+        <td>Qoo10配送ファイルの自動生成</td>
+      </tr>
+      <tr class="error-row">
+        <td>Amazon開発整理と出力</td>
+        <td>自分</td>
+        <td>8:26</td>
+        <td><span class="error-badge">⚠ 100%</span></td>
+        <td>Amazon開発データの整理・出力 ※常時エラー</td>
+      </tr>
+      <tr>
+        <td>TTS確認用</td>
+        <td><span class="owner-other">他のユーザー</span></td>
+        <td>10:43</td>
+        <td>0%</td>
+        <td>TikTok Shop確認用データ更新</td>
+      </tr>
+      <tr>
+        <td>アラートメール送信処理</td>
+        <td>自分</td>
+        <td>9:23</td>
+        <td>0%</td>
+        <td>異常検知時のメール自動送信</td>
+      </tr>
+      <tr>
+        <td>varis取得と出力</td>
+        <td><span class="owner-other">他のユーザー</span></td>
+        <td>9:33</td>
+        <td>0%</td>
+        <td>varisデータの定期取得・出力</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="note-box">GAS①はトリガー0件（全て手動実行）。GAS③はトリガー1件（varis集計表出力 — 他のユーザー、10:05実行）。</div>
+
 <!-- FLOW 10: 楽天CSV売上データ -->
 <div class="flow-section">
   <div class="flow-title rakuten">楽天 CSV売上データ取込・整理・出力</div>
@@ -554,7 +727,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="note-box">楽天①②.gs が①②を順番に実行するランナー</div>
 </div>
 
-<!-- FLOW 11: TikTok配送データ -->
+<!-- FLOW 11: TikTok配送データ（拡張版） -->
 <div class="flow-section">
   <div class="flow-title tiktok">TikTok 配送データ取込・書込・出力</div>
   <div class="flow-steps flow-tiktok">
@@ -573,24 +746,25 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     <div class="step">
       <div class="label">GAS②</div>
       <div class="name">Tik① 取り込み</div>
-      <div class="detail">DriveからSS③「Tik配送一時」に取込（MAX_COLUMNS=55、Drive API v2）</div>
+      <div class="detail">DriveからSS③「Tik配送一時」に取込<br>MAX_COLUMNS=55、Drive API v2使用</div>
       <div class="gs-file">Tik①ドライブから取り込む.gs</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="label">GAS②</div>
+    <div class="step">
+      <div class="label">GAS②</div>
       <div class="name">Tik② 配送書き込み</div>
-      <div class="detail">配送データ整理・SS③に書込</div>
+      <div class="detail">配送データを整理・SS③のシートに書込<br>openByIdでクロスSS書込</div>
       <div class="gs-file">Tik②配送書き込み.gs</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
     <div class="step">
       <div class="label">GAS②</div>
-      <div class="name">Tik③ 出力</div>
-      <div class="detail">最終出力</div>
+      <div class="name">Tik③ 最終整形・出力</div>
+      <div class="detail">最終整形・出力処理</div>
       <div class="gs-file">Tik③出力.gs</div>
     </div>
   </div>
-  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。GAS②のスクリプトだが、取込先はSS③（楽天Qoo10CV管理）の「Tik配送一時」シート。openByIdでSS③に書き込む。</div>
+  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。GAS②のスクリプトだが、openById()でSS③に書き込むクロスSS連携。「Tik配送一時」シートはSS③（楽天Qoo10CV管理）に存在。</div>
 </div>
 
 <!-- FLOW 12: varis整理・集計 -->
@@ -686,6 +860,8 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 <!-- ========================================== -->
 <div class="section-divider gas3">GAS③ 楽天Qoo10CV管理 関連フロー</div>
 
+<div class="note-box"><strong style="color:#34d399;">GAS③ トリガー情報:</strong> 1件 — varis集計表出力（他のユーザー、時間ベース、最終実行: 10:05:42）</div>
+
 <!-- FLOW 14: Varis → CV管理反映 -->
 <div class="flow-section">
   <div class="flow-title varis">Varis → CV管理シート反映（GAS②→GAS③連携）</div>
@@ -728,6 +904,72 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     </div>
   </div>
   <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。GAS②の旧Qoo10処理（キュ①～③.gs, Qoo10確認用更新.gs）は全てdeprecated。現在Qoo10のCV反映はこのvaris経由のみ。Qoo10の請求データはGAS①のTTS請求集計で処理。</div>
+</div>
+
+<!-- ========================================== -->
+<!-- リファレンス                               -->
+<!-- ========================================== -->
+<div class="reference-section">
+  <h2>リファレンス</h2>
+
+  <div class="reference-subsection">
+    <h3>Drive フォルダID一覧</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>用途</th>
+          <th>フォルダID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TTS Excelファイル格納</td>
+          <td>1Jps4g82ebKpq2IzZiE7mKb3J8rtNF3Qs</td>
+        </tr>
+        <tr>
+          <td>TTS請求データ</td>
+          <td>1nsxcKhQ8rmUvEpxoAYkPrhKzbzHZLrII</td>
+        </tr>
+        <tr>
+          <td>Qoo10請求データ</td>
+          <td>1BEEuWg9GEQpuQI6JDYlNdHsZ_xXhkROS</td>
+        </tr>
+        <tr>
+          <td>楽天CSV親フォルダ</td>
+          <td>1d-FSLCon-HocG6zVaRPuIW3dPdASawEk</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="reference-subsection">
+    <h3>GAS② 非アクティブファイル一覧（deprecated）</h3>
+    <div class="reference-note">
+      キュ①～③.gs, Qoo10確認用更新.gs, Amazon①～②.gs, LPvaris整理.gs
+    </div>
+  </div>
+
+  <div class="reference-subsection">
+    <h3>外部スプレッドシートID</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>用途</th>
+          <th>ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Amazon SS</td>
+          <td>15rnXL2w0elqcZKTnEv-VFxJPFiaIjMTE4cwlAYcabMg</td>
+        </tr>
+        <tr>
+          <td>楽天 SS</td>
+          <td>1kp46nW3sCR6RZMev-XXzTnQV3_84b8j6UeTNG_P9WQs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- ===== Footer ===== -->
