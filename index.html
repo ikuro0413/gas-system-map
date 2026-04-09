@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GAS ã·ã¹ãã ç¸é¢å³</title>
+<title>GAS システム相関図</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -20,7 +20,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 .ss-box .ss-detail { font-size: 11px; color: #aaa; margin-bottom: 8px; line-height: 1.4; }
 .ss-box ul { list-style: none; padding: 0; }
 .ss-box li { font-size: 11px; color: #aaa; padding: 2px 0 2px 12px; position: relative; }
-.ss-box li::before { content: 'Â·'; position: absolute; left: 0; font-weight: bold; }
+.ss-box li::before { content: '·'; position: absolute; left: 0; font-weight: bold; }
 .ss1 h3 { color: #60a5fa; } .ss1 { border-color: rgba(96,165,250,0.3); }
 .ss2 h3 { color: #f87171; } .ss2 { border-color: rgba(248,113,113,0.3); }
 .ss3 h3 { color: #34d399; } .ss3 { border-color: rgba(52,211,153,0.3); }
@@ -90,391 +90,391 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 </style>
 </head>
 <body>
-<h1>GAS ã·ã¹ãã ç¸é¢å³</h1>
-<p class="subtitle">ECå¤ã¢ã¼ã«å£²ä¸ã»CVã»ééãã¼ã¿èªåå¦çãã¤ãã©ã¤ã³</p>
+<h1>GAS システム相関図</h1>
+<p class="subtitle">EC多モール売上・CV・配送データ自動処理パイプライン</p>
 <div class="ss-overview">
   <div class="ss-box ss1">
-    <h3>SSâ  Tikç®¡çã·ã¼ã</h3>
+    <h3>SS① Tik管理シート</h3>
     <div class="ss-id">SS ID: 1Qulrn5kLK...</div>
-    <div class="ss-detail">GASâ  Rhinoã©ã³ã¿ã¤ã <br>ã©ã¤ãã©ãª: zaiko<br>ãµã¼ãã¹: Drive API<br><strong style="color:#60a5fa;">ããªã¬ã¼: 0ä»¶ï¼æåå®è¡ã®ã¿ï¼</strong></div>
+    <div class="ss-detail">GAS① Rhinoランタイム<br>ライブラリ: zaiko<br>サービス: Drive API<br><strong style="color:#60a5fa;">トリガー: 0件（手動実行のみ）</strong></div>
     <ul>
-      <li>ææç©ä¸æããåºåAPIFY.gs</li>
-      <li>æå½èæ¯ã«éè¨APIFY.gs</li>
-      <li>éè¨æ´ç2026Tik.gs / ã¤ã³ã¹ã¿.gs</li>
-      <li>ã·ã¼ãæ´æ°Amazon.gs / æ¥½å¤©.gs</li>
-      <li>TTSéè¨.gs / ä»£çåºéè¨.gs / è«æ±éè¨.gs</li>
-      <li>ã¡ãã£ã¢ã®ã­ã©ãã¹æç¨¿.gs</li>
+      <li>成果物一時から出力APIFY.gs</li>
+      <li>担当者毎に集計APIFY.gs</li>
+      <li>集計整理2026Tik.gs / インスタ.gs</li>
+      <li>シート更新Amazon.gs / 楽天.gs</li>
+      <li>TTS集計.gs / 代理店集計.gs / 請求集計.gs</li>
+      <li>メディアのキラトス投稿.gs</li>
     </ul>
   </div>
   <div class="ss-box ss2">
-    <h3>SSâ¡ ã¢ã¼ã«CVç®¡çåãã¼ã¿</h3>
+    <h3>SS② モールCV管理元データ</h3>
     <div class="ss-id">SS ID: 1yT1vidaJC...</div>
-    <div class="ss-detail">GASâ¡ 35+ãã¡ã¤ã«<br>ãµã¼ãã¹: Drive APIã»Gmail<br><strong style="color:#f87171;">ããªã¬ã¼: 10ä»¶ï¼æéãã¼ã¹ï¼</strong></div>
+    <div class="ss-detail">GAS② 35+ファイル<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 10件（時間ベース）</strong></div>
     <ul>
-      <li>æ¥½å¤©â  ãã©ã¤ãããåãè¾¼ã.gs / â¡ CSVæ´çã¨åºå.gs</li>
-      <li>Tikâ  ãã©ã¤ãããåãè¾¼ã.gs / â¡ ééæ¸ãè¾¼ã¿.gs / â¢ åºå.gs</li>
-      <li>varisæ´ç.gs / variséè¨è¡¨åºå.gs</li>
-      <li>ãã¼ããã¼åºåï¼Senjin / ãµã«ï¼</li>
-      <li>Qoo10ééãã¡ã¤ã«ä½æ.gs / éè¨ã¾ã¨ã2.gs / åºè·æå ±å¦ç.gs</li>
-      <li>Amazonéçºæ´çã¨åºå.gs / Amazonãã¼ã¿ã«ãã¼ã¿åè¾¼</li>
-      <li>å¨åªä½åææ¯.gs / å¨åªä½å¨åº«.gs / TTSç¢ºèªç¨æ´æ°.gs</li>
+      <li>楽天① ドライブから取り込む.gs / ② CSV整理と出力.gs</li>
+      <li>Tik① ドライブから取り込む.gs / ② 配送書き込み.gs / ③ 出力.gs</li>
+      <li>varis整理.gs / varis集計表出力.gs</li>
+      <li>パートナー出力（Senjin / サル）</li>
+      <li>Qoo10配送ファイル作成.gs / 集計まとめ2.gs / 出荷情報処理.gs</li>
+      <li>Amazon開発整理と出力.gs / Amazonポータルデータ取込</li>
+      <li>全媒体商材毎.gs / 全媒体在庫.gs / TTS確認用更新.gs</li>
     </ul>
   </div>
   <div class="ss-box ss3">
-    <h3>SSâ¢ æ¥½å¤©Qoo10CVç®¡ç</h3>
+    <h3>SS③ 楽天Qoo10CV管理</h3>
     <div class="ss-id">SS ID: 15wtvBZHZ...</div>
-    <div class="ss-detail">GASâ¢ 1ãã¡ã¤ã« / GASâ¡ãããæ¸è¾¼ãã<br>ãµã¼ãã¹: Sheets API<br><strong style="color:#34d399;">ããªã¬ã¼: 1ä»¶ï¼variséè¨è¡¨åºåï¼</strong></div>
+    <div class="ss-detail">GAS③ 1ファイル / GAS②からも書込あり<br>サービス: Sheets API<br><strong style="color:#34d399;">トリガー: 1件（varis集計表出力）</strong></div>
     <ul>
-      <li>Varisåæ .gsï¼GASâ¢å¯ä¸ã®ãã¡ã¤ã«ï¼</li>
-      <li>varisæ´ççµæãåã¢ã¼ã«(Qoo10/æ¥½å¤©/TTS)ã®CVè¡ã«æ¸è¾¼</li>
-      <li>ãTikééä¸æãã·ã¼ãããï¼GASâ¡ã®Tikâ ãæ¸è¾¼ï¼</li>
-      <li>Qoo10éé/å£²ä¸å¦ç â GASâ¡ããªã¬ã¼çµç±ã§ç¨¼åä¸­</li>
+      <li>Varis反映.gs（GAS③唯一のファイル）</li>
+      <li>varis整理結果を各モール(Qoo10/楽天/TTS)のCV行に書込</li>
+      <li>「Tik配送一時」シートあり（GAS②のTik①が書込）</li>
+      <li>Qoo10配送/売上処理 — GAS②トリガー経由で稼働中</li>
     </ul>
   </div>
 </div>
 <div class="legend">
-  <div class="legend-item"><div class="legend-box" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.25);"></div>å¤é¨ï¼APIã»æåã»å¤é¨ã¹ãã·</div>
+  <div class="legend-item"><div class="legend-box" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.25);"></div>外部（API・手動・外部スプシ）</div>
   <div class="legend-item"><div class="legend-box" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);"></div>Google Drive</div>
-  <div class="legend-item"><div class="legend-box" style="background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.3);"></div>GASï¼ã¹ã¯ãªããå¦çï¼</div>
-  <div class="legend-item"><div class="legend-box" style="background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);"></div>SS / ã·ã¼ã / åºå</div>
+  <div class="legend-item"><div class="legend-box" style="background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.3);"></div>GAS（スクリプト処理）</div>
+  <div class="legend-item"><div class="legend-box" style="background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);"></div>SS / シート / 出力</div>
 </div>
-<div class="data-flow-overview">[å¤é¨ãã¼ã¿ã½ã¼ã¹]
-  ââ Qoo10 API (4åºè) â GASâ¡
-  ââ Amazon SP-API â GASâ¡ Amazonãã¼ã¿ã«ãã¼ã¿åè¾¼
-  ââ Drive CSV/XLSX â GASâ¡
-  ââ Drive Excel (TTS) â GASâ 
-  ââ Apify â GASâ 
-  ââ å¤é¨ã¹ãã· â GASâ </div>
-<div class="section-divider">GASâ  Tikç®¡çã·ã¼ã é¢é£ãã­ã¼</div>
+<div class="data-flow-overview">[外部データソース]
+  ├─ Qoo10 API (4店舗) → GAS②
+  ├─ Amazon SP-API → GAS② Amazonポータルデータ取込
+  ├─ Drive CSV/XLSX → GAS②
+  ├─ Drive Excel (TTS) → GAS①
+  ├─ Apify → GAS①
+  └─ 外部スプシ → GAS①</div>
+<div class="section-divider">GAS① Tik管理シート 関連フロー</div>
 <div class="flow-section">
-  <div class="flow-title tts">TikTok Shopï¼TTSï¼éè¨åè¾¼ â ã¯ãªã¨ã¤ã¿ã¼å¥</div>
+  <div class="flow-title tts">TikTok Shop（TTS）集計取込 — クリエイター別</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨</div><div class="name">TikTok Shop</div><div class="detail">TTSç®¡çç»é¢ããDL</div></div>
+    <div class="step step-ext"><div class="label">外部</div><div class="name">TikTok Shop</div><div class="detail">TTS管理画面からDL</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ext"><div class="label">æå</div><div class="name">æ¯æExcelãæåDL</div><div class="detail">æå½èãDLãã¦Driveã«æ ¼ç´</div></div>
+    <div class="step step-ext"><div class="label">手動</div><div class="name">毎朝Excelを手動DL</div><div class="detail">担当者がDLしてDriveに格納</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">YYYYå¹´MMæãã©ã«ã</div><div class="detail">ãã©ã«ãID: 1Jps4g8...</div></div>
+    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">YYYY年MM月フォルダ</div><div class="detail">フォルダID: 1Jps4g8...</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">TTSéè¨åè¾¼</div><div class="detail">ExcelâSheetså¤æï¼Drive API v3ï¼ãã¯ãªã¨ã¤ã¿ã¼å¥éè¨</div><div class="gs-file">TTSéè¨.gsï¼289è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">TTS集計取込</div><div class="detail">Excel→Sheets変換（Drive API v3）、クリエイター別集計</div><div class="gs-file">TTS集計.gs（289行）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ åã«æ´çåºå</div><div class="detail">è²åããã©ã¼ãããä»ã</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS①内に整理出力</div><div class="detail">色分けフォーマット付き</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title tts">TTS ä»£çåºéè¨ â ä»£çåºå¥Excelåºå</div>
+  <div class="flow-title tts">TTS 代理店集計 — 代理店別Excel出力</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ  ã·ã¼ã</div><div class="name">ä»£çåºã¢ã«ç®¡ç</div><div class="detail">ã¯ãªã¨ã¤ã¿ã¼âä»£çåºãããã³ã°</div></div>
+    <div class="step step-ss"><div class="label">SS① シート</div><div class="name">代理店アカ管理</div><div class="detail">クリエイター→代理店マッピング</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">TTSä»£çåºéè¨</div><div class="detail">ä»£çåºå¥ã«ç²å¾ä»¶æ°ã»è¿éæ°ã»æå¹è²©å£²æ°ãéè¨</div><div class="gs-file">TTSä»£çåºéè¨.gsï¼199è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">TTS代理店集計</div><div class="detail">代理店別に獲得件数・返金数・有効販売数を集計</div><div class="gs-file">TTS代理店集計.gs（199行）</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">ä»£çåºå¥Excel</div><div class="detail">Driveãã©ã«ãã«åºå</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">å¨ãã¼ã¿ã¾ã¨ãExcel</div><div class="detail">Driveãã©ã«ãã«åºå</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">代理店別Excel</div><div class="detail">Driveフォルダに出力</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">全データまとめExcel</div><div class="detail">Driveフォルダに出力</div></div></div>
     </div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title tts">TTS + Qoo10 è«æ±éè¨ â æ¯æããã¼ã¿</div>
+  <div class="flow-title tts">TTS + Qoo10 請求集計 — 支払いデータ</div>
   <div class="flow-steps">
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-drive"><div class="label">Google Drive</div><div class="name">TTSãã©ã«ã</div><div class="detail">ID: 1nsxcKh...</div></div></div>
-      <div class="branch-row"><div class="step step-drive"><div class="label">Google Drive</div><div class="name">Qoo10ãã©ã«ã</div><div class="detail">ID: 1BEEuWg...</div></div></div>
+      <div class="branch-row"><div class="step step-drive"><div class="label">Google Drive</div><div class="name">TTSフォルダ</div><div class="detail">ID: 1nsxcKh...</div></div></div>
+      <div class="branch-row"><div class="step step-drive"><div class="label">Google Drive</div><div class="name">Qoo10フォルダ</div><div class="detail">ID: 1BEEuWg...</div></div></div>
     </div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">æ¯æãéè¨</div><div class="detail">æ¯æãIDã§éè¤æé¤ãTTS=é»è² / Qoo10=ãã³ã¯</div><div class="gs-file">TTSè«æ±éè¨.gsï¼193è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">支払い集計</div><div class="detail">支払いIDで重複排除、TTS=黄色 / Qoo10=ピンク</div><div class="gs-file">TTS請求集計.gs（193行）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ åã«è«æ±éè¨åºå</div><div class="detail">TTS+Qoo10ã®æ¯æããã¼ã¿çµ±å</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS①内に請求集計出力</div><div class="detail">TTS+Qoo10の支払いデータ統合</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title amazon">Amazon ãã¤ãªã¼åæ</div>
+  <div class="flow-title amazon">Amazon デイリー同期</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨ã¹ãã·</div><div class="name">Amazon SS</div><div class="detail">ID: 15rnXL2w...ãAMZãã¤ãªã¼ãã·ã¼ã</div></div>
+    <div class="step step-ext"><div class="label">外部スプシ</div><div class="name">Amazon SS</div><div class="detail">ID: 15rnXL2w...「AMZデイリー」シート</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">ã·ã¼ãæ´æ°Amazon</div><div class="detail">A1ã»ã«ã§å¯¾è±¡ã¿ãæ±ºå®ãCåä»¥éãåå¾ãBåããæ¸è¾¼</div><div class="gs-file">ã·ã¼ãæ´æ°Amazon.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">シート更新Amazon</div><div class="detail">A1セルで対象タブ決定、C列以降を取得しB列から書込</div><div class="gs-file">シート更新Amazon.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ  Tikç®¡çã·ã¼ã</div><div class="detail">Amazonãã¤ãªã¼ãã¼ã¿åæ </div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS① Tik管理シート</div><div class="detail">Amazonデイリーデータ反映</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title rakuten">æ¥½å¤© ãã¤ãªã¼åæ</div>
+  <div class="flow-title rakuten">楽天 デイリー同期</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨ã¹ãã·</div><div class="name">æ¥½å¤© SS</div><div class="detail">ID: 1kp46nW3...ãæ¥½å¤©ãã¤ãªã¼ãã·ã¼ã</div></div>
+    <div class="step step-ext"><div class="label">外部スプシ</div><div class="name">楽天 SS</div><div class="detail">ID: 1kp46nW3...「楽天デイリー」シート</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">ã·ã¼ãæ´æ°æ¥½å¤©</div><div class="detail">Amazonçã¨åä¸æ§é </div><div class="gs-file">ã·ã¼ãæ´æ°æ¥½å¤©.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">シート更新楽天</div><div class="detail">Amazon版と同一構造</div><div class="gs-file">シート更新楽天.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ  Tikç®¡çã·ã¼ã</div><div class="detail">æ¥½å¤©ãã¤ãªã¼ãã¼ã¿åæ </div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS① Tik管理シート</div><div class="detail">楽天デイリーデータ反映</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title utility">ã¡ãã£ã¢ã®ã­ã©ãã¹æç¨¿ â ã­ã¼ã¯ã¼ãè²åã</div>
+  <div class="flow-title utility">メディアのキラトス投稿 — キーワード色分け</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ  ã·ã¼ã</div><div class="name">ã¸ãæç¨¿</div><div class="detail">æç¨¿ãã¼ã¿ãèç©ãããã·ã¼ã</div></div>
+    <div class="step step-ss"><div class="label">SS① シート</div><div class="name">ジバ投稿</div><div class="detail">投稿データが蓄積されたシート</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">highlightRowsByKeywords</div><div class="detail">ã­ã¼ã¯ã¼ãã§è¡ãè²åã</div><div class="gs-file">ã¡ãã£ã¢ã®ã­ã©ãã¹æç¨¿.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">highlightRowsByKeywords</div><div class="detail">キーワードで行を色分け</div><div class="gs-file">メディアのキラトス投稿.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ ã·ã¼ãè²åãæ¸</div><div class="detail">é=ã­ã©ãã¹ç³» / ãã³ã¯=ã­ãã³ç³»</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS①シート色分け済</div><div class="detail">青=キラトス系 / ピンク=キテン系</div></div>
   </div>
-  <div class="note-box">é(ã­ã©ãã¹,æ­¯,ãã¯ã¤ããã³ã°,å£)ãåªåããã³ã¯(ã­ãã³,ãã¿ãã³,ãã­ã,åç²§æ°´,ekam,è,ã·ã,ãã¢)ã</div>
+  <div class="note-box">青(キラトス,歯,ホワイトニング,口)が優先。ピンク(キテン,ビタミン,ニキビ,化粧水,ekam,肌,シミ,ヘア)。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title apify">Apify / TikTokåç»ãã¼ã¿ â æå½èå¥éè¨</div>
+  <div class="flow-title apify">Apify / TikTok動画データ → 担当者別集計</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨</div><div class="name">Apifyã¯ã©ã¦ã</div><div class="detail">TikTok ã¹ã¯ã¬ã¤ãã³ã°çµæ</div></div>
+    <div class="step step-ext"><div class="label">外部</div><div class="name">Apifyクラウド</div><div class="detail">TikTok スクレイピング結果</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ext"><div class="label">å¤é¨API</div><div class="name">Apify API</div><div class="detail">Jsonå½¢å¼ã§ãã¼ã¿åå¾</div></div>
+    <div class="step step-ext"><div class="label">外部API</div><div class="name">Apify API</div><div class="detail">Json形式でデータ取得</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">Apifyææç©åè¾¼</div><div class="detail">ææç©ä¸æããåºåï¼éè¤ãã§ãã¯ä»ãï¼</div><div class="gs-file">ææç©ä¸æããåºåAPIFY.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">Apify成果物取込</div><div class="detail">成果物一時から出力（重複チェック付き）</div><div class="gs-file">成果物一時から出力APIFY.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">æå½èå¥éè¨</div><div class="detail">æç¨¿æ°ã»åçæ°ã»ããã­æ°ãæå½èãã¨ã«</div><div class="gs-file">æå½èæ¯ã«éè¨APIFY.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">担当者別集計</div><div class="detail">投稿数・再生数・いいね数を担当者ごとに</div><div class="gs-file">担当者毎に集計APIFY.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">Sï½Vå 8è¡ç®ï½</div><div class="detail">æå½èå¥éè¨çµæ</div></div>
-  </div>
-</div>
-<div class="flow-section">
-  <div class="flow-title tiktok">TikTok åçæ°éè¨ â æ¥ä»å¥ã»åç»å¥</div>
-  <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ  ã·ã¼ã</div><div class="name">åçæ°ä¸æ</div><div class="detail">TikTokåç»ãã¼ã¿</div></div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">éè¨æ´ç2026Tik</div><div class="detail">æ¥ä»ã»ä»¶æ°ã»ç·åçæ°ã®ãµããªã¼è¡+ãã¼ã¿è¡</div><div class="gs-file">éè¨æ´ç2026Tik.gsï¼108è¡ï¼</div></div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">åçæ°éè¨Tik</div><div class="detail">æ¥ä»å¥ã»åç»å¥ã®éè¨è¡¨</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">S～V列 8行目～</div><div class="detail">担当者別集計結果</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title insta">Instagram åçæ°éè¨ â æç¨¿å¥</div>
+  <div class="flow-title tiktok">TikTok 再生数集計 — 日付別・動画別</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ  ã·ã¼ã</div><div class="name">åçæ°ä¸æ</div><div class="detail">Instagramæç¨¿ãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS① シート</div><div class="name">再生数一時</div><div class="detail">TikTok動画データ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ </div><div class="name">éè¨æ´ç2026ã¤ã³ã¹ã¿</div><div class="detail">æç¨¿ãã¨ã®ã¨ã³ã²ã¼ã¸ã¡ã³ãéè¨</div><div class="gs-file">éè¨æ´ç2026ã¤ã³ã¹ã¿.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">集計整理2026Tik</div><div class="detail">日付・件数・総再生数のサマリー行+データ行</div><div class="gs-file">集計整理2026Tik.gs（108行）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">åçæ°éè¨insta</div><div class="detail">æç¨¿å¥ã®éè¨è¡¨</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">再生数集計Tik</div><div class="detail">日付別・動画別の集計表</div></div>
   </div>
 </div>
-<div class="section-divider gas2">GASâ¡ ã¢ã¼ã«CVç®¡çåãã¼ã¿ é¢é£ãã­ã¼</div>
+<div class="flow-section">
+  <div class="flow-title insta">Instagram 再生数集計 — 投稿別</div>
+  <div class="flow-steps">
+    <div class="step step-ss"><div class="label">SS① シート</div><div class="name">再生数一時</div><div class="detail">Instagram投稿データ</div></div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step step-gas"><div class="label">GAS①</div><div class="name">集計整理2026インスタ</div><div class="detail">投稿ごとのエンゲージメント集計</div><div class="gs-file">集計整理2026インスタ.gs</div></div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">再生数集計insta</div><div class="detail">投稿別の集計表</div></div>
+  </div>
+</div>
+<div class="section-divider gas2">GAS② モールCV管理元データ 関連フロー</div>
 <div class="trigger-table">
   <table>
-    <thead><tr><th>é¢æ°å</th><th>ãªã¼ãã¼</th><th>ååã®å®è¡</th><th>ã¨ã©ã¼ç</th><th>æ¨å®å¾¹å²</th></tr></thead>
+    <thead><tr><th>関数名</th><th>オーナー</th><th>前回の実行</th><th>エラー率</th><th>推定役割</th></tr></thead>
     <tbody>
-      <tr><td>å¨åªä½åææ¯</td><td>èªå</td><td>21:01</td><td>0%</td><td>å¨ã¢ã¼ã«æ¨ªæ­ã®åæå¥ãã¼ã¿éè¨</td></tr>
-      <tr><td>å¨åªä½å¨åº«</td><td>èªå</td><td>20:50</td><td>0%</td><td>å¨ã¢ã¼ã«æ¨ªæ­ã®å¨åº«ãã¼ã¿æ´æ°</td></tr>
-      <tr><td>Amazonãã¼ã¿ã«ãã¼ã¿åè¾¼</td><td>èªå</td><td>7:52</td><td>0%</td><td>Amazonãã¼ã¿ã«ããã®ãã¼ã¿èªååè¾¼</td></tr>
-      <tr><td>Qoo10éè¨ã¾ã¨ã2</td><td>èªå</td><td>9:37</td><td>0%</td><td>Qoo10å£²ä¸ãã¼ã¿éè¨</td></tr>
-      <tr><td>Qoo10ç¢ºèªç¨</td><td><span class="owner-other">ä»ã®ã¦ã¼ã¶ã¼</span></td><td>10:34</td><td>0%</td><td>Qoo10ãã¼ã¿ç¢ºèªã»æ¤è¨¼ç¨</td></tr>
-      <tr><td>ã­ã¥ééãã¡ã¤ã«ä½æ</td><td>èªå</td><td>8:40</td><td>0%</td><td>Qoo10ééãã¡ã¤ã«ã®èªåçæ</td></tr>
-      <tr class="error-row"><td>Amazonéçºæ´çã¨åºå</td><td>èªå</td><td>8:26</td><td><span class="error-badge">â  100%</span></td><td>Amazonéçºãã¼ã¿ã®æ´çã»åºå â»å¸¸æã¨ã©ã¼</td></tr>
-      <tr><td>TTSç¢ºèªç¨</td><td><span class="owner-other">ä»ã®ã¦ã¼ã¶ã¼</span></td><td>10:43</td><td>0%</td><td>TikTok Shopç¢ºèªç¨ãã¼ã¿æ´æ°</td></tr>
-      <tr><td>ã¢ã©ã¼ãã¡ã¼ã«éä¿¡å¦ç</td><td>èªå</td><td>9:23</td><td>0%</td><td>ç°å¸¸æ¤ç¥æã®ã¡ã¼ã«èªåéä¿¡</td></tr>
-      <tr><td>varisåå¾ã¨åºå</td><td><span class="owner-other">ä»ã®ã¦ã¼ã¶ã¼</span></td><td>9:33</td><td>0%</td><td>varisãã¼ã¿ã®å®æåå¾ã»åºå</td></tr>
+      <tr><td>全媒体商材毎</td><td>自分</td><td>21:01</td><td>0%</td><td>全モール横断の商材別データ集計</td></tr>
+      <tr><td>全媒体在庫</td><td>自分</td><td>20:50</td><td>0%</td><td>全モール横断の在庫データ更新</td></tr>
+      <tr><td>Amazonポータルデータ取込</td><td>自分</td><td>7:52</td><td>0%</td><td>Amazonポータルからのデータ自動取込</td></tr>
+      <tr><td>Qoo10集計まとめ2</td><td>自分</td><td>9:37</td><td>0%</td><td>Qoo10売上データ集計</td></tr>
+      <tr><td>Qoo10確認用</td><td><span class="owner-other">他のユーザー</span></td><td>10:34</td><td>0%</td><td>Qoo10データ確認・検証用</td></tr>
+      <tr><td>キュ配送ファイル作成</td><td>自分</td><td>8:40</td><td>0%</td><td>Qoo10配送ファイルの自動生成</td></tr>
+      <tr class="error-row"><td>Amazon開発整理と出力</td><td>自分</td><td>8:26</td><td><span class="error-badge">⚠ 100%</span></td><td>Amazon開発データの整理・出力 ※常時エラー</td></tr>
+      <tr><td>TTS確認用</td><td><span class="owner-other">他のユーザー</span></td><td>10:43</td><td>0%</td><td>TikTok Shop確認用データ更新</td></tr>
+      <tr><td>アラートメール送信処理</td><td>自分</td><td>9:23</td><td>0%</td><td>異常検知時のメール自動送信</td></tr>
+      <tr><td>varis取得と出力</td><td><span class="owner-other">他のユーザー</span></td><td>9:33</td><td>0%</td><td>varisデータの定期取得・出力</td></tr>
     </tbody>
   </table>
 </div>
-<div class="note-box">GASâ ã¯ããªã¬ã¼0ä»¶ï¼å¨ã¦æåå®è¡ï¼ãGASâ¢ã¯ããªã¬ã¼1ä»¶ï¼variséè¨è¡¨åºå â ä»ã®ã¦ã¼ã¶ã¼ã10:05å®è¡ï¼ã</div>
+<div class="note-box">GAS①はトリガー0件（全て手動実行）。GAS③はトリガー1件（varis集計表出力 — 他のユーザー、10:05実行）。</div>
 <div class="flow-section">
-  <div class="flow-title qoo10">Qoo10 ééãã¡ã¤ã«èªåçæï¼ããªã¬ã¼: ã­ã¥ééãã¡ã¤ã«ä½æï¼</div>
+  <div class="flow-title qoo10">Qoo10 配送ファイル自動生成（トリガー: キュ配送ファイル作成）</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨API</div><div class="name">Qoo10 API</div><div class="detail">4åºèï¼ãªãªã·ã¥/ãããã©ã/ã´ã£ã´ã·ã¢ã¼ã¯ã¹/ãããªã¹ã¿ï¼</div></div>
+    <div class="step step-ext"><div class="label">外部API</div><div class="name">Qoo10 API</div><div class="detail">4店舗（リリシュ/ハハハラボ/ヴィヴシアークス/ビバリスタ）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">ã­ã¥ééãã¡ã¤ã«ä½æ</div><div class="detail">4åºèã®APIä¸æ¬åå¾ãæªåºè·10æ¥å</div><div class="gs-file">Qoo10ééãã¡ã¤ã«ä½æ.gsï¼370è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">キュ配送ファイル作成</div><div class="detail">4店舗のAPI一括取得、未出荷10日分</div><div class="gs-file">Qoo10配送ファイル作成.gs（370行）</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-drive"><div class="label">åºå</div><div class="name">Drive ãã©ã«ãåºå</div><div class="detail">æ¥ä»ãã©ã«ãã«èªåæ ¼ç´</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">ã¡ã¼ã«éä¿¡</div><div class="detail">adwellness01@ã«éç¥</div></div></div>
+      <div class="branch-row"><div class="step step-drive"><div class="label">出力</div><div class="name">Drive フォルダ出力</div><div class="detail">日付フォルダに自動格納</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">メール送信</div><div class="detail">adwellness01@に通知</div></div></div>
     </div>
   </div>
-  <div class="note-box">Qoo10 API GetShippingInfo_v2ã§å¨åºèã®ééãã¼ã¿ãåå¾ããªãªã·ã¥âãã«ã¢ããã«åºåç½®æãæ¥ä»ãã©ã«ãã«èªåæ ¼ç´ã</div>
+  <div class="note-box">Qoo10 API GetShippingInfo_v2で全店舗の配送データを取得。リリシュ→ヘルアップに店名置換。日付フォルダに自動格納。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title qoo10">Qoo10 å£²ä¸éè¨ãã¤ãã©ã¤ã³ï¼ããªã¬ã¼: Qoo10éè¨ã¾ã¨ã2ï¼</div>
+  <div class="flow-title qoo10">Qoo10 売上集計パイプライン（トリガー: Qoo10集計まとめ2）</div>
   <div class="flow-steps">
-    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">ãã©ã«ã</div><div class="detail">ID: 1z7ywqj... ééãã¡ã¤ã«æ ¼ç´</div></div>
+    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">フォルダ</div><div class="detail">ID: 1z7ywqj... 配送ファイル格納</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Qoo10å£²ä¸åè¾¼2</div><div class="detail">CSV/Excelåè¾¼ããã¹ã¿åç§ã§åååè£æ­£</div><div class="gs-file">Qoo10éè¨ã¾ã¨ã2.gsï¼285è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Qoo10売上取込2</div><div class="detail">CSV/Excel取込、マスタ参照で商品名補正</div><div class="gs-file">Qoo10集計まとめ2.gs（285行）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¢ ã·ã¼ã</div><div class="name">ééä¸æ</div><div class="detail">ä¸æãã¼ã¿æ ¼ç´</div></div>
+    <div class="step step-ss"><div class="label">SS③ シート</div><div class="name">配送一時</div><div class="detail">一時データ格納</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Qoo10å£²ä¸æ´ç2</div><div class="detail">åååÃæ¥ä»ã§éè¨</div><div class="gs-file">Qoo10å£²ä¸æ´ç2.gsï¼140è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Qoo10売上整理2</div><div class="detail">商品名×日付で集計</div><div class="gs-file">Qoo10売上整理2.gs（140行）</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¢ ã·ã¼ã</div><div class="name">ã­ã¥æ´ç</div><div class="detail">æ´çæ¸ã¿ãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS③ シート</div><div class="name">キュ整理</div><div class="detail">整理済みデータ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">ã­ã¥å£²ä¸åºå2</div><div class="detail">æ¥ä»è¡ããããåæ¥æ¯è¼ãæ¥ä¸ææ¤ç¥</div><div class="gs-file">Qoo10å£²ä¸åºå2.gsï¼219è¡ï¼</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">キュ売上出力2</div><div class="detail">日付行マッチ、前日比較、急上昇検知</div><div class="gs-file">Qoo10売上出力2.gs（219行）</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-ss"><div class="label">SSâ¢ åºå</div><div class="name">Qoo10ã·ã¼ã</div><div class="detail">å£²ä¸éè¨çµæåæ </div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">ã¡ã¼ã«éç¥ + Senjinåºå</div><div class="detail">ã­ã©ãã¹/ã©ãã·ã¥ãã©ã«ã</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">SS③ 出力</div><div class="name">Qoo10シート</div><div class="detail">売上集計結果反映</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">メール通知 + Senjin出力</div><div class="detail">キラトス/ラッシュフォルテ</div></div></div>
     </div>
   </div>
-  <div class="note-box">5é¢æ°ãé æ¬¡å®è¡: å£²ä¸åè¾¼2âå£²ä¸æ´ç2âã­ã¥å£²ä¸åºå2âSenjin_kiratothâSenjin_lash_forteã</div>
+  <div class="note-box">5関数を順次実行: 売上取込2→売上整理2→キュ売上出力2→Senjin_kiratoth→Senjin_lash_forte。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title qoo10">Qoo10 åºè·æå ±åæ </div>
+  <div class="flow-title qoo10">Qoo10 出荷情報反映</div>
   <div class="flow-steps">
-    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">åºè·å®ç¸¾CSV</div><div class="detail">æ ¼ç´ãã©ã«ã</div></div>
+    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">出荷実績CSV</div><div class="detail">格納フォルダ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Qoo10åºè·æå ±</div><div class="detail">è¿½è·¡çªå·ããããåå²ééå¯¾å¿</div><div class="gs-file">Qoo10åºè·æå ±å¦ç.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Qoo10出荷情報</div><div class="detail">追跡番号マッチ、分割配送対応</div><div class="gs-file">Qoo10出荷情報処理.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ ã·ã¼ã</div><div class="name">âå£²ä¸ç®¡çã·ã¹ãã </div><div class="detail">ééæå ±åæ </div></div>
+    <div class="step step-ss"><div class="label">SS② シート</div><div class="name">★売上管理システム</div><div class="detail">配送情報反映</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">ã¡ã¼ã«éç¥</div><div class="detail">ééæå ±åæ å®äº</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">メール通知</div><div class="detail">配送情報反映完了</div></div>
   </div>
 </div>
 <div class="flow-section">
-  <div class="flow-title amazon">Amazonéçºæ´çã¨åºåï¼å¤§è¦æ¨¡APIé£æºã·ã¹ãã ï¼</div>
+  <div class="flow-title amazon">Amazon開発整理と出力（大規模API連携システム）</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨API</div><div class="name">Amazon SP-API</div><div class="detail">åæ³äººã®ã»ã©ã¼ã¢ã«ã¦ã³ã<br>æ³¨æã»å¨åº«ã»å£²ä¸ãã¼ã¿</div></div>
+    <div class="step step-ext"><div class="label">外部API</div><div class="name">Amazon SP-API</div><div class="detail">各法人のセラーアカウント<br>注文・在庫・売上データ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Amazonãã¼ã¿ã«ãã¼ã¿åè¾¼</div><div class="detail">å¨æ³äººã®Amazonãã¼ã¿ãä¸æ¬åè¾¼<br>ããªã¬ã¼: æ¯æ7:52</div><div class="gs-file">Amazonãã¼ã¿ã«ãã¼ã¿åè¾¼.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Amazonポータルデータ取込</div><div class="detail">全法人のAmazonデータを一括取込<br>トリガー: 毎朝7:52</div><div class="gs-file">Amazonポータルデータ取込.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ ã·ã¼ã</div><div class="name">Amazonä¸æãã¼ã¿</div><div class="detail">åè¾¼ãã¼ã¿ã®ä¸­éæ ¼ç´</div></div>
+    <div class="step step-ss"><div class="label">SS② シート</div><div class="name">Amazon一時データ</div><div class="detail">取込データの中間格納</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Amazonéçºæ´çã¨åºå</div><div class="detail">ãã¼ã¿æ´çã»éè¨ã»åã·ã¼ãã¸åæ <br>ããªã¬ã¼: 8:26 â å¸¸æã¨ã©ã¼</div><div class="gs-file">Amazonéçºæ´çã¨åºå.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Amazon開発整理と出力</div><div class="detail">データ整理・集計・各シートへ反映<br>トリガー: 8:26 ⚠常時エラー</div><div class="gs-file">Amazon開発整理と出力.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-ss"><div class="label">SSâ¡ åºå</div><div class="name">âå£²ä¸ç®¡çã·ã¹ãã </div><div class="detail">Amazonå£²ä¸ãã¼ã¿åæ </div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">æ³äººå¥éè¨ã·ã¼ã</div><div class="detail">åæ³äººã®å£²ä¸ã»å¨åº«éè¨</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">SS② 出力</div><div class="name">★売上管理システム</div><div class="detail">Amazon売上データ反映</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">法人別集計シート</div><div class="detail">各法人の売上・在庫集計</div></div></div>
     </div>
   </div>
-  <div class="note-box">â  Amazonéçºæ´çã¨åºåã¯ã¨ã©ã¼ç100%ï¼å¸¸æã¨ã©ã¼ç¶æï¼ãAmazonãã¼ã¿ã«ãã¼ã¿åè¾¼ï¼7:52ï¼ã¯æ­£å¸¸ç¨¼åããã¼ã¿åè¾¼âæ´çâåºåã®2æ®µæ§æãæ§Amazonâ â¡.gsã¯deprecatedã</div>
+  <div class="note-box">⚠ Amazon開発整理と出力はエラー率100%（常時エラー状態）。Amazonポータルデータ取込（7:52）は正常稼働。データ取込→整理→出力の2段構成。旧Amazon①②.gsはdeprecated。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title cross">å¨åªä½åææ¯ â ã¢ã¼ã«æ¨ªæ­åæå¥éè¨</div>
+  <div class="flow-title cross">全媒体商材毎 — モール横断商材別集計</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¡ ãã¼ã¿</div><div class="name">åã¢ã¼ã«å£²ä¸ãã¼ã¿</div><div class="detail">TikTok/æ¥½å¤©/Qoo10/Amazon<br>ã®ç¦nç©æ¸ã¿ãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS② データ</div><div class="name">各モール売上データ</div><div class="detail">TikTok/楽天/Qoo10/Amazon<br>の集計済みデータ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">å¨åªä½åææ¯</div><div class="detail">å¨ã¢ã¼ã«æ¨ªæ­ã§åæå¥ã«ãã¼ã¿éè¨<br>ããªã¬ã¼: æ¯æ¥21:01</div><div class="gs-file">å¨åªä½åææ¯.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">全媒体商材毎</div><div class="detail">全モール横断で商材別にデータ集計<br>トリガー: 毎日21:01</div><div class="gs-file">全媒体商材毎.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ åºå</div><div class="name">åæå¥ã¯ã­ã¹éè¨</div><div class="detail">åæÃã¢ã¼ã«å¥ã®éè¨çµæ</div></div>
+    <div class="step step-ss"><div class="label">SS② 出力</div><div class="name">商材別クロス集計</div><div class="detail">商材×モール別の集計結果</div></div>
   </div>
-  <div class="note-box">å¨ã¢ã¼ã«ï¼TikTok Shop/æ¥½å¤©/Qoo10/Amazonï¼ã®å£²ä¸ãã¼ã¿ãåæåä½ã§æ¨ªæ­éè¨ãæ¯æ©21:01ã«èªåå®è¡ã</div>
+  <div class="note-box">全モール（TikTok Shop/楽天/Qoo10/Amazon）の売上データを商材単位で横断集計。毎晩21:01に自動実行。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title cross">å¨åªä½å¨åº« â ã¢ã¼ã«æ¨ªæ­å¨åº«æ´æ°</div>
+  <div class="flow-title cross">全媒体在庫 — モール横断在庫更新</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¡ ãã¼ã¿</div><div class="name">åã¢ã¼ã«å¨åº«ãã¼ã¿</div><div class="detail">TikTok/æ¥½å¤©/Qoo10/Amazon<br>ã®å¨åº«æå ±</div></div>
+    <div class="step step-ss"><div class="label">SS② データ</div><div class="name">各モール在庫データ</div><div class="detail">TikTok/楽天/Qoo10/Amazon<br>の在庫情報</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">å¨åªä½å¨åº«</div><div class="detail">å¨ã¢ã¼ã«æ¨ªæ­ã§å¨åº«ç¶æ³ãæ´æ°<br>ããªã¬ã¼: æ¯æ¥20:50</div><div class="gs-file">å¨åªä½å¨åº«.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">全媒体在庫</div><div class="detail">全モール横断で在庫状況を更新<br>トリガー: 毎日20:50</div><div class="gs-file">全媒体在庫.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ åºå</div><div class="name">å¨åº«ç¶æ³ã·ã¼ã</div><div class="detail">å¨ã¢ã¼ã«ã®å¨åº«ä¸è¦§æ´æ°</div></div>
+    <div class="step step-ss"><div class="label">SS② 出力</div><div class="name">在庫状況シート</div><div class="detail">全モールの在庫一覧更新</div></div>
   </div>
-  <div class="note-box">å¨ã¢ã¼ã«ã®å¨åº«ãã¼ã¿ãæ¨ªæ­ã§æ´æ°ãæ¯æ©20:50ã«èªåå®è¡ãå¨åªä½åææ¯ï¼21:01ï¼ã®åã«å¨åº«ãã¼ã¿ãææ°åããé åºã</div>
+  <div class="note-box">全モールの在庫データを横断で更新。毎晩20:50に自動実行。全媒体商材毎（21:01）の前に在庫データを最新化する順序。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title tts">TTSç¢ºèªç¨ â TikTok Shopãã¼ã¿æ¤è¨¼</div>
+  <div class="flow-title tts">TTS確認用 — TikTok Shopデータ検証</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¡ ãã¼ã¿</div><div class="name">TTSéè¨ãã¼ã¿</div><div class="detail">TikTok Shopã®å£²ä¸ã»CVç­</div></div>
+    <div class="step step-ss"><div class="label">SS② データ</div><div class="name">TTS集計データ</div><div class="detail">TikTok Shopの売上・CV等</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">TTSç¢ºèªç¨</div><div class="detail">TTSç¢ºèªç¨ã·ã¼ãã®ãã¼ã¿æ´æ°<br>ããªã¬ã¼: 10:43ï¼ä»ã®ã¦ã¼ã¶ã¼ï¼</div><div class="gs-file">TTSç¢ºèªç¨æ´æ°.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">TTS確認用</div><div class="detail">TTS確認用シートのデータ更新<br>トリガー: 10:43（他のユーザー）</div><div class="gs-file">TTS確認用更新.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ åºå</div><div class="name">TTSç¢ºèªç¨ã·ã¼ã</div><div class="detail">ç¢ºèªã»æ¤è¨¼ç¨ãã¼ã¿åæ </div></div>
+    <div class="step step-ss"><div class="label">SS② 出力</div><div class="name">TTS確認用シート</div><div class="detail">確認・検証用データ反映</div></div>
   </div>
-  <div class="note-box">ä»ã®ã¦ã¼ã¶ã¼ï¼æ¡åï¼ããªã¼ãã¼ã®ããªã¬ã¼ãTTSé¢é£ãã¼ã¿ã®æ´åæ§ç¢ºèªã»æ¤è¨¼ç¨éã</div>
+  <div class="note-box">他のユーザー（桑原）がオーナーのトリガー。TTS関連データの整合性確認・検証用途。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title tiktok">TikTok ééãã¼ã¿åè¾¼ã»æ¸è¾¼ã»åºå</div>
+  <div class="flow-title tiktok">TikTok 配送データ取込・書込・出力</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨</div><div class="name">TikTok CSV/XLSX</div><div class="detail">ééãã¼ã¿ãã¡ã¤ã«</div></div>
+    <div class="step step-ext"><div class="label">外部</div><div class="name">TikTok CSV/XLSX</div><div class="detail">配送データファイル</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">ãã¡ã¤ã«æ ¼ç´</div><div class="detail">CSV/XLSXãæ ¼ç´</div></div>
+    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">ファイル格納</div><div class="detail">CSV/XLSXを格納</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Tikâ  åãè¾¼ã¿</div><div class="detail">DriveããSSâ¢ãTikééä¸æãã«åãè¾¼<br>MAX_COLUMNS=55</div><div class="gs-file">Tikâ ãã©ã¤ãããåãè¾¼ã.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Tik① 取り込み</div><div class="detail">DriveからSS③「Tik配送一時」に取込<br>MAX_COLUMNS=55</div><div class="gs-file">Tik①ドライブから取り込む.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Tikâ¡ ééæ¸ãè¾¼ã¿</div><div class="detail">ééãã¼ã¿ãæ´çã»SSâ¢ã«æ¸è¾¼<br>openByIdã§ã¯ã­ã¹SS</div><div class="gs-file">Tikâ¡ééæ¸ãè¾¼ã¿.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Tik② 配送書き込み</div><div class="detail">配送データを整理・SS③に書込<br>openByIdでクロスSS</div><div class="gs-file">Tik②配送書き込み.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">Tikâ¢ æçµæ´å½¢ã»åºå</div><div class="detail">æçµæ´å½¢ã»åºåå¦ç</div><div class="gs-file">Tikâ¢åºå.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">Tik③ 最終整形・出力</div><div class="detail">最終整形・出力処理</div><div class="gs-file">Tik③出力.gs</div></div>
   </div>
-  <div class="note-box">Tikâ ï½â¢.gs ãé çªã«å®è¡ããã©ã³ãã¼ãopenById()ã§SSâ¢ã«æ¸ãè¾¼ãã¯ã­ã¹SSé£æºã</div>
+  <div class="note-box">Tik①～③.gs が順番に実行するランナー。openById()でSS③に書き込むクロスSS連携。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title rakuten">æ¥½å¤© CSVå£²ä¸ãã¼ã¿åè¾¼ã»æ´çã»åºå</div>
+  <div class="flow-title rakuten">楽天 CSV売上データ取込・整理・出力</div>
   <div class="flow-steps">
-    <div class="step step-ext"><div class="label">å¤é¨</div><div class="name">æ¥½å¤© CSV</div><div class="detail">å£²ä¸CSVãã¡ã¤ã«</div></div>
+    <div class="step step-ext"><div class="label">外部</div><div class="name">楽天 CSV</div><div class="detail">売上CSVファイル</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">æå¥ãã©ã«ã</div><div class="detail">è¦ªID: 1d-FSLCon...ããã©ã«ãåã¯A6ã»ã«ãã</div></div>
+    <div class="step step-drive"><div class="label">Google Drive</div><div class="name">月別フォルダ</div><div class="detail">親ID: 1d-FSLCon...、フォルダ名はA6セルから</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">æ¥½å¤©â  åãè¾¼ã¿</div><div class="detail">CSVããæ¥½å¤©CSVä¸æããæ¥½å¤©åºåä¸æãã«åè¾¼</div><div class="gs-file">æ¥½å¤©â ãã©ã¤ãããåãè¾¼ã.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">楽天① 取り込み</div><div class="detail">CSVを「楽天CSV一時」「楽天広告一時」に取込</div><div class="gs-file">楽天①ドライブから取り込む.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">æ¥½å¤©â¡ CSVæ´çã»åºå</div><div class="detail">ãã¼ã¿æ´çã»éè¨åºå</div><div class="gs-file">æ¥½å¤©â¡CSVæ´çã¨åºå.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">楽天② CSV整理・出力</div><div class="detail">データ整理・集計出力</div><div class="gs-file">楽天②CSV整理と出力.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">SSâ¡ ã¢ã¼ã«CVç®¡çåãã¼ã¿</div><div class="detail">æ¥½å¤©å£²ä¸éè¨</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">SS② モールCV管理元データ</div><div class="detail">楽天売上集計</div></div>
   </div>
-  <div class="note-box">æ¥½å¤©â â¡.gs ãâ â¡ãé çªã«å®è¡ããã©ã³ãã¼</div>
+  <div class="note-box">楽天①②.gs が①②を順番に実行するランナー</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title varis">Varis ãã¼ã¿æ´çã»éè¨è¡¨åºå</div>
+  <div class="flow-title varis">Varis データ整理・集計表出力</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¡ ã·ã¼ã</div><div class="name">varisãã¼ã¿</div><div class="detail">varisã®åãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS② シート</div><div class="name">varisデータ</div><div class="detail">varisの元データ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">varisæ´ç</div><div class="detail">å£²ä¸ç®¡çã·ã¹ãã ãååè¾æ¸ã¨ãã¦åå¯ãã»æ´ç</div><div class="gs-file">varisæ´ç.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">varis整理</div><div class="detail">売上管理システムを商品辞書として名寄せ・整理</div><div class="gs-file">varis整理.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">SSâ¡ ã·ã¼ã</div><div class="name">varisæ´ç</div><div class="detail">æ´çæ¸ã¿ãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS② シート</div><div class="name">varis整理</div><div class="detail">整理済みデータ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">variséè¨è¡¨åºå</div><div class="detail">éè¨ãã¼ãã«çæ</div><div class="gs-file">variséè¨è¡¨åºå.gs</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">varis集計表出力</div><div class="detail">集計テーブル生成</div><div class="gs-file">varis集計表出力.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-ss"><div class="label">åºå</div><div class="name">éè¨è¡¨</div><div class="detail">åååÃåè¨æ³¨ææ°</div></div>
+    <div class="step step-ss"><div class="label">出力</div><div class="name">集計表</div><div class="detail">商品名×合計注文数</div></div>
   </div>
-  <div class="note-box">variså¨é¨.gs ãvarisç³»å¦çãä¸æ¬å®è¡ããã©ã³ãã¼ã</div>
+  <div class="note-box">varis全部.gs がvaris系処理を一括実行するランナー。</div>
 </div>
 <div class="flow-section">
-  <div class="flow-title partner">ãã¼ããã¼å¥ãã¼ã¿åºå</div>
+  <div class="flow-title partner">パートナー別データ出力</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¡ ãã¼ã¿</div><div class="name">ã¢ã¼ã«CVç®¡çåãã¼ã¿</div><div class="detail">æ¥½å¤©ã»TikTokç­ã®éè¨æ¸ã¿ãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS② データ</div><div class="name">モールCV管理元データ</div><div class="detail">楽天・TikTok等の集計済みデータ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¡</div><div class="name">ãã¼ããã¼åºåå¦ç</div><div class="detail">åãã¼ããã¼åãã«ãã¼ã¿æ½åºã»æ´å½¢</div></div>
+    <div class="step step-gas"><div class="label">GAS②</div><div class="name">パートナー出力処理</div><div class="detail">各パートナー向けにデータ抽出・整形</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">Senjinæ§ï¼ã­ã©ãã¹ï¼</div><div class="gs-file">Ssenjinæ§åºå_ã­ã©ãã¹.gs</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">Senjinæ§ï¼ã©ãã·ã¥ãã©ã«ãï¼</div><div class="gs-file">Ssenjinæ§åºå_ã©ãã·ã¥ãã©ã«ã.gs</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">ãµã«ãã</div><div class="gs-file">ãµã«ããåºå.gs</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">åºå</div><div class="name">Senjin æ¥½å¤©</div><div class="gs-file">Senjin_æ¥½å¤©.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin様（キラトス）</div><div class="gs-file">Ssenjin様出力_キラトス.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin様（ラッシュフォルテ）</div><div class="gs-file">Ssenjin様出力_ラッシュフォルテ.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">サルさん</div><div class="gs-file">サルさん出力.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin 楽天</div><div class="gs-file">Senjin_楽天.gs</div></div></div>
     </div>
   </div>
 </div>
-<div class="section-divider gas3">GASâ¢ æ¥½å¤©Qoo10CVç®¡ç é¢é£ãã­ã¼</div>
-<div class="note-box"><strong style="color:#34d399;">GASâ¢ ããªã¬ã¼æå ±:</strong> 1ä»¶ â variséè¨è¡¨åºåï¼ä»ã®ã¦ã¼ã¶ã¼ãæéãã¼ã¹ãæçµå®è¡: 10:05:42ï¼</div>
+<div class="section-divider gas3">GAS③ 楽天Qoo10CV管理 関連フロー</div>
+<div class="note-box"><strong style="color:#34d399;">GAS③ トリガー情報:</strong> 1件 — varis集計表出力（他のユーザー、時間ベース、最終実行: 10:05:42）</div>
 <div class="flow-section">
-  <div class="flow-title varis">Varis â CVç®¡çã·ã¼ãåæ ï¼GASâ¡âGASâ¢é£æºï¼</div>
+  <div class="flow-title varis">Varis → CV管理シート反映（GAS②→GAS③連携）</div>
   <div class="flow-steps">
-    <div class="step step-ss"><div class="label">SSâ¢ ã·ã¼ã</div><div class="name">varisæ´çã¿ã</div><div class="detail">GASâ¡ãæ´çããvarisãã¼ã¿</div></div>
+    <div class="step step-ss"><div class="label">SS③ シート</div><div class="name">varis整理タブ</div><div class="detail">GAS②が整理したvarisデータ</div></div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step step-gas"><div class="label">GASâ¢</div><div class="name">variséè¨è¡¨åºå</div><div class="detail">åååÃåè¨æ³¨ææ°ãéè¨ãæ¥ä»è¡ããã</div><div class="gs-file">Varisåæ .gs</div></div>
+    <div class="step step-gas"><div class="label">GAS③</div><div class="name">varis集計表出力</div><div class="detail">商品名×合計注文数を集計、日付行マッチ</div><div class="gs-file">Varis反映.gs</div></div>
     <div class="connector"><div class="bar"></div></div>
     <div class="branch-container">
-      <div class="branch-row"><div class="step step-ss"><div class="label">SSâ¢ åºå</div><div class="name">Qoo10 CVã·ã¼ã</div><div class="detail">Qoo10ã®CVè¡ã«æ¸è¾¼</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">SSâ¢ åºå</div><div class="name">æ¥½å¤© CVã·ã¼ã</div><div class="detail">æ¥½å¤©ã®CVè¡ã«æ¸è¾¼</div></div></div>
-      <div class="branch-row"><div class="step step-ss"><div class="label">SSâ¢ åºå</div><div class="name">TTS CVã·ã¼ã</div><div class="detail">TTSã®CVè¡ã«æ¸è¾¼</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">SS③ 出力</div><div class="name">Qoo10 CVシート</div><div class="detail">Qoo10のCV行に書込</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">SS③ 出力</div><div class="name">楽天 CVシート</div><div class="detail">楽天のCV行に書込</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">SS③ 出力</div><div class="name">TTS CVシート</div><div class="detail">TTSのCV行に書込</div></div></div>
     </div>
   </div>
-  <div class="note-box">GASâ¡ã®variså¦ççµæããGASâ¢ãæçµçã«CVç®¡çã·ã¼ãã«åæ ãããåºå£ãã®å½¹å²ã</div>
+  <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。</div>
 </div>
 <div class="reference-section">
-  <h2>ãªãã¡ã¬ã³ã¹</h2>
+  <h2>リファレンス</h2>
   <div class="reference-subsection">
-    <h3>Drive ãã©ã«ãIDä¸è¦§</h3>
+    <h3>Drive フォルダID一覧</h3>
     <table>
-      <thead><tr><th>ç¨é</th><th>ãã©ã«ãID</th></tr></thead>
+      <thead><tr><th>用途</th><th>フォルダID</th></tr></thead>
       <tbody>
-        <tr><td>TTS Excelãã¡ã¤ã«æ ¼ç´</td><td>1Jps4g82ebKpq2IzZiE7mKb3J8rtNF3Qs</td></tr>
-        <tr><td>TTSè«æ±ãã¼ã¿</td><td>1nsxcKhQ8rmUvEpxoAYkPrhKzbzHZLrII</td></tr>
-        <tr><td>Qoo10è«æ±ãã¼ã¿</td><td>1BEEuWg9GEQpuQI6JDYlNdHsZ_xXhkROS</td></tr>
-        <tr><td>æ¥½å¤©CSVè¦ªãã©ã«ã</td><td>1d-FSLCon-HocG6zVaRPuIW3dPdASawEk</td></tr>
+        <tr><td>TTS Excelファイル格納</td><td>1Jps4g82ebKpq2IzZiE7mKb3J8rtNF3Qs</td></tr>
+        <tr><td>TTS請求データ</td><td>1nsxcKhQ8rmUvEpxoAYkPrhKzbzHZLrII</td></tr>
+        <tr><td>Qoo10請求データ</td><td>1BEEuWg9GEQpuQI6JDYlNdHsZ_xXhkROS</td></tr>
+        <tr><td>楽天CSV親フォルダ</td><td>1d-FSLCon-HocG6zVaRPuIW3dPdASawEk</td></tr>
       </tbody>
     </table>
   </div>
   <div class="reference-subsection">
-    <h3>GASâ¡ éã¢ã¯ãã£ããã¡ã¤ã«ä¸è¦§ï¼deprecatedï¼</h3>
-    <div class="reference-note">ã­ã¥â ï½â¢.gs, Qoo10ç¢ºèªç¨æ´æ°.gs, Amazonâ ï½â¡.gs, LPvarisæ´ç.gs</div>
+    <h3>GAS② 非アクティブファイル一覧（deprecated）</h3>
+    <div class="reference-note">キュ①～③.gs, Qoo10確認用更新.gs, Amazon①～②.gs, LPvaris整理.gs</div>
   </div>
   <div class="reference-subsection">
-    <h3>å¤é¨ã¹ãã¬ããã·ã¼ãID</h3>
+    <h3>外部スプレッドシートID</h3>
     <table>
-      <thead><tr><th>ç¨é</th><th>ID</th></tr></thead>
+      <thead><tr><th>用途</th><th>ID</th></tr></thead>
       <tbody>
         <tr><td>Amazon SS</td><td>15rnXL2w0elqcZKTnEv-VFxJPFiaIjMTE4cwlAYcabMg</td></tr>
-        <tr><td>æ¥½å¤© SS</td><td>1kp46nW3sCR6RZMev-XXzTnQV3_84b8j6UeTNG_P9WQs</td></tr>
+        <tr><td>楽天 SS</td><td>1kp46nW3sCR6RZMev-XXzTnQV3_84b8j6UeTNG_P9WQs</td></tr>
       </tbody>
     </table>
   </div>
 </div>
-<div class="footer">GAS ã·ã¹ãã ç¸é¢å³ â æçµæ´æ°: 2026/04/09 | GASâ â¡â¢ã®å¨ã³ã¼ãã¯gas-directorã¹ã­ã«ã§ç®¡ç</div>
+<div class="footer">GAS システム相関図 — 最終更新: 2026/04/09 | GAS①②③の全コードはgas-directorスキルで管理</div>
 </body>
 </html>
