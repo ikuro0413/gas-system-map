@@ -3,513 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GASシステム全体相関図</title>
+<title>GAS System Map</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
-h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
-.subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
-.container { max-width: 1400px; margin: 0 auto; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Hiragino Sans',sans-serif;background:#0a0e1a;color:#e2e8f0;overflow-x:hidden}
+.hero{text-align:center;padding:32px 20px 16px}
+.hero h1{font-size:24px;font-weight:800;background:linear-gradient(90deg,#60a5fa,#34d399,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px}
+.hero p{font-size:13px;color:#64748b;margin-top:6px}
 
-/* --- レイヤー --- */
-.layer { margin-bottom: 16px; border-radius: 12px; padding: 16px; }
-.layer-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px; }
+/* === SVG Diagram === */
+.diagram-wrap{display:flex;justify-content:center;padding:0 20px;margin-bottom:12px}
+svg.main-diagram{max-width:900px;width:100%}
+.node-group{cursor:pointer}
+.node-group:hover .node-bg{filter:brightness(1.3)}
+.node-label{font-weight:700;fill:#f1f5f9;font-size:13px;pointer-events:none}
+.node-sub{fill:#94a3b8;font-size:9.5px;pointer-events:none}
+.node-icon{font-size:22px;pointer-events:none}
+@keyframes flowDot{0%{offset-distance:0%}100%{offset-distance:100%}}
+.flow-dot{width:6px;height:6px;border-radius:50%;position:absolute;offset-rotate:0deg;animation:flowDot 3s linear infinite}
 
-.layer-external { background: rgba(100,116,139,0.15); border: 1px solid #475569; }
-.layer-external .layer-title { color: #94a3b8; }
+/* animated dash for SVG */
+@keyframes dash{to{stroke-dashoffset:-20}}
+.anim-line{stroke-dasharray:8 6;animation:dash 1s linear infinite}
 
-.layer-gas1 { background: rgba(59,130,246,0.08); border: 1px solid #1e40af; }
-.layer-gas1 .layer-title { color: #60a5fa; }
+/* === Legend === */
+.legend-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;padding:8px 20px;font-size:11px;color:#94a3b8;margin-bottom:8px}
+.legend-bar span{display:flex;align-items:center;gap:5px}
+.ldot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 
-.layer-gas2 { background: rgba(16,185,129,0.08); border: 1px solid #065f46; }
-.layer-gas2 .layer-title { color: #34d399; }
+/* === Section Cards === */
+.container{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+.section{margin-bottom:20px}
+.section-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:12px 12px 0 0;cursor:pointer;user-select:none;transition:background .2s}
+.section-head:hover{filter:brightness(1.15)}
+.section-head .icon{font-size:28px;line-height:1}
+.section-head .info{flex:1}
+.section-head .info h2{font-size:15px;font-weight:700}
+.section-head .info p{font-size:11px;opacity:.7;margin-top:2px}
+.section-head .chevron{font-size:18px;transition:transform .3s;color:#94a3b8}
+.section-head.open .chevron{transform:rotate(180deg)}
+.section-body{border-radius:0 0 12px 12px;padding:0;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+.section-body.open{max-height:3000px;padding:16px}
 
-.layer-gas3 { background: rgba(168,85,247,0.08); border: 1px solid #581c87; }
-.layer-gas3 .layer-title { color: #a78bfa; }
+/* SS Layers */
+.ss1 .section-head{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05))}
+.ss1 .section-head h2{color:#60a5fa}
+.ss1 .section-body{background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.15);border-top:0}
+.ss2 .section-head{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.05))}
+.ss2 .section-head h2{color:#34d399}
+.ss2 .section-body{background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.15);border-top:0}
+.ss3 .section-head{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(139,92,246,.05))}
+.ss3 .section-head h2{color:#a78bfa}
+.ss3 .section-body{background:rgba(139,92,246,.04);border:1px solid rgba(139,92,246,.15);border-top:0}
 
-/* --- スプシカード --- */
-.ss-card { background: rgba(30,41,59,0.9); border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #334155; }
-.ss-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.ss-name { font-weight: 700; font-size: 14px; }
-.ss-id { font-size: 10px; color: #64748b; font-family: monospace; }
-.ss-link { font-size: 11px; color: #38bdf8; text-decoration: none; }
-.ss-link:hover { text-decoration: underline; }
+/* Tab chips */
+.tabs{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}
+.chip{font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid rgba(255,255,255,.1)}
+.chip.t1{background:#1e3a5f;color:#93c5fd;border-color:#2563eb}
+.chip.t2{background:#1a2e1a;color:#86efac;border-color:#166534}
+.chip.t3{background:#2d1b4e;color:#c4b5fd;border-color:#6d28d9}
+.chip.tc{background:#3b2a1a;color:#fbbf24;border-color:#92400e}
+.chip.to{background:#1e293b;color:#94a3b8;border-color:#334155}
+.chip.th{opacity:.4}
+.gas-files{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.gf{font-size:10px;padding:2px 7px;border-radius:3px;background:#1e293b;color:#cbd5e1;border:1px solid #334155}
+.gf.m{border-color:#f59e0b;color:#fbbf24}
 
-/* --- タブグリッド --- */
-.tab-grid { display: flex; flex-wrap: wrap; gap: 5px; }
-.tab-chip { font-size: 11px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; border: 1px solid transparent; }
-.tab-chip.gas-target { background: #1e3a5f; color: #93c5fd; border-color: #2563eb; font-weight: 600; }
-.tab-chip.data { background: #1a2e1a; color: #86efac; border-color: #166534; }
-.tab-chip.output { background: #2d1b4e; color: #c4b5fd; border-color: #6d28d9; }
-.tab-chip.config { background: #3b2a1a; color: #fbbf24; border-color: #92400e; }
-.tab-chip.other { background: #1e293b; color: #94a3b8; border-color: #334155; }
-.tab-chip.hidden { opacity: 0.45; }
+/* Flow Diagram */
+.flow-card{background:rgba(15,23,42,.5);border:1px solid #1e293b;border-radius:10px;padding:14px;margin-bottom:12px}
+.flow-card h3{font-size:13px;font-weight:700;color:#f59e0b;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.flow-card h3 .num{background:#f59e0b;color:#0a0e1a;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.pipe{display:flex;align-items:center;gap:0;margin:6px 0;flex-wrap:wrap}
+.pipe .box{font-size:10px;padding:5px 10px;border-radius:6px;white-space:nowrap;font-weight:600;position:relative}
+.pipe .arr{color:#f59e0b;font-size:16px;margin:0 4px;flex-shrink:0}
+.pipe .fn{font-size:9px;color:#94a3b8;font-family:monospace;margin-left:4px}
+.b-ext{background:#374151;color:#d1d5db}
+.b-s1{background:#1e3a5f;color:#93c5fd}
+.b-s2{background:#164e3a;color:#6ee7b7}
+.b-s3{background:#2d1b4e;color:#c4b5fd}
+.b-s3h{background:#2d1b4e;color:#c4b5fd;border:2px solid #a78bfa}
+.note{font-size:10px;color:#64748b;margin-top:4px;padding-left:4px}
 
-/* --- GASファイルカード --- */
-.gas-card { background: rgba(15,23,42,0.8); border-radius: 8px; padding: 12px; margin-top: 10px; border: 1px dashed #475569; }
-.gas-header { font-size: 13px; font-weight: 700; color: #f59e0b; margin-bottom: 6px; }
-.gas-files { display: flex; flex-wrap: wrap; gap: 4px; }
-.gas-file { font-size: 10px; padding: 2px 6px; border-radius: 3px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; }
-.gas-file.main { border-color: #f59e0b; color: #fbbf24; }
+/* Cross-SS highlight */
+.cross-flow{border-left:3px solid #f59e0b;padding-left:12px;margin:10px 0}
+.cross-label{font-size:10px;color:#f59e0b;font-weight:700;margin-bottom:6px;letter-spacing:.5px}
 
-/* --- フロー矢印 --- */
-.flow-section { margin: 12px 0; padding: 12px; background: rgba(15,23,42,0.6); border-radius: 8px; border: 1px solid #1e293b; }
-.flow-title { font-size: 13px; font-weight: 700; color: #f59e0b; margin-bottom: 8px; }
-.flow-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; font-size: 12px; }
-.flow-box { padding: 3px 8px; border-radius: 4px; font-size: 11px; white-space: nowrap; }
-.flow-ext { background: #374151; color: #d1d5db; }
-.flow-g1 { background: #1e3a5f; color: #93c5fd; }
-.flow-g2 { background: #1a2e1a; color: #86efac; }
-.flow-g3 { background: #2d1b4e; color: #c4b5fd; }
-.flow-arrow { color: #f59e0b; font-weight: bold; font-size: 14px; }
-.flow-func { font-size: 10px; color: #94a3b8; font-family: monospace; }
+/* Dep order */
+.dep-card{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:14px;margin-top:16px}
+.dep-card h3{font-size:13px;font-weight:700;color:#f87171;margin-bottom:10px}
+.dep-row{font-size:12px;margin:4px 0;line-height:1.8}
+.dep-row strong{font-weight:700}
 
-/* --- 凡例 --- */
-.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; justify-content: center; }
-.legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+/* Footer */
+.footer{text-align:center;font-size:10px;color:#334155;padding:20px;border-top:1px solid #1e293b;margin-top:20px}
 
-/* --- セクション --- */
-.section-title { font-size: 16px; font-weight: 700; color: #f1f5f9; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #334155; }
-
-.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 900px) { .cols-2 { grid-template-columns: 1fr; } }
+/* SS info line */
+.ss-info{display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;flex-wrap:wrap}
+.ss-info .name{font-weight:700;font-size:13px}
+.ss-info .sid{font-size:9px;color:#64748b;font-family:monospace}
+.ss-info a{font-size:11px;color:#38bdf8;text-decoration:none}
+.ss-info a:hover{text-decoration:underline}
+.gas-label{font-size:12px;font-weight:700;color:#f59e0b;margin-top:12px;margin-bottom:4px}
 </style>
 </head>
 <body>
+
+<div class="hero">
+  <h1>GAS x Spreadsheet x Tab</h1>
+  <p>3 GAS Projects / 3 Spreadsheets / External Data Sources</p>
+</div>
+
+<!-- ===== Main SVG Diagram ===== -->
+<div class="diagram-wrap">
+<svg class="main-diagram" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow1"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#3b82f6" flood-opacity=".4"/></filter>
+    <filter id="glow2"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#10b981" flood-opacity=".4"/></filter>
+    <filter id="glow3"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8b5cf6" flood-opacity=".4"/></filter>
+    <filter id="glowExt"><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f59e0b" flood-opacity=".3"/></filter>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="#34d399" fill="#34d399" d="M0,0 L8,3 L0,6 Z"/></marker>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="#a78bfa" fill="#a78bfa" d="M0,0 L8,3 L0,6 Z"/></marker>
+    <marker id="arrowO" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path fill="#f59e0b" d="M0,0 L8,3 L0,6 Z"/></marker>
+    <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path fill="#60a5fa" d="M0,0 L8,3 L0,6 Z"/></marker>
+  </defs>
+
+  <!-- Background grid -->
+  <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,.02)" stroke-width="1"/>
+  </pattern>
+  <rect width="900" height="420" fill="url(#grid)"/>
+
+  <!-- External Sources (top) -->
+  <g filter="url(#glowExt)">
+    <rect x="60" y="16" width="140" height="48" rx="24" fill="rgba(245,158,11,.1)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="130" y="36" text-anchor="middle" fill="#fbbf24" font-size="16">📡</text>
+    <text x="130" y="52" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Apify (TikTok)</text>
+  </g>
+  <g filter="url(#glowExt)">
+    <rect x="380" y="8" width="140" height="48" rx="24" fill="rgba(245,158,11,.1)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="450" y="28" text-anchor="middle" fill="#fbbf24" font-size="16">📁</text>
+    <text x="450" y="44" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Google Drive</text>
+  </g>
+  <g filter="url(#glowExt)">
+    <rect x="700" y="16" width="140" height="48" rx="24" fill="rgba(245,158,11,.1)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="770" y="36" text-anchor="middle" fill="#fbbf24" font-size="16">📊</text>
+    <text x="770" y="52" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">CSV / Excel</text>
+  </g>
+
+  <!-- Animated flow lines: External → SSes -->
+  <line x1="130" y1="64" x2="320" y2="155" class="anim-line" stroke="#f59e0b" stroke-width="1.5" opacity=".5"/>
+  <line x1="450" y1="56" x2="450" y2="145" class="anim-line" stroke="#f59e0b" stroke-width="1.5" opacity=".5"/>
+  <line x1="770" y1="64" x2="650" y2="155" class="anim-line" stroke="#f59e0b" stroke-width="1.5" opacity=".5"/>
+
+  <!-- ===== SS① (Center-Left) ===== -->
+  <g class="node-group" onclick="toggleSection('s1')">
+    <rect class="node-bg" x="200" y="130" width="260" height="110" rx="16" fill="rgba(59,130,246,.12)" stroke="#3b82f6" stroke-width="2" filter="url(#glow1)"/>
+    <text x="230" y="160" class="node-icon">🔵</text>
+    <text x="256" y="162" class="node-label" font-size="14">SS① Tik管理シート</text>
+    <text x="230" y="180" class="node-sub">GAS① — Rhino runtime / 10ファイル</text>
+    <text x="230" y="196" class="node-sub">TikTok集計 / TTS / Instagram / AMZ・楽天同期</text>
+    <text x="230" y="214" fill="#3b82f6" font-size="9" font-weight="600">▶ クリックで詳細</text>
+  </g>
+
+  <!-- ===== SS② (Right-Top) ===== -->
+  <g class="node-group" onclick="toggleSection('s2')">
+    <rect class="node-bg" x="540" y="130" width="280" height="110" rx="16" fill="rgba(16,185,129,.12)" stroke="#10b981" stroke-width="2" filter="url(#glow2)"/>
+    <text x="570" y="160" class="node-icon">🟢</text>
+    <text x="596" y="162" class="node-label" font-size="14">SS② モールCV管理元データ</text>
+    <text x="570" y="180" class="node-sub">GAS② — 24ファイル (メインエンジン)</text>
+    <text x="570" y="196" class="node-sub">CSV取込 / 楽天整理 / Tik配送 / varis処理</text>
+    <text x="570" y="214" fill="#10b981" font-size="9" font-weight="600">▶ クリックで詳細</text>
+  </g>
+
+  <!-- ===== SS③ (Bottom-Center) ===== -->
+  <g class="node-group" onclick="toggleSection('s3')">
+    <rect class="node-bg" x="320" y="290" width="260" height="110" rx="16" fill="rgba(139,92,246,.12)" stroke="#8b5cf6" stroke-width="2" filter="url(#glow3)"/>
+    <text x="350" y="320" class="node-icon">🟣</text>
+    <text x="376" y="322" class="node-label" font-size="14">SS③ 楽天Qoo10CV管理</text>
+    <text x="350" y="340" class="node-sub">GAS③ — 1ファイル (Varis反映.gs)</text>
+    <text x="350" y="356" class="node-sub">varis集計→CVシート反映 / 楽天CSV格納</text>
+    <text x="350" y="374" fill="#8b5cf6" font-size="9" font-weight="600">▶ クリックで詳細</text>
+  </g>
+
+  <!-- ===== Connection Lines between SSes ===== -->
+  <!-- SS② → SS① (Amazon daily sync) -->
+  <path d="M540,195 Q480,180 460,195" fill="none" stroke="#34d399" stroke-width="2.5" class="anim-line" marker-end="url(#arrowB)"/>
+  <rect x="460" y="170" width="90" height="18" rx="9" fill="rgba(16,185,129,.2)" stroke="#34d399" stroke-width="1"/>
+  <text x="505" y="183" text-anchor="middle" fill="#34d399" font-size="8" font-weight="700">AMZデイリー同期</text>
+
+  <!-- SS③ → SS① (Rakuten daily sync) -->
+  <path d="M370,290 Q310,260 330,240" fill="none" stroke="#a78bfa" stroke-width="2.5" class="anim-line" marker-end="url(#arrowB)"/>
+  <rect x="280" y="254" width="82" height="18" rx="9" fill="rgba(139,92,246,.2)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="321" y="267" text-anchor="middle" fill="#a78bfa" font-size="8" font-weight="700">楽天デイリー同期</text>
+
+  <!-- SS② → SS③ (varis pipeline) -->
+  <path d="M680,240 Q660,310 580,330" fill="none" stroke="#f59e0b" stroke-width="2.5" class="anim-line" marker-end="url(#arrowP)"/>
+  <rect x="620" y="268" width="80" height="18" rx="9" fill="rgba(245,158,11,.15)" stroke="#f59e0b" stroke-width="1"/>
+  <text x="660" y="281" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="700">varis連携</text>
+
+  <!-- SS② ↔ SS③ (Tik delivery / Rakuten CSV) -->
+  <path d="M620,240 Q580,290 540,305" fill="none" stroke="#94a3b8" stroke-width="1.5" class="anim-line" opacity=".5"/>
+  <text x="595" y="265" fill="#94a3b8" font-size="7">配送/楽天CSV</text>
+
+  <!-- Small animated circles on paths -->
+  <circle r="3" fill="#34d399" opacity=".8"><animateMotion dur="2.5s" repeatCount="indefinite" path="M540,195 Q480,180 460,195"/></circle>
+  <circle r="3" fill="#a78bfa" opacity=".8"><animateMotion dur="3s" repeatCount="indefinite" path="M370,290 Q310,260 330,240"/></circle>
+  <circle r="3" fill="#f59e0b" opacity=".8"><animateMotion dur="2.8s" repeatCount="indefinite" path="M680,240 Q660,310 580,330"/></circle>
+
+  <!-- GAS gear icons -->
+  <text x="420" y="226" font-size="14" fill="#60a5fa" opacity=".6">GAS①</text>
+  <text x="760" y="226" font-size="14" fill="#34d399" opacity=".6">GAS②</text>
+  <text x="540" y="388" font-size="14" fill="#a78bfa" opacity=".6">GAS③</text>
+
+  <!-- Small label: data direction summary -->
+  <text x="450" y="415" text-anchor="middle" fill="#475569" font-size="9">SS間のデータフローは自動GASで日次同期 — 矢印の方向にデータが流れる</text>
+</svg>
+</div>
+
+<!-- Legend -->
+<div class="legend-bar">
+  <span><span class="ldot" style="background:#3b82f6"></span> SS① / GAS①</span>
+  <span><span class="ldot" style="background:#10b981"></span> SS② / GAS②</span>
+  <span><span class="ldot" style="background:#8b5cf6"></span> SS③ / GAS③</span>
+  <span><span class="ldot" style="background:#f59e0b"></span> 外部ソース</span>
+  <span><span class="ldot" style="background:#ef4444"></span> クロスSS連携</span>
+</div>
+
 <div class="container">
-<h1>GAS × スプレッドシート × タブ 相関マップ</h1>
-<p class="subtitle">3つのGASプロジェクトが3つのスプレッドシートと外部データソースを繋ぐパイプライン全体像</p>
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> GAS処理対象タブ</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#166534"></div> データ入出力タブ</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div> 出力・集計タブ</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div> 設定・マスタタブ</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#334155"></div> 手動運用タブ</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#334155;opacity:0.4"></div> 非表示/旧タブ</div>
-</div>
-
-<!-- ===== 外部データソース ===== -->
-<div class="layer layer-external">
-  <div class="layer-title">📡 外部データソース</div>
-  <div class="cols-2">
-    <div class="ss-card">
-      <div class="ss-header"><span class="ss-name">Apify（TikTok動画スクレイピング）</span></div>
-      <div style="font-size:11px;color:#94a3b8">TikTok動画メタデータ（再生数・いいね・コメント等）を自動収集 → GAS①の「成果物一時」へ</div>
+<!-- ===== SS① Detail ===== -->
+<div class="section ss1" id="s1">
+  <div class="section-head" onclick="toggleSection('s1')">
+    <div class="icon">🔵</div>
+    <div class="info">
+      <h2>SS① Tik管理シート — GAS① (Rhino)</h2>
+      <p>TikTok・TTS・Instagram集計 / Amazon・楽天デイリー同期 / 支払い管理</p>
     </div>
-    <div class="ss-card">
-      <div class="ss-header"><span class="ss-name">Google Drive フォルダ群</span></div>
-      <div style="font-size:11px;color:#94a3b8">
-        TTS Excel → <code style="color:#fbbf24">1Jps4g...</code> ｜ TTS請求 → <code style="color:#fbbf24">1nsxcK...</code><br>
-        Qoo10請求 → <code style="color:#fbbf24">1BEEuW...</code> ｜ 楽天CSV → <code style="color:#fbbf24">1d-FSL...</code>
-      </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body" id="s1-body">
+    <div class="ss-info">
+      <span class="name">Tiktok管理シート</span>
+      <span class="sid">1Qulrn5kLK-kUr2l...</span>
+      <a href="https://docs.google.com/spreadsheets/d/1Qulrn5kLK-kUr2ltwykRrQ6RyI7mZqrkrAbVkCyJVVw/" target="_blank">開く↗</a>
     </div>
-    <div class="ss-card">
-      <div class="ss-header"><span class="ss-name">SS間連携（Amazon/楽天デイリー同期）</span></div>
-      <div style="font-size:11px;color:#94a3b8">
-        SS② Amazonタブ → GAS①シート更新Amazon.gs → SS① AMZデイリー<br>
-        SS③ 楽天タブ → GAS①シート更新楽天.gs → SS① 楽天デイリー<br>
-        <span style="color:#fbbf24">※ SS②・SS③のタブにはGAS②がCSV/Excelから自動集計した結果が格納される</span>
-      </div>
+    <div class="tabs">
+      <span class="chip t1">商材別日次集計</span><span class="chip t1">AMZデイリー</span><span class="chip t1">楽天デイリー</span><span class="chip t1">TTSデイリー</span><span class="chip t1">Q10デイリー</span><span class="chip t2">全媒体在庫</span><span class="chip t1">代理店稼働状況</span><span class="chip t1">代理店アカ管理</span><span class="chip t1">支払い管理</span><span class="chip t2">在庫管理</span><span class="chip to">モール利益鸈算</span><span class="chip tc">GAS更新ログ</span><span class="chip t3">TTS集計</span><span class="chip to">運用中</span><span class="chip to">TTリサーチ</span><span class="chip t2">在庫予測シート</span><span class="chip t3">キラトスモール合算</span><span class="chip t3">再生数集計Tik</span><span class="chip t3">再生数集計insta</span><span class="chip t1">再生数一時</span><span class="chip to th">モール跳ね返り</span><span class="chip to">永野さんメモ</span><span class="chip to th">SEO記事</span><span class="chip to">使用コード</span><span class="chip to th">(旧)モール利益計算</span><span class="chip to">Gアカ</span><span class="chip to">案件情報</span><span class="chip to">Tセール期限一覧</span><span class="chip to">セール情堰(改</span><span class="chip to">AMZ改善項目</span><span class="chip to th">サルモール集計用01/14</span><span class="chip to th">自社成果物過去</span>
+    </div>
+    <div class="gas-label">📜 GASプロジェクト（Rhino runtime）<a href="https://script.google.com/home/projects/1GnxjfYEhZZt2ey8GX6rybtOWHuKpra2--vMWNlpzuYNs9D5gsshWU7Xj/edit" target="_blank" style="color:#38bdf8;font-size:10px;margin-left:8px">エディタ↗</a></div>
+    <div class="gas-files">
+      <span class="gf m">成果物一時から出力APIFY.gs</span><span class="gf m">担当者毎に集計APIFY.gs</span><span class="gf m">シート更新Amazon.gs</span><span class="gf m">シート更新楽天.gs</span><span class="gf">メディアのキラトス投稿.gs</span><span class="gf m">集計整理2026Tik.gs</span><span class="gf m">集計整理2026インスタ.gs</span><span class="gf m">TTS集計.gs（289行）</span><span class="gf m">TTS代理店集計.gs</span><span class="gf m">TTS請求集計.gs</span>
     </div>
   </div>
 </div>
 
-<!-- ===== GAS① ===== -->
-<div class="layer layer-gas1">
-  <div class="layer-title">🔵 GAS① — Tik管理シート（TikTok・TTS・Instagram集計、Amazon/楽天同期）</div>
-  <div class="ss-card">
-    <div class="ss-header">
-      <span class="ss-name">Tiktok管理シート</span>
-      <span class="ss-id">1Qulrn5kLK-kUr2ltwykRrQ6RyI7mZqrkrAbVkCyJVVw</span>
-      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/1Qulrn5kLK-kUr2ltwykRrQ6RyI7mZqrkrAbVkCyJVVw/" target="_blank">開く↗</a>
+<!-- ===== SS② Detail ===== -->
+<div class="section ss2" id="s2">
+  <div class="section-head" onclick="toggleSection('s2')">
+    <div class="icon">🟢</div>
+    <div class="info">
+      <h2>SS② 新モールCV管理元データAmazon — GAS② (24ファイル)</h2>
+      <p>CSV取込・楽天整理・TikTok配送・varis処理・パートナー出力</p>
     </div>
-    <div class="tab-grid">
-      <span class="tab-chip config">商材別日次集計</span>
-      <span class="tab-chip gas-target">AMZデイリー</span>
-      <span class="tab-chip gas-target">楽天デイリー</span>
-      <span class="tab-chip gas-target">TTSデイリー</span>
-      <span class="tab-chip gas-target">Q10デイリー</span>
-      <span class="tab-chip data">全媒体在庫</span>
-      <span class="tab-chip gas-target">代理店稼働状況</span>
-      <span class="tab-chip gas-target">代理店アカ管理</span>
-      <span class="tab-chip gas-target">支払い管理</span>
-      <span class="tab-chip data">在庫管理</span>
-      <span class="tab-chip other">モール利益計算</span>
-      <span class="tab-chip config" style="border-color:#dc2626;color:#fca5a5">GAS更新ログ</span>
-      <span class="tab-chip output">TTS集計</span>
-      <span class="tab-chip other">運用中</span>
-      <span class="tab-chip other">TTリサーチ</span>
-      <span class="tab-chip data">在庫予測シート</span>
-      <span class="tab-chip output">キラトスモール合算</span>
-      <span class="tab-chip output">再生数集計Tik</span>
-      <span class="tab-chip output">再生数集計insta</span>
-      <span class="tab-chip gas-target">再生数一時</span>
-      <span class="tab-chip other hidden">モール跳ね返り</span>
-      <span class="tab-chip other">永野さんメモ</span>
-      <span class="tab-chip other hidden">SEO記事</span>
-      <span class="tab-chip other">使用コード</span>
-      <span class="tab-chip other hidden">(旧)モール利益計算</span>
-      <span class="tab-chip other">Gアカ</span>
-      <span class="tab-chip other">案件情報</span>
-      <span class="tab-chip other">Tセール期限一覧</span>
-      <span class="tab-chip other">セール情報(改</span>
-      <span class="tab-chip other">AMZ改善項目</span>
-      <span class="tab-chip other hidden">サル集計用01/14</span>
-      <span class="tab-chip other hidden">自社成果物過去</span>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body" id="s2-body">
+    <div class="ss-info">
+      <span class="name">新モールCV管理元データAmazon</span>
+      <span class="sid">1yT1vidaJCsmA_WV...</span>
+      <a href="https://docs.google.com/spreadsheets/d/1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE/" target="_blank">開く↗</a>
     </div>
-    <div class="gas-card">
-      <div class="gas-header">📜 GASプロジェクト（Rhino runtime）<a class="ss-link" href="https://script.google.com/home/projects/1GnxjfYEhZZt2ey8GX6rybtOWHuKpra2--vMWNlpzuYNs9D5gsshWU7Xj/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
-      <div class="gas-files">
-        <span class="gas-file main">成果物一時から出力APIFY.gs</span>
-        <span class="gas-file main">担当者毎に集計APIFY.gs</span>
-        <span class="gas-file main">シート更新Amazon.gs</span>
-        <span class="gas-file main">シート更新楽天.gs</span>
-        <span class="gas-file">メディアのキラトス投稿.gs</span>
-        <span class="gas-file main">集計整理2026Tik.gs</span>
-        <span class="gas-file main">集計整理2026インスタ.gs</span>
-        <span class="gas-file main">TTS集計.gs（289行）</span>
-        <span class="gas-file main">TTS代理店集計.gs</span>
-        <span class="gas-file main">TTS請求集計.gs</span>
-      </div>
+    <div class="tabs">
+      <span class="chip t1">Amazon</span><span class="chip tc">★売上管理システム</span><span class="chip t1">Tik配送</span><span class="chip t1">Tik配送_同一名前</span><span class="chip t2">代理店モール共有</span><span class="chip t2">Amazon開発用一時</span><span class="chip t1">CSV整理用</span><span class="chip to">ログ</span><span class="chip t2">Amazon開発用広告</span><span class="chip t1">キュ配送</span><span class="chip t1">在庫varis</span><span class="chip t1">varisデータ</span><span class="chip t1">varis整理</span><span class="chip t2">親商品別一時</span><span class="chip t3">varis</span>
+    </div>
+    <div class="gas-label">📜 GASプロジェクト（24ファイル）<a href="https://script.google.com/home/projects/1dfSzqWfDndHC9VV-NMjbJnEIoqPacjnHLExdsRf618GMEZTKYET4HVH8/edit" target="_blank" style="color:#38bdf8;font-size:10px;margin-left:8px">エディタ↗</a></div>
+    <div class="gas-files">
+      <span class="gf m">楽天①ドライブから取り込む.gs</span><span class="gf m">楽天②CSV整理と出力.gs</span><span class="gf">楽天①②.gs</span><span class="gf m">Tik①ドライブから取り込む.gs</span><span class="gf m">Tik②配送書き込み.gs</span><span class="gf m">Tik③出力.gs</span><span class="gf">Tik①～③.gs</span><span class="gf">TTS確認用更新.gs</span><span class="gf m">varis整理.gs</span><span class="gf m">varis集計表出力.gs</span><span class="gf">varis全部.gs</span><span class="gf">Ssenjin様出力_キラトス.gs</span><span class="gf">Ssenjin様出力_ラッシュフォルテ.gs</span><span class="gf">サルさん出力.gs</span><span class="gf">Senjin_楽天.gs</span>
     </div>
   </div>
 </div>
 
-<!-- ===== GAS② ===== -->
-<div class="layer layer-gas2">
-  <div class="layer-title">🟢 GAS② — モールCV管理元データ（CSV取込・整理・varis処理・パートナー出力）</div>
-  <div class="ss-card">
-    <div class="ss-header">
-      <span class="ss-name">新モールCV管理元データAmazon</span>
-      <span class="ss-id">1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE</span>
-      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE/" target="_blank">開く↗</a>
+<!-- ===== SS③ Detail ===== -->
+<div class="section ss3" id="s3">
+  <div class="section-head" onclick="toggleSection('s3')">
+    <div class="icon">🟣</div>
+    <div class="info">
+      <h2>SS③ 新_楽天Qoo10CV管理 — GAS③ (1ファイル)</h2>
+      <p>varis集計→CVシート反映 / 楽天CSV格納 / Tik配送一時</p>
     </div>
-    <div class="tab-grid">
-      <span class="tab-chip gas-target">Amazon</span>
-      <span class="tab-chip config">★売上管理システム</span>
-      <span class="tab-chip gas-target">Tik配送</span>
-      <span class="tab-chip gas-target">Tik配送_同一名前</span>
-      <span class="tab-chip data">代理店モール共有</span>
-      <span class="tab-chip data">Amazon開発用一時</span>
-      <span class="tab-chip gas-target">CSV整理用</span>
-      <span class="tab-chip other">ログ</span>
-      <span class="tab-chip data">Amazon開発用広告</span>
-      <span class="tab-chip gas-target">キュ配送</span>
-      <span class="tab-chip gas-target">在庫varis</span>
-      <span class="tab-chip gas-target">varisデータ</span>
-      <span class="tab-chip gas-target">varis整理</span>
-      <span class="tab-chip data">親商品別一時</span>
-      <span class="tab-chip output">varis</span>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body" id="s3-body">
+    <div class="ss-info">
+      <span class="name">新_楽天Qoo10CV管理</span>
+      <span class="sid">15wtvBZHZhKBCvR3...</span>
+      <a href="https://docs.google.com/spreadsheets/d/15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg/" target="_blank">開く↗</a>
     </div>
-    <div class="gas-card">
-      <div class="gas-header">📜 GASプロジェクト（24ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1dfSzqWfDndHC9VV-NMjbJnEIoqPacjnHLExdsRf618GMEZTKYET4HVH8/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
-      <div class="gas-files">
-        <span class="gas-file main">楽天①ドライブから取り込む.gs</span>
-        <span class="gas-file main">楽天②CSV整理と出力.gs</span>
-        <span class="gas-file">楽天①②.gs</span>
-        <span class="gas-file main">Tik①ドライブから取り込む.gs</span>
-        <span class="gas-file main">Tik②配送書き込み.gs</span>
-        <span class="gas-file main">Tik③出力.gs</span>
-        <span class="gas-file">Tik①～③.gs</span>
-        <span class="gas-file">TTS確認用更新.gs</span>
-        <span class="gas-file main">varis整理.gs</span>
-        <span class="gas-file main">varis集計表出力.gs</span>
-        <span class="gas-file">varis全部.gs</span>
-        <span class="gas-file">Ssenjin様出力_キラトス.gs</span>
-        <span class="gas-file">Ssenjin様出力_ラッシュフォルテ.gs</span>
-        <span class="gas-file">サルさん出力.gs</span>
-        <span class="gas-file">Senjin_楽天.gs</span>
-      </div>
+    <div class="tabs">
+      <span class="chip t1">Qoo10</span><span class="chip t1">TTS</span><span class="chip t1">楽天</span><span class="chip t2">TTS確認用</span><span class="chip t2">キュ確認用</span><span class="chip tc">RQ売上管理システム</span><span class="chip t1">Tik配送一時</span><span class="chip t2">TikTok一覧</span><span class="chip t2">Tik一覧</span><span class="chip t2">楽天確認用</span><span class="chip t2">キュ整理</span><span class="chip t2">キュ広告一時</span><span class="chip t2">キュ広告整理</span><span class="chip t1">楽天CSV一覧</span><span class="chip t1">楽天CSV整理用</span><span class="chip t2">楽天CSV一時</span><span class="chip t2">楽天広告一時</span><span class="chip t1">varis整理</span>
     </div>
+    <div class="gas-label">📜 GASプロジェクト（1ファイル）<a href="https://script.google.com/home/projects/1NvJSVNcXN4p_WnvH6y2cne9dJS-o2hUCPcnwlJDXfzoq9r69Um79SYMq/edit" target="_blank" style="color:#38bdf8;font-size:10px;margin-left:8px">エディタ↗</a></div>
+    <div class="gas-files"><span class="gf m">Varis反映.gs</span></div>
   </div>
 </div>
 
-<!-- ===== GAS③ ===== -->
-<div class="layer layer-gas3">
-  <div class="layer-title">🟣 GAS③ — 楽天Qoo10CV管理（varis集計→CVシート反映）</div>
-  <div class="ss-card">
-    <div class="ss-header">
-      <span class="ss-name">新_楽天Qoo10CV管理</span>
-      <span class="ss-id">15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg</span>
-      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg/" target="_blank">開く↗</a>
-    </div>
-    <div class="tab-grid">
-      <span class="tab-chip gas-target">Qoo10</span>
-      <span class="tab-chip gas-target">TTS</span>
-      <span class="tab-chip gas-target">楽天</span>
-      <span class="tab-chip data">TTS確認用</span>
-      <span class="tab-chip data">キュ確認用</span>
-      <span class="tab-chip config">RQ売上管理システム</span>
-      <span class="tab-chip gas-target">Tik配送一時</span>
-      <span class="tab-chip data">TikTok一覧</span>
-      <span class="tab-chip data">Tik一覧</span>
-      <span class="tab-chip data">楽天確認用</span>
-      <span class="tab-chip data">キュ整理</span>
-      <span class="tab-chip data">キュ広告一時</span>
-      <span class="tab-chip data">キュ広告整理</span>
-      <span class="tab-chip gas-target">楽天CSV一覧</span>
-      <span class="tab-chip gas-target">楽天CSV整理用</span>
-      <span class="tab-chip data">楽天CSV一時</span>
-      <span class="tab-chip data">楽天広告一時</span>
-      <span class="tab-chip gas-target">varis整理</span>
-    </div>
-    <div class="gas-card">
-      <div class="gas-header">📜 GASプロジェクト（1ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1NvJSVNcXN4p_WnvH6y2cne9dJS-o2hUCPcnwlJDXfzoq9r69Um79SYMq/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
-      <div class="gas-files">
-        <span class="gas-file main">Varis反映.gs</span>
-      </div>
-    </div>
+<!-- ===== Data Flow Section ===== -->
+<h2 style="font-size:17px;font-weight:800;margin:28px 0 14px;color:#f1f5f9;display:flex;align-items:center;gap:8px">
+  <span style="font-size:22px">🔄</span> データフロー詳細
+</h2>
+
+<div class="flow-card">
+  <h3><span class="num">1</span> Apify → TikTok投稿データ</h3>
+  <div class="pipe"><span class="box b-ext">📡 Apify</span><span class="arr">→</span><span class="box b-s1">成果物一時</span><span class="arr">→</span><span class="box b-s1">自社投稿</span><span class="fn">成果物一時から出力APIFY.gs</span></div>
+  <div class="pipe"><span class="box b-s1">自社投稿</span><span class="arr">→</span><span class="box b-s1">S〜V列 担当者別集計</span><span class="fn">担当者ごと()</span></div>
+</div>
+
+<div class="flow-card">
+  <h3><span class="num">2</span> 再生数集計（TikTok / Instagram）</h3>
+  <div class="pipe"><span class="box b-s1">再生数一時</span><span class="arr">→</span><span class="box b-s1">再生数集計Tik</span><span class="fn">集計整理2026Tik()</span></div>
+  <div class="pipe"><span class="box b-s1">再生数一時</span><span class="arr">→</span><span class="box b-s1">再生数集計insta</span><span class="fn">集計整理2026インスタ()</span></div>
+</div>
+
+<div class="flow-card" style="border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.03)">
+  <h3><span class="num" style="background:#ef4444">3</span> <span style="color:#f87171">Amazon / 楽天デイリー同期（クロスSS）</span></h3>
+  <p style="font-size:11px;color:#94a3b8;margin-bottom:10px">GAS①がSS②・SS③から日次データを読み取り → SS①のデイリータブへ同期。元データはGAS②がCSV/Excelから自動集計済み。</p>
+
+  <div class="cross-flow">
+    <div class="cross-label">Amazon系: SS② → SS①</div>
+    <div class="pipe"><span class="box b-ext">📁 Drive CSV</span><span class="arr">→</span><span class="box b-s2">SS② Amazonタブ</span><span class="fn">GAS② 自動集計</span><span class="arr">→</span><span class="box b-s1">SS① AMZデイリー</span><span class="fn">シート更新Amazon.gs</span></div>
+    <div class="note">GAS②: Amazon①②.gs等 → SS② Amazonタブ・Amazon開発用一時・広告に集約</div>
+  </div>
+
+  <div class="cross-flow">
+    <div class="cross-label">楽天系: SS③ → SS①</div>
+    <div class="pipe"><span class="box b-ext">📁 Drive楽天CSV</span><span class="arr">→</span><span class="box b-s3">SS③ 楽天CSV一時</span><span class="fn">楽天①取込.gs</span></div>
+    <div class="pipe"><span class="box b-s3">楽天CSV一時</span><span class="arr">→</span><span class="box b-s3">楽天CSV整理用</span><span class="fn">楽天②整理.gs</span><span class="arr">→</span><span class="box b-s3h">SS③ 楽天タブ</span></div>
+    <div class="pipe"><span class="box b-s3">SS③ 楽天タブ</span><span class="arr">→</span><span class="box b-s1">SS① 楽天デイリー</span><span class="fn">シート更新楽天.gs</span></div>
+    <div class="note">GAS②: 楽天①②.gs → Drive CSV取込 → SS③ 楽天CSV一時 → 整理 → 楽天タブ</div>
   </div>
 </div>
 
-<!-- ===== データフロー ===== -->
-<div class="section-title">🔄 データフロー（GAS関数 → タブの読み書き関係）</div>
+<div class="flow-card">
+  <h3><span class="num">4</span> TTS集計パイプライン（GAS①内完結）</h3>
+  <div class="pipe"><span class="box b-ext">📁 Drive Excel</span><span class="arr">→</span><span class="box b-s1">TTS集計</span><span class="fn">TTS集計取込()</span><span class="arr">→</span><span class="box b-s1">代理店アカ管理</span><span class="arr">→</span><span class="box b-ext">Drive出力</span><span class="fn">TTS代理店集計()</span></div>
+  <div class="pipe"><span class="box b-ext">📁 TTS/Qoo10請求</span><span class="arr">→</span><span class="box b-s1">支払い管理</span><span class="fn">支払い集計()</span></div>
+</div>
 
-<div class="flow-section">
-  <div class="flow-title">1. Apify → TikTok投稿データ</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Apify</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">成果物一時</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">自社投稿</span>
-    <span class="flow-func">成果物一時から出力APIFY.gs</span>
+<div class="flow-card">
+  <h3><span class="num">5</span> 楽天CSV取込（GAS② → SS③）</h3>
+  <div class="pipe"><span class="box b-ext">📁 Drive CSV</span><span class="arr">→</span><span class="box b-s3">楽天CSV一時/広告一時</span><span class="fn">楽天CSV売上集計()</span><span class="arr">→</span><span class="box b-s3">楽天CSV整理用</span><span class="fn">楽天②CSV整理と出力()</span></div>
+</div>
+
+<div class="flow-card">
+  <h3><span class="num">6</span> TikTok配送データ（GAS② → SS②/SS③）</h3>
+  <div class="pipe"><span class="box b-ext">📁 CSV/XLSX</span><span class="arr">→</span><span class="box b-s3">Tik配送一時</span><span class="fn">Tik取込()</span><span class="arr">→</span><span class="box b-s2">Tik配送</span><span class="fn">Tik②配送書込()</span><span class="arr">→</span><span class="box b-s3">TTS/TikTok一覧</span><span class="fn">Tik③出力()</span></div>
+</div>
+
+<div class="flow-card" style="border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.03)">
+  <h3><span class="num" style="background:#ef4444">7</span> <span style="color:#f87171">varisパイプライン（クロスSS ★最重要★）</span></h3>
+  <div class="cross-flow">
+    <div class="cross-label">GAS②: varis整理 → 集計表</div>
+    <div class="pipe"><span class="box b-s2">varisデータ(SS②)</span><span class="arr">→</span><span class="box b-s2">varis整理(SS②)</span><span class="fn">varisデータ整理()</span><span class="arr">→</span><span class="box b-s2">varis集計表(SS②)</span><span class="fn">varis集計表出力()</span></div>
   </div>
-  <div class="flow-row">
-    <span class="flow-box flow-g1">自社投稿</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">S〜V列 担当者別集計</span>
-    <span class="flow-func">担当者ごと()</span>
+  <div class="cross-flow">
+    <div class="cross-label">GAS③: CV反映（最終出口）</div>
+    <div class="pipe"><span class="box b-s3">varis整理(SS③)</span><span class="arr">→</span><span class="box b-s3h">Qoo10/楽天/TTS(SS③)</span><span class="fn">GAS③ varis集計表出力()</span><span style="font-size:9px;color:#f59e0b;margin-left:4px">← 日付行マッチでCV書込</span></div>
   </div>
 </div>
 
-<div class="flow-section">
-  <div class="flow-title">2. 再生数集計（TikTok / Instagram）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-g1">再生数一時</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">再生数集計Tik</span>
-    <span class="flow-func">集計整理2026Tik()</span>
-  </div>
-  <div class="flow-row">
-    <span class="flow-box flow-g1">再生数一時</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">再生数集計insta</span>
-    <span class="flow-func">集計整理2026インスタ()</span>
-  </div>
+<!-- Dependency Order -->
+<div class="dep-card">
+  <h3>⚠️ 実行順序の依存関係（順番を間違えるとデータが空になる）</h3>
+  <div class="dep-row"><strong style="color:#34d399">varis系:</strong> GAS② varisデータ整理() → GAS② varis集計表出力() → <strong style="color:#a78bfa">GAS③ varis集計表出力()</strong></div>
+  <div class="dep-row"><strong style="color:#34d399">楽天系:</strong> GAS② 楽天CSV売上集計() → GAS② 楽天②CSV整理と出力()</div>
+  <div class="dep-row"><strong style="color:#34d399">TikTok系:</strong> GAS② Tik取込() → GAS② Tik②配送書込() → GAS② Tik③出力()</div>
+  <div class="dep-row"><strong style="color:#60a5fa">TTS系:</strong> GAS① TTS集計取込() → GAS① TTS代理店集計() → GAS① 支払い集計()</div>
 </div>
 
-<div class="flow-section" style="border-color:#065f46;">
-  <div class="flow-title" style="color:#34d399;">3. Amazon / 楽天 デイリーデータ同期（SS②③ → SS① のクロスSS連携）</div>
-  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">GAS①がSS②・SS③のタブから日次データを読み取り、SS①のデイリータブへ同期する。元データはGAS②がCSV/Excelから自動集計して各タブに格納済み。</div>
-
-  <div style="font-size:11px;font-weight:700;color:#34d399;margin-bottom:4px;">Amazon系：SS② Amazonタブ → SS① AMZデイリー</div>
-  <div class="flow-row" style="background:rgba(16,185,129,0.08);padding:6px;border-radius:6px;">
-    <span class="flow-box flow-ext">Drive CSV/Excel</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">SS② Amazonタブ</span>
-    <span class="flow-func">GAS② CSV/Excel自動集計</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">SS① AMZデイリー</span>
-    <span class="flow-func">GAS① シート更新Amazon.gs — 更新()</span>
-  </div>
-  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新モールCV管理元データAmazon（<code style="color:#64748b">1yT1vida...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
-  <div style="font-size:10px;color:#86efac;margin:2px 0 8px 8px;">GAS②側: Amazon①②.gs等でCSV/Excelデータを取り込み → SS② Amazonタブ・Amazon開発用一時・Amazon開発用広告に集約</div>
-
-  <div style="font-size:11px;font-weight:700;color:#a78bfa;margin-bottom:4px;">楽天系：SS③ 楽天タブ → SS① 楽天デイリー</div>
-  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:6px;border-radius:6px;">
-    <span class="flow-box flow-ext">Drive 楽天CSV <span style="font-size:9px;opacity:0.7">1d-FSL...</span></span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">SS③ 楽天CSV一時/楽天広告一時</span>
-    <span class="flow-func">GAS② 楽天①ドライブから取り込む.gs</span>
-  </div>
-  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:4px 6px;border-radius:6px;margin-top:2px;">
-    <span class="flow-box flow-g3">SS③ 楽天CSV一時</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">SS③ 楽天CSV整理用</span>
-    <span class="flow-func">GAS② 楽天②CSV整理と出力.gs</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3" style="border:2px solid #a78bfa;font-weight:700">SS③ 楽天タブ</span>
-  </div>
-  <div class="flow-row" style="margin-top:4px;">
-    <span class="flow-box flow-g3">SS③ 楽天タブ</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">SS① 楽天デイリー</span>
-    <span class="flow-func">GAS① シート更新楽天.gs — 楽天更新()</span>
-  </div>
-  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新_楽天Qoo10CV管理（<code style="color:#64748b">15wtvBZH...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
-  <div style="font-size:10px;color:#c4b5fd;margin:2px 0 0 8px;">GAS②側: 楽天①②.gs がDriveのCSVファイルを取り込み → SS③ 楽天CSV一時 → 整理 → 楽天タブに反映</div>
-</div>
-
-<div class="flow-section">
-  <div class="flow-title">4. TTS集計パイプライン（GAS①内で完結）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive Excel</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">TTS集計</span>
-    <span class="flow-func">TTS集計取込()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">代理店アカ管理</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-ext">Drive Excel出力</span>
-    <span class="flow-func">TTS代理店集計()</span>
-  </div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive TTS/Qoo10請求</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">支払い管理</span>
-    <span class="flow-func">支払い集計()</span>
-  </div>
-</div>
-
-<div class="flow-section">
-  <div class="flow-title">5. 楽天CSV取込パイプライン（GAS② → SS③）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive CSV</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">楽天CSV一時 / 楽天広告一時</span>
-    <span class="flow-func">楽天CSV売上集計()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">楽天CSV整理用</span>
-    <span class="flow-func">楽天②CSV整理と出力()</span>
-  </div>
-</div>
-
-<div class="flow-section">
-  <div class="flow-title">6. TikTok配送データパイプライン（GAS② → SS③）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">Tik配送一時</span>
-    <span class="flow-func">Tik取込()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">Tik配送</span>
-    <span class="flow-func">Tik②配送書込()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">TTS / TikTok一覧</span>
-    <span class="flow-func">Tik③出力()</span>
-  </div>
-</div>
-
-<div class="flow-section">
-  <div class="flow-title">7. varisパイプライン（GAS② → GAS③ のクロスSS連携 ★最重要★）</div>
-  <div class="flow-row" style="background:rgba(245,158,11,0.08);padding:6px;border-radius:6px;">
-    <span class="flow-box flow-g2">varisデータ（SS②）</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">varis整理（SS②）</span>
-    <span class="flow-func">varisデータ整理()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">varis集計表（SS②）</span>
-    <span class="flow-func">varis集計表出力()</span>
-  </div>
-  <div class="flow-row" style="margin-top:4px;background:rgba(168,85,247,0.1);padding:6px;border-radius:6px;">
-    <span class="flow-box flow-g3">varis整理（SS③）</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">Qoo10 / 楽天 / TTS（SS③）</span>
-    <span class="flow-func">GAS③ varis集計表出力()</span>
-    <span style="font-size:10px;color:#f59e0b;margin-left:4px">← 日付行マッチでCV書込</span>
-  </div>
-</div>
-
-<!-- ===== Qoo10配送処理フロー ===== -->
-<div class="section-title" style="color:#f472b6;border-color:#be185d;">🔍 Qoo10 配送処理フロー（横断ビュー）</div>
-
-<div class="flow-section" style="border-color:#be185d;">
-  <div class="flow-title" style="color:#f472b6;">Qoo10配送データの全体フロー（3つのGASに跨る）</div>
-  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">Qoo10の配送・CV・請求データは独立したGASではなく、TikTok配送パイプライン＋varisパイプラインを経由して処理される。</div>
-
-  <div style="font-size:11px;font-weight:700;color:#f472b6;margin-bottom:4px;">STEP 1: 配送データ取込（GAS②）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">Tik配送一時（SS③）</span>
-    <span class="flow-func">Tik①ドライブから取り込む.gs — Tik取込()</span>
-  </div>
-
-  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 2: 配送書込＆出力（GAS②）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-g3">Tik配送一時</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">Tik配送（SS②）</span>
-    <span class="flow-func">Tik②配送書き込み.gs</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3">TTS / TikTok一覧（SS③）</span>
-    <span class="flow-func">Tik③出力.gs</span>
-  </div>
-
-  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 3: varis整理→集計（GAS②）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-g2">varisデータ（SS②）</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">varis整理（SS②）</span>
-    <span class="flow-func">varis整理.gs — varisデータ整理()</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g2">varis集計表</span>
-    <span class="flow-func">varis集計表出力.gs</span>
-  </div>
-
-  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 4: Qoo10 CVシート反映（GAS③ — 最終出口）</div>
-  <div class="flow-row" style="background:rgba(244,114,182,0.1);padding:6px;border-radius:6px;">
-    <span class="flow-box flow-g3">varis整理（SS③）</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g3" style="border:2px solid #ec4899;font-weight:700">Qoo10 CVシート（SS③）</span>
-    <span class="flow-func">GAS③ Varis反映.gs — varis集計表出力()</span>
-    <span style="font-size:10px;color:#f472b6;margin-left:4px">← 日付行マッチでCV数を書込</span>
-  </div>
-
-  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 5: Qoo10請求データ集計（GAS①）</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">Drive Qoo10請求 <span style="font-size:9px;opacity:0.7">1BEEuW...</span></span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">支払い管理（SS①）</span>
-    <span class="flow-func">TTS請求集計.gs — 支払い集計()</span>
-    <span style="font-size:10px;color:#fbbf24;margin-left:4px">Qoo10=ピンク色分け</span>
-  </div>
-</div>
-
-<div class="flow-section" style="border-color:#be185d;">
-  <div class="flow-title" style="color:#f472b6;">Qoo10関連GASファイル一覧</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;">
-    <div>
-      <div style="color:#60a5fa;font-weight:700;margin-bottom:4px;">GAS①（Tik管理シート）</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">TTS請求集計.gs</div>
-      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10請求データの集計</div>
-    </div>
-    <div>
-      <div style="color:#34d399;font-weight:700;margin-bottom:4px;">GAS②（モールCV管理元データ）</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik①ドライブから取り込む.gs</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik②配送書き込み.gs</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik③出力.gs</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">varis整理.gs</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">varis集計表出力.gs</div>
-      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">配送取込〜varis処理のメインパイプライン</div>
-    </div>
-    <div>
-      <div style="color:#a78bfa;font-weight:700;margin-bottom:4px;">GAS③（楽天Qoo10CV管理）</div>
-      <div class="gas-file main" style="display:inline-block;margin:2px;">Varis反映.gs</div>
-      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10 CVシートへの最終書込</div>
-    </div>
-  </div>
-  <div style="margin-top:8px;padding:6px;background:rgba(100,116,139,0.15);border-radius:4px;font-size:10px;color:#94a3b8;">
-    <strong style="color:#64748b;">⚠ 旧Qoo10専用スクリプト（非アクティブ）:</strong> GAS②の「キュ①～③」は現在未使用。Qoo10データはTik配送パイプライン＋varisパイプラインに統合済み。
-  </div>
-</div>
-
-<div class="flow-section">
-  <div class="flow-title">⚠️ 実行順序の依存関係（順番を間違えるとデータが空になる）</div>
-  <div style="font-size:12px;line-height:1.8;">
-    <div><strong style="color:#34d399">varis系:</strong> GAS② varisデータ整理() → GAS② varis集計表出力() → <strong style="color:#a78bfa">GAS③ varis集計表出力()</strong></div>
-    <div><strong style="color:#34d399">楽天系:</strong> GAS② 楽天CSV売上集計() → GAS② 楽天②CSV整理と出力()</div>
-    <div><strong style="color:#34d399">TikTok系:</strong> GAS② Tik取込() → GAS② Tik②配送書込() → GAS② Tik③出力()</div>
-    <div><strong style="color:#60a5fa">TTS系:</strong> GAS① TTS集計取込() → GAS① TTS代理店集計() → GAS① 支払い集計()</div>
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:20px;font-size:11px;color:#475569;">
-  作成日: 2026/04/09 ｜ 最終更新: 2026/04/09 Amazon/楽天デイリー同期フロー詳細化・タイトル修正 ｜ GAS統括ディレクタースキル準拠
+<div class="footer">
+  作成日: 2026/04/09 ｜ 最終更新: 2026/04/09 ビジュアルリニューアル ｜ GAS統括ディレクタースキル準拠
 </div>
 </div>
+
+<script>
+function toggleSection(id){
+  var head=document.querySelector('#'+id+' .section-head');
+  var body=document.getElementById(id+'-body');
+  head.classList.toggle('open');
+  body.classList.toggle('open');
+}
+</script>
 </body>
 </html>
