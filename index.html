@@ -147,6 +147,10 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 .flow-amazon .step .name { color: #fbbf24; }
 .flow-amazon .connector .bar { background: rgba(255,153,0,0.35); }
 
+.flow-qoo10 .step { background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); }
+.flow-qoo10 .step .name { color: #a855f7; }
+.flow-qoo10 .connector .bar { background: rgba(168,85,247,0.35); }
+
 .flow-tts .step { background: rgba(250,204,21,0.1); border: 1px solid rgba(250,204,21,0.3); }
 .flow-tts .step .name { color: #facc15; }
 .flow-tts .connector .bar { background: rgba(250,204,21,0.35); }
@@ -244,7 +248,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="ss-box ss2">
     <h3>SS② モールCV管理元データ</h3>
     <div class="ss-id">SS ID: 1yT1vidaJC...</div>
-    <div class="ss-detail">GAS② 24ファイル（うち多数deprecated）<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 10件（時間ベース）</strong></div>
+    <div class="ss-detail">GAS② 35+ファイル<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 10件（時間ベース）</strong></div>
     <ul>
       <li>楽天① ドライブから取り込む.gs</li>
       <li>楽天② CSV整理と出力.gs</li>
@@ -252,6 +256,9 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       <li>Tik② 配送書き込み.gs / Tik③ 出力.gs</li>
       <li>varis整理.gs / varis集計表出力.gs</li>
       <li>パートナー出力（Senjin / サル）</li>
+      <li>Qoo10配送ファイル作成.gs</li>
+      <li>Qoo10集計まとめ2.gs（→売上取込/整理/出力/Senjin）</li>
+      <li>Qoo10出荷情報処理.gs</li>
     </ul>
   </div>
   <div class="ss-box ss3">
@@ -262,7 +269,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       <li>Varis反映.gs（GAS③唯一のファイル）</li>
       <li>varis整理結果を各モール(Qoo10/楽天/TTS)のCV行に書込</li>
       <li>「Tik配送一時」シートあり（GAS②のTik①が書込）</li>
-      <li>旧Qoo10処理（キュ①～③）は全てdeprecated</li>
+      <li>Qoo10配送/売上処理（キュ①～③.gs）— GAS②トリガー経由で稼働中</li>
     </ul>
   </div>
 </div>
@@ -275,6 +282,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="legend-item"><div class="legend-dot" style="background:#facc15"></div>TikTok Shop (TTS)</div>
   <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>楽天</div>
   <div class="legend-item"><div class="legend-dot" style="background:#ff9900"></div>Amazon</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Qoo10</div>
   <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>Varis / CV反映</div>
   <div class="legend-item"><div class="legend-dot" style="background:#fb923c"></div>パートナー出力</div>
   <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>ユーティリティ</div>
@@ -282,123 +290,18 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 
 <!-- ===== Data Flow Overview ===== -->
 <div class="data-flow-overview">[外部データソース]
-  ├─ Apify → GAS①
+  ├─ Qoo10 API (4店舗) → GAS②
   ├─ Drive CSV/XLSX → GAS②
   ├─ Drive Excel (TTS) → GAS①
+  ├─ Apify → GAS①
   └─ 外部スプシ → GAS①</div>
 
-<!-- ============================================= -->
+<!-- ========================================== -->
 <!-- GAS① Tik管理シート 関連フロー               -->
 <!-- ========================================== -->
 <div class="section-divider">GAS① Tik管理シート 関連フロー</div>
 
-<!-- FLOW 1: Apify / TikTok動画 -->
-<div class="flow-section">
-  <div class="flow-title apify">Apify / TikTok動画データ → 担当者別集計</div>
-  <div class="flow-steps flow-apify">
-    <div class="step">
-      <div class="label">外部</div>
-      <div class="name">Apify</div>
-      <div class="detail">TikTok動画データ自動収集</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">SS① シート</div>
-      <div class="name">成果物一時</div>
-      <div class="detail">Apify収集データ一時格納</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS①</div>
-      <div class="name">成果物一時から出力</div>
-      <div class="detail">重複チェック（アカウント名+URL）、JST変換</div>
-      <div class="gs-file">成果物一時から出力APIFY.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">SS① シート</div>
-      <div class="name">自社投稿</div>
-      <div class="detail">Tik管理シートに蓄積</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS①</div>
-      <div class="name">担当者毎に集計</div>
-      <div class="detail">投稿数・再生数・いいね数を担当者(L列)別に</div>
-      <div class="gs-file">担当者毎に集計APIFY.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">出力</div>
-      <div class="name">S〜V列 8行目〜</div>
-      <div class="detail">担当者別集計結果</div>
-    </div>
-  </div>
-</div>
-
-<!-- FLOW 2: TikTok再生数集計 -->
-<div class="flow-section">
-  <div class="flow-title apify">TikTok 再生数集計</div>
-  <div class="flow-steps flow-apify">
-    <div class="step">
-      <div class="label">外部</div>
-      <div class="name">Apify</div>
-      <div class="detail">TikTok動画データ収集</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">SS① シート</div>
-      <div class="name">再生数一時</div>
-      <div class="detail">一時取り込みシート</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS①</div>
-      <div class="name">集計整理2026Tik</div>
-      <div class="detail">サマリー行（日付・件数・総再生数）+ データ行を生成</div>
-      <div class="gs-file">集計整理2026Tik.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">出力</div>
-      <div class="name">再生数集計Tik</div>
-      <div class="detail">Tik管理シート内に出力</div>
-    </div>
-  </div>
-</div>
-
-<!-- FLOW 3: Instagram再生数集計 -->
-<div class="flow-section">
-  <div class="flow-title insta">Instagram 再生数集計</div>
-  <div class="flow-steps flow-insta">
-    <div class="step">
-      <div class="label">外部</div>
-      <div class="name">Apify</div>
-      <div class="detail">Instagram動画データ収集</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">SS① シート</div>
-      <div class="name">再生数一時</div>
-      <div class="detail">一時取り込みシート（TikTokと共有）</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS①</div>
-      <div class="name">集計整理2026インスタ</div>
-      <div class="detail">日付・件数・再生数サマリー生成</div>
-      <div class="gs-file">集計整理2026インスタ.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">出力</div>
-      <div class="name">再生数集計insta</div>
-      <div class="detail">Tik管理シート内に出力</div>
-    </div>
-  </div>
-</div>
-
-<!-- FLOW 4: TTS集計取込（クリエイター別） -->
+<!-- FLOW 1: TTS集計取込（クリエイター別） -->
 <div class="flow-section">
   <div class="flow-title tts">TikTok Shop（TTS）集計取込 — クリエイター別</div>
   <div class="flow-steps flow-tts">
@@ -435,7 +338,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
 </div>
 
-<!-- FLOW 5: TTS代理店集計 -->
+<!-- FLOW 2: TTS代理店集計 -->
 <div class="flow-section">
   <div class="flow-title tts">TTS 代理店集計 — 代理店別Excel出力</div>
   <div class="flow-steps flow-tts">
@@ -471,7 +374,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
 </div>
 
-<!-- FLOW 6: TTS請求集計 -->
+<!-- FLOW 3: TTS請求集計 -->
 <div class="flow-section">
   <div class="flow-title tts">TTS + Qoo10 請求集計 — 支払いデータ</div>
   <div class="flow-steps flow-tts">
@@ -507,7 +410,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
 </div>
 
-<!-- FLOW 7: Amazonデイリー同期 -->
+<!-- FLOW 4: Amazonデイリー同期 -->
 <div class="flow-section">
   <div class="flow-title amazon">Amazon デイリー同期</div>
   <div class="flow-steps flow-amazon">
@@ -532,7 +435,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
 </div>
 
-<!-- FLOW 8: 楽天デイリー同期 -->
+<!-- FLOW 5: 楽天デイリー同期 -->
 <div class="flow-section">
   <div class="flow-title rakuten">楽天 デイリー同期</div>
   <div class="flow-steps flow-rakuten">
@@ -557,13 +460,13 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
 </div>
 
-<!-- FLOW 9: メディアのキラトス投稿 -->
+<!-- FLOW 6: メディアのキラトス投稿 -->
 <div class="flow-section">
   <div class="flow-title utility">メディアのキラトス投稿 — キーワード色分け</div>
   <div class="flow-steps flow-utility">
     <div class="step">
       <div class="label">SS① シート</div>
-      <div class="name">ジバ投稿</div>
+      <div class="name">セバ投稿</div>
       <div class="detail">投稿データが蓄積されたシート</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
@@ -592,6 +495,95 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     </div>
   </div>
   <div class="note-box">青が優先（両方マッチ時は青）</div>
+</div>
+
+<!-- FLOW 7: Apify / TikTok動画 -->
+<div class="flow-section">
+  <div class="flow-title apify">Apify / TikTok動画データ → 拡当者別集計</div>
+  <div class="flow-steps flow-apify">
+    <div class="step">
+      <div class="label">外部</div>
+      <div class="name">Apifyクラウド</div>
+      <div class="detail">TikTok スクレイピング結果</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">外部API</div>
+      <div class="name">Apify API</div>
+      <div class="detail">Json形式でデータ取得</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS①</div>
+      <div class="name">Apify成果物取込</div>
+      <div class="detail">成果物一時から出力（D列以降を1時間ごとに差分取得）</div>
+      <div class="gs-file">成果物一時から出力APIFY.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS①</div>
+      <div class="name">担当者別集計</div>
+      <div class="detail">売上・セット単価・単価の集計<br>YouTube/TikTok/Instagramで分岐</div>
+      <div class="gs-file">担当者毎に集計APIFY.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">SS①内に集計表出力</div>
+      <div class="detail">クリエイター名・担当者別集計</div>
+    </div>
+  </div>
+  <div class="note-box">Apifyランナー.gs がApify系全体を実行。GoogleAppsScript側でcacheServiceを使い、最後の実行日時・スクリプト実行回数をトラッキング</div>
+</div>
+
+<!-- FLOW 8: TikTok再生数集計 -->
+<div class="flow-section">
+  <div class="flow-title tiktok">TikTok 再生数集計 — 日付別・動画別</div>
+  <div class="flow-steps flow-tiktok">
+    <div class="step">
+      <div class="label">SS① シート</div>
+      <div class="name">動画データ</div>
+      <div class="detail">クリエイター別の動画リスト</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS①</div>
+      <div class="name">TikTok動画集計</div>
+      <div class="detail">動画ごとの再生数・いいね数・コメント数を集計</div>
+      <div class="gs-file">集計整理2026Tik.gs（部分）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">SS①内に出力</div>
+      <div class="detail">日付別・動画別の集計表</div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW 9: Instagram再生数集計 -->
+<div class="flow-section">
+  <div class="flow-title insta">Instagram 再生数集計 — 投稿別</div>
+  <div class="flow-steps flow-insta">
+    <div class="step">
+      <div class="label">SS① シート</div>
+      <div class="name">投稿データ</div>
+      <div class="detail">Instagram投稿リスト</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS①</div>
+      <div class="name">Instagram集計</div>
+      <div class="detail">投稿ごとのエンゲージメント集計</div>
+      <div class="gs-file">集計整理2026Tik.gs（部分 インスタ.gs）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">SS①内に出力</div>
+      <div class="detail">投稿別の集計表</div>
+    </div>
+  </div>
 </div>
 
 <!-- ========================================== -->
@@ -688,6 +680,194 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
 
 <div class="note-box">GAS①はトリガー0件（全て手動実行）。GAS③はトリガー1件（varis集計表出力 — 他のユーザー、10:05実行）。</div>
 
+<!-- FLOW A: Qoo10 配送ファイル自動生成（新） -->
+<div class="flow-section">
+  <div class="flow-title qoo10">Qoo10 配送ファイル自動生成（トリガー: キュ配送ファイル作成）</div>
+  <div class="flow-steps flow-qoo10">
+    <div class="step">
+      <div class="label">外部API</div>
+      <div class="name">Qoo10 API</div>
+      <div class="detail">4店舗（リリシュ/ハハハラボ/ヴィヴシアークス/ビバリスタ）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">キュ配送ファイル作成</div>
+      <div class="detail">4店舗のAPI一括取得、未出荷10日分</div>
+      <div class="gs-file">Qoo10配送ファイル作成.gs（370行）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="branch-container">
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">Drive フォルダ出力</div>
+          <div class="detail">日付フォルダに自動格納</div>
+        </div>
+      </div>
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">メール送信</div>
+          <div class="detail">adwellness01@に通知</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note-box">Qoo10 API GetShippingInfo_v2で全店舗の配送データを取得。リリシュ→ヘルアップに店名置換。日付フォルダに自動格納。</div>
+</div>
+
+<!-- FLOW B: Qoo10 売上集計パイプライン（新） -->
+<div class="flow-section">
+  <div class="flow-title qoo10">Qoo10 売上集計パイプライン（トリガー: Qoo10集計まとめ2）</div>
+  <div class="flow-steps flow-qoo10">
+    <div class="step">
+      <div class="label">Google Drive</div>
+      <div class="name">フォルダ</div>
+      <div class="detail">ID: 1z7ywqj... 配送ファイル格納</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Qoo10売上取込2</div>
+      <div class="detail">CSV/Excel取込、マスタ参照で商品名補正、セット数計算</div>
+      <div class="gs-file">Qoo10集計まとめ2.gs（285行）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">SS③ シート</div>
+      <div class="name">配送一時</div>
+      <div class="detail">一時データ格納</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Qoo10売上整理2</div>
+      <div class="detail">商品名×日付で数量・金額を集計</div>
+      <div class="gs-file">Qoo10売上整理2.gs（140行）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">SS③ シート</div>
+      <div class="name">キュ整理</div>
+      <div class="detail">整理完了データ</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">キュ売上出力2</div>
+      <div class="detail">日付行マッチで書込、前日比較、急上昇検知</div>
+      <div class="gs-file">Qoo10売上出力2.gs（219行）</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="branch-container">
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">SS③ 出力</div>
+          <div class="name">Qoo10シート</div>
+          <div class="detail">売上集計結果反映</div>
+        </div>
+      </div>
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">メール通知</div>
+          <div class="detail">集計完了通知</div>
+        </div>
+      </div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="branch-container">
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">Qoo10_Senjin_kiratoth</div>
+          <div class="detail">Senjin向けキラトス出力</div>
+        </div>
+      </div>
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">Qoo10_Senjin_lash_forte</div>
+          <div class="detail">Senjin向けラッシュフォルテ出力</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note-box">Qoo10集計まとめ2トリガーが5関数を順次実行: Qoo10売上取込2→売上整理2→キュ売上出力2→Senjin_kiratoth→Senjin_lash_forte。★売上管理システム参照でマスタ情報紐付け。</div>
+</div>
+
+<!-- FLOW C: Qoo10 出荷情報反映（新） -->
+<div class="flow-section">
+  <div class="flow-title qoo10">Qoo10 出荷情報反映</div>
+  <div class="flow-steps flow-qoo10">
+    <div class="step">
+      <div class="label">Google Drive</div>
+      <div class="name">出荷実績CSV</div>
+      <div class="detail">格納フォルダ</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Qoo10出荷情報</div>
+      <div class="detail">追跡番号マッチ、分割配送対応</div>
+      <div class="gs-file">Qoo10出荷情報処理.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">SS② シート</div>
+      <div class="name">★売上管理システム</div>
+      <div class="detail">配送情報反映</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">メール通知</div>
+      <div class="detail">配送情報反映完了</div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW 11: TikTok配送データ（拡張版） -->
+<div class="flow-section">
+  <div class="flow-title tiktok">TikTok 配送データ取込書込・出力</div>
+  <div class="flow-steps flow-tiktok">
+    <div class="step">
+      <div class="label">外部</div>
+      <div class="name">TikTok CSV/XLSX</div>
+      <div class="detail">配送データファイル</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">Google Drive</div>
+      <div class="name">ファイル格納</div>
+      <div class="detail">CSV/XLSXを格納</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik① 取り込み</div>
+      <div class="detail">DriveからSS③「Tik配送一時」に取込<br>MAX_COLUMNS=55、Drive API v2使用</div>
+      <div class="gs-file">Tik①ドライブから取り込む.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik② 配送書き込み</div>
+      <div class="detail">配送データを整理・SS③のシートに書込<br>openByIdでクロスSS書込</div>
+      <div class="gs-file">Tik②配送書き込み.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik③ 最終整形・出力</div>
+      <div class="detail">最終整形・出力処理</div>
+      <div class="gs-file">Tik③出力.gs</div>
+    </div>
+  </div>
+  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。GAS②のスクリプトだが、openById()でSS③に書き込むクロスSS連携。「Tik配送一時」シートはSS③（楽天Qoo10CV管理）に存在。</div>
+</div>
+
 <!-- FLOW 10: 楽天CSV売上データ -->
 <div class="flow-section">
   <div class="flow-title rakuten">楽天 CSV売上データ取込・整理・出力</div>
@@ -725,46 +905,6 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     </div>
   </div>
   <div class="note-box">楽天①②.gs が①②を順番に実行するランナー</div>
-</div>
-
-<!-- FLOW 11: TikTok配送データ（拡張版） -->
-<div class="flow-section">
-  <div class="flow-title tiktok">TikTok 配送データ取込・書込・出力</div>
-  <div class="flow-steps flow-tiktok">
-    <div class="step">
-      <div class="label">外部</div>
-      <div class="name">TikTok CSV/XLSX</div>
-      <div class="detail">配送データファイル</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">Google Drive</div>
-      <div class="name">ファイル格納</div>
-      <div class="detail">CSV/XLSXを格納</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS②</div>
-      <div class="name">Tik① 取り込み</div>
-      <div class="detail">DriveからSS③「Tik配送一時」に取込<br>MAX_COLUMNS=55、Drive API v2使用</div>
-      <div class="gs-file">Tik①ドライブから取り込む.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS②</div>
-      <div class="name">Tik② 配送書き込み</div>
-      <div class="detail">配送データを整理・SS③のシートに書込<br>openByIdでクロスSS書込</div>
-      <div class="gs-file">Tik②配送書き込み.gs</div>
-    </div>
-    <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS②</div>
-      <div class="name">Tik③ 最終整形・出力</div>
-      <div class="detail">最終整形・出力処理</div>
-      <div class="gs-file">Tik③出力.gs</div>
-    </div>
-  </div>
-  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。GAS②のスクリプトだが、openById()でSS③に書き込むクロスSS連携。「Tik配送一時」シートはSS③（楽天Qoo10CV管理）に存在。</div>
 </div>
 
 <!-- FLOW 12: varis整理・集計 -->
@@ -903,7 +1043,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       </div>
     </div>
   </div>
-  <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。GAS②の旧Qoo10処理（キュ①～③.gs, Qoo10確認用更新.gs）は全てdeprecated。現在Qoo10のCV反映はこのvaris経由のみ。Qoo10の請求データはGAS①のTTS請求集計で処理。</div>
+  <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。Qoo10のCV反映はvaris経由のみ（現行）。キュ①～③.gsは配送/売上処理としてGAS②トリガーから稼働中。Qoo10の請求データはGAS①のTTS請求集計で処理。</div>
 </div>
 
 <!-- ========================================== -->
@@ -913,7 +1053,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <h2>リファレンス</h2>
 
   <div class="reference-subsection">
-    <h3>Drive フォルダID一覧</h3>
+    <h3>Drive フォルダID一稧</h3>
     <table>
       <thead>
         <tr>
@@ -945,7 +1085,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="reference-subsection">
     <h3>GAS② 非アクティブファイル一覧（deprecated）</h3>
     <div class="reference-note">
-      キュ①～③.gs, Qoo10確認用更新.gs, Amazon①～②.gs, LPvaris整理.gs
+      キュ⑰～③.gs, Qoo10確認用更新.gs, Amazon⑰～②.gs, LPvaris整理.gs
     </div>
   </div>
 
