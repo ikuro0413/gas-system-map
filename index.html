@@ -172,7 +172,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     <ul>
       <li>楽天① ドライブから取り込む.gs</li>
       <li>楽天② CSV整理と出力.gs</li>
-      <li>Tik① ドライブから取り込む.gs</li>
+      <li>Tik① ドライブから取り込む.gs（→SS③に書込）</li>
       <li>Tik② 配送書き込み.gs / Tik③ 出力.gs</li>
       <li>varis整理.gs / varis集計表出力.gs</li>
       <li>パートナー出力（Senjin / サル）</li>
@@ -180,10 +180,12 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
   <div class="ss-box ss3">
     <h3>SS③ 楽天Qoo10CV管理</h3>
-    <div class="ss-id">GAS③ — ファイル1つのみ</div>
+    <div class="ss-id">GAS③ — ファイル1つのみ / GAS②からも書込あり</div>
     <ul>
-      <li>Varis反映.gs</li>
-      <li>SS②のvaris整理結果を各モールCV行に書込</li>
+      <li>Varis反映.gs（GAS③唯一のファイル）</li>
+      <li>varis整理結果を各モール(Qoo10/楽天/TTS)のCV行に書込</li>
+      <li>「Tik配送一時」シートあり（GAS②のTik①が書込）</li>
+      <li>旧Qoo10処理（キュ①～③）は全てdeprecated</li>
     </ul>
   </div>
 </div>
@@ -571,14 +573,13 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     <div class="step">
       <div class="label">GAS②</div>
       <div class="name">Tik① 取り込み</div>
-      <div class="detail">DriveからSS②「Tik配送一時」に取込（MAX_COLUMNS=55、Drive API v2）</div>
+      <div class="detail">DriveからSS③「Tik配送一時」に取込（MAX_COLUMNS=55、Drive API v2）</div>
       <div class="gs-file">Tik①ドライブから取り込む.gs</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
-    <div class="step">
-      <div class="label">GAS②</div>
+    <div class="label">GAS②</div>
       <div class="name">Tik② 配送書き込み</div>
-      <div class="detail">配送データ整理・SS②に書込</div>
+      <div class="detail">配送データ整理・SS③に書込</div>
       <div class="gs-file">Tik②配送書き込み.gs</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
@@ -589,7 +590,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       <div class="gs-file">Tik③出力.gs</div>
     </div>
   </div>
-  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。旧版では「SS③に取込」と記載されていたが、正しくはSS②の「Tik配送一時」シートに取り込む。</div>
+  <div class="note-box">Tik①～③.gs が①②③を順番に実行するランナー。GAS②のスクリプトだが、取込先はSS③（楽天Qoo10CV管理）の「Tik配送一時」シート。openByIdでSS③に書き込む。</div>
 </div>
 
 <!-- FLOW 12: varis整理・集計 -->
@@ -671,7 +672,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       </div>
       <div class="branch-row">
         <div class="step">
-          <div class=""label">出力</div>
+          <div class="label">出力</div>
           <div class="name">Senjin 楽天</div>
           <div class="gs-file">Senjin_楽天.gs</div>
         </div>
@@ -690,9 +691,9 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="flow-title varis">Varis → CV管理シート反映（GAS②→GAS③連携）</div>
   <div class="flow-steps flow-varis">
     <div class="step">
-      <div class="label">SS② → SS③</div>
+      <div class="label">SS③ シート</div>
       <div class="name">varis整理タブ</div>
-      <div class="detail">GAS②で整理済みのvarisデータ</div>
+      <div class="detail">GAS②が整理したvarisデータ（SS③内に存在）</div>
     </div>
     <div class="connector"><div class="bar"></div></div>
     <div class="step">
@@ -726,7 +727,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       </div>
     </div>
   </div>
-  <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。Qoo10の独立したGAS処理は非アクティブ（deprecated）で、CV反映はこのvaris経由のみ。</div>
+  <div class="note-box">GAS②のvaris処理結果を、GAS③が最終的にCV管理シートに反映する「出口」の役割。GAS②の旧Qoo10処理（キュ①～③.gs, Qoo10確認用更新.gs）は全てdeprecated。現在Qoo10のCV反映はこのvaris経由のみ。Qoo10の請求データはGAS①のTTS請求集計で処理。</div>
 </div>
 
 <!-- ===== Footer ===== -->
