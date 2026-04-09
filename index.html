@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>本業GASシステム全体相関図</title>
+<title>GASシステム全体相関図</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
@@ -78,7 +78,7 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
 </head>
 <body>
 <div class="container">
-<h1>本業 GAS × スプレッドシート × タブ 相関マップ</h1>
+<h1>GAS × スプレッドシート × タブ 相関マップ</h1>
 <p class="subtitle">3つのGASプロジェクトが3つのスプレッドシートと外部データソースを繋ぐパイプライン全体像</p>
 
 <div class="legend">
@@ -92,7 +92,7 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
 
 <!-- ===== 外部データソース ===== -->
 <div class="layer layer-external">
-  <div class="layer-title">📡 外部データソース</div>
+  <div class="layer-title">💼 外部データソース</div>
   <div class="cols-2">
     <div class="ss-card">
       <div class="ss-header"><span class="ss-name">Apify（TikTok動画スクレイピング）</span></div>
@@ -101,17 +101,17 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
     <div class="ss-card">
       <div class="ss-header"><span class="ss-name">Google Drive フォルダ群</span></div>
       <div style="font-size:11px;color:#94a3b8">
-        TTS Excel → <code style="color:#fbbf24">1Jps4g...</code> ｜ TTS請求 → <code style="color:#fbbf24">1nsxcK...</code><br>
-        Qoo10請求 → <code style="color:#fbbf24">1BEEuW...</code> ｜ 楽天CSV → <code style="color:#fbbf24">1d-FSL...</code>
+        TTS Excel → <code style="color:#fbbf24">1Jps4g...</code> | TTS請求 → <code style="color:#fbbf24">1nsxcK...</code><br>
+        Qoo10請求 → <code style="color:#fbbf24">1BEEuW...</code> | 楽天CSV → <code style="color:#fbbf24">1d-FSL...</code>
       </div>
     </div>
     <div class="ss-card">
-      <div class="ss-header"><span class="ss-name">外部Amazon SS</span> <span class="ss-id">15rnXL2w...</span></div>
-      <div style="font-size:11px;color:#94a3b8">「AMZデイリー」シートからGAS①へ日次データ同期</div>
-    </div>
-    <div class="ss-card">
-      <div class="ss-header"><span class="ss-name">外部楽天 SS</span> <span class="ss-id">1kp46nW3...</span></div>
-      <div style="font-size:11px;color:#94a3b8">「楽天デイリー」シートからGAS①へ日次データ同期</div>
+      <div class="ss-header"><span class="ss-name">SS間連携（Amazon/楽天デイリー同期）</span></div>
+      <div style="font-size:11px;color:#94a3b8">
+        SS① Amazon → GAS①シート更新Amazon.gs → SS① AMZデイリー<br>
+        SS② 楽天タブ → GAS①シート更新楽天.gs → SS① 楽天デイリー<br>
+        <span style="color:#fbbf24">※ SS①②のタブにはGAS①がCSV/Excelから自動集計した結果が格納される</span>
+      </div>
     </div>
   </div>
 </div>
@@ -140,7 +140,7 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
       <span class="tab-chip config" style="border-color:#dc2626;color:#fca5a5">GAS更新ログ</span>
       <span class="tab-chip output">TTS集計</span>
       <span class="tab-chip other">運用中</span>
-      <span class="tab-chip other">TTリサーチ</span>
+      <span class="tab-chip other">TT リサーチ</span>
       <span class="tab-chip data">在庫予測シート</span>
       <span class="tab-chip output">キラトスモール合算</span>
       <span class="tab-chip output">再生数集計Tik</span>
@@ -150,7 +150,813 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
       <span class="tab-chip other">永野さんメモ</span>
       <span class="tab-chip other hidden">SEO記事</span>
       <span class="tab-chip other">使用コード</span>
-      <span class="tab-chip other hidden">(旧)モール利益計算</span>
+      <span class="tab-chip other hidden">（旧）モール利益計算</span>
+      <span class="tab-chip other">Gアカ</span>
+      <span class="tab-chip other">案件情報</span>
+      <span class="tab-chip other">Tセール期限一覧</span>
+      <span class="tab-chip other">セール情報(改</span>
+      <span class="tab-chip other">AMZ改善項目</span>
+      <span class="tab-chip other hidden">サル集計 752801/14</span>
+      <span class="tab-chip other hidden">自社成果物過去</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（Rhino runtime）<a class="ss-link" href="https://script.google.com/home/projects/1GnxjfYEhZZt2ey8GX6rybtOWHuKpra2--vMWNlpzuYNs9D5gsshWU7Xj/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">成果物一時からAPIFY出力.gs</span>
+        <span class="gas-file main">担当者毎に集計APIFY.gs</span>
+        <span class="gas-file main">シート更新Amazon.gs</span>
+        <span class="gas-file main">シート更新楽天.gs</span>
+        <span class="gas-file">メディアのキラト投稿.gs</span>
+        <span class="gas-file main">集計整理2026Tik.gs</span>
+        <span class="gas-file main">集計整理2026インスタ.gs</span>
+        <span class="gas-file main">TTS集計.gs（289行）</span>
+        <span class="gas-file main">TTS代理店集計.gs</span>
+        <span class="gas-file main">TTS請求集計.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS① ===== -->
+<div class="layer layer-gas2">
+  <div class="layer-title">🟢 GAS① — モールCV管理元データ（CSV取込・整理・varis処理・パートナー出力）</div>
+  <div class="ss-card">
+    <div class="ss-header">
+      <span class="ss-name">新モールCV管理元データAmazon</span>
+      <span class="ss-id">1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE</span>
+      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE/" target="_blank">開く↗</a>
+    </div>
+    <div class="tab-grid">
+      <span class="tab-chip gas-target">Amazon</span>
+      <span class="tab-chip config">★売上管理システム</span>
+      <span class="tab-chip gas-target">Tik配送</span>
+      <span class="tab-chip gas-target">Tik配送_同一名前</span>
+      <span class="tab-chip data">代理店モール共有</span>
+      <span class="tab-chip data">Amazon開発用一時</span>
+      <span class="tab-chip gas-target">CSV整理用</span>
+      <span class="tab-chip other">ログ</span>
+      <span class="tab-chip data">Amazon開発用広告</span>
+      <span class="tab-chip gas-target">キュ配送</span>
+      <span class="tab-chip gas-target">在庫varis</span>
+      <span class="tab-chip gas-target">varisデータ</span>
+      <span class="tab-chip gas-target">varis整理</span>
+      <span class="tab-chip data">親商品別一時</span>
+      <span class="tab-chip output">varis</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（24ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1dfSzqWfDndHC9VV-NMjbJnEIoqPacjnHLExdsRf618GMEZTKYET4HVH8/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">楽天①ドライブから取り込む.gs</span>
+        <span class="gas-file main">楽天①CSV整理と出力.gs</span>
+        <span class="gas-file">楽天①②.gs</span>
+        <span class="gas-file main">Tik①ドライブから取り込む.gs</span>
+        <span class="gas-file main">Tik①配送書き込み.gs</span>
+        <span class="gas-file main">Tik②出力.gs</span>
+        <span class="gas-file">Tik①～②.gs</span>
+        <span class="gas-file">TTS確認用更新.gs</span>
+        <span class="gas-file main">varis整理.gs</span>
+        <span class="gas-file main">varis集計表出力.gs</span>
+        <span class="gas-file">varis全部.gs</span>
+        <span class="gas-file">Ssenjin様出力_キラト.gs</span>
+        <span class="gas-file">Ssenjin様出力_ラッシュフォルテ.gs</span>
+        <span class="gas-file">サル出力.gs</span>
+        <span class="gas-file">Senjin_楽天.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS② ===== -->
+<div class="layer layer-gas3">
+  <div class="layer-title">🟣 GAS② — 楽天Qoo10CV管理（varis集計→CVシート反映）</div>
+  <div class="ss-card">
+    <div class="ss-header">
+      <span class="ss-name">新_楽天Qoo10CV管理</span>
+      <span class="ss-id">15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg</span>
+      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg/" target="_blank">開く↗</a>
+    </div>
+    <div class="tab-grid">
+      <span class="tab-chip gas-target">Qoo10</span>
+      <span class="tab-chip gas-target">TTS</span>
+      <span class="tab-chip gas-target">楽天</span>
+      <span class="tab-chip data">TTS確認用</span>
+      <span class="tab-chip data">キュ確認用</span>
+      <span class="tab-chip config">RQ売上管理システム</span>
+      <span class="tab-chip gas-target">Tik配送一時</span>
+      <span class="tab-chip data">TikTok一覧</span>
+      <span class="tab-chip data">Tik一覧</span>
+      <span class="tab-chip data">楽天確認用</span>
+      <span class="tab-chip data">キュ整理</span>
+      <span class="tab-chip data">キュ広告一時</span>
+      <span class="tab-chip data">キュ広告整理</span>
+      <span class="tab-chip gas-target">楽天CSV一覧</span>
+      <span class="tab-chip gas-target">楽天CSV整理用</span>
+      <span class="tab-chip data">楽天CSV一時</span>
+      <span class="tab-chip data">楽天広告一時</span>
+      <span class="tab-chip gas-target">varis整理</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（1ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1NvJSVNcXN4p_WnvH6y2cne9dJS-o2hUCPcnwlJDXfzoq9r69Um79SYMq/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">Varis反映.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== データフロー ===== -->
+<div class="section-title">🔄 データフロー（GAS関数 → タブの読み書き関係）</div>
+
+<div class="flow-section">
+  <div class="flow-title">1. Apify → TikTok投稿データ</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Apify</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">成果物一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">自社投稿</span>
+    <span class="flow-func">成果物一時から出力APIFY.gs</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">自社投稿</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">S~V列 担当者別集計</span>
+    <span class="flow-func">担当者ごと()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">2. 再生数集計（TikTok / Instagram）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">再生数一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">再生数集計Tik</span>
+    <span class="flow-func">集計整理2026Tik()</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">再生数一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">再生数集計insta</span>
+    <span class="flow-func">集計整理2026インスタ()</span>
+  </div>
+</div>
+
+<div class="flow-section" style="border-color:#065f46;">
+  <div class="flow-title" style="color:#34d399;">3. Amazon / 楽天 デイリーデータ同期（SS① → SS①②③ のクロスSS連携）</div>
+  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">GAS①がSS①②のタブから日次データを読み取り、SS①のデイリータブへ同期する。元データはGAS①がCSV/Excelから自動集計して各タブに格納済み。</div>
+
+  <div style="font-size:11px;font-weight:700;color:#34d399;margin-bottom:4px;">Amazon系：SS① Amazon → SS① AMZデイリー</div>
+  <div class="flow-row" style="background:rgba(16,185,129,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive CSV/Excel</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">SS① Amazonタブ</span>
+    <span class="flow-func">GAS① CSV/Excel自動集計</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">SS① AMZデイリー</span>
+    <span class="flow-func">GAS① シート更新Amazon.gs — 更新()</span>
+  </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新モールCV管理元データAmazon（<code style="color:#64748b">1yT1vida...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#86efac;margin:2px 0 8px 8px;">GAS①側: Amazon①②.gs等でCSV/Excelデータを取り込み → SS① AmazonタブAmazon開発用一時Amazon開発用広告に集約</div>
+
+  <div style="font-size:11px;font-weight:700;color:#a78bfa;margin-bottom:4px;">楽天系：SS② 楽天タブ → SS① 楽天デイリー</div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive 楽天CSV <span style="font-size:9px;opacity:0.7">1d-FSL...</span></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS② 楽天CSV一時/楽天広告一時</span>
+    <span class="flow-func">GAS① 楽天①ドライブから取り込む.gs</span>
+  </div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:4px 6px;border-radius:6px;margin-top:2px;">
+    <span class="flow-box flow-g3">SS② 楽天CSV一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS② 楽天CSV整理用</span>
+    <span class="flow-func">GAS① 楽天①CSV整理と出力.gs</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3" style="border:2px solid #a78bfa;font-weight:700">SS② 楽天タブ</span>
+  </div>
+  <div class="flow-row" style="margin-top:4px;">
+    <span class="flow-box flow-g3">SS② 楽天タブ</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">SS① 楽天デイリー</span>
+    <span class="flow-func">GAS① シート更新楽天.gs — 楽天更新()</span>
+  </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新_楽天Qoo10CV管理（<code style="color:#64748b">15wtvBZH...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#c4b5fd;margin:2px 0 0 8px;">GAS①側: 楽天①②.gs がDriveのCSVファイルを取り込み → SS② 楽天CSV一時 → 整理 → 楽天タブに反映</div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">4. TTS集計パイプライン（GAS①内で完結）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive Excel</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">TTS集計</span>
+    <span class="flow-func">TTS集計取込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">代理店アカ管理</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-ext">Drive Excel出力</span>
+    <span class="flow-func">TTS代理店集計()</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive TTS/Qoo10請求</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">支払い管理</span>
+    <span class="flow-func">支払い集計()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">5. 楽天CSV取込パイプライン（GAS① → SS②）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">楽天CSV一時 / 楽天広告一時</span>
+    <span class="flow-func">楽天CSV売上集計()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">楽天CSV整理用</span>
+    <span class="flow-func">楽天①CSV整理と出力()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">6. TikTok配送データパイプライン（GAS① → SS②）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Tik配送一時</span>
+    <span class="flow-func">Tik取込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">Tik配送</span>
+    <span class="flow-func">Tik①配送書込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">TTS / TikTok一覧</span>
+    <span class="flow-func">Tik②出力()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">7. varisパイプライン（GAS① → GAS② のクロスSS連携 ★最重要★）</div>
+  <div class="flow-row" style="background:rgba(245,158,11,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g2">varisデータ（SS①）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis整理（SS①）</span>
+    <span class="flow-func">varisデータ整理()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis集計表（SS①）</span>
+    <span class="flow-func">varis集計表出力()</span>
+  </div>
+  <div class="flow-row" style="margin-top:4px;background:rgba(168,85,247,0.1);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g3">varis整理（SS②）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Qoo10 / 楽天 / TTS（SS②）</span>
+    <span class="flow-func">GAS② varis集計表出力()</span>
+    <span style="font-size:10px;color:#f59e0b;margin-left:4px">← 日付行マッチでCV書込</span>
+  </div>
+</div>
+
+<!-- ===== Qoo10配送処理フロー ===== -->
+<div class="section-title" style="color:#f472b6;border-color:#be185d;">🔍 Qoo10 配送処理フロー（横断ビュー）</div>
+
+<div class="flow-section" style="border-color:#be185d;">
+  <div class="flow-title" style="color:#f472b6;">Qoo10配送データの全体フロー（3つのGASに跨る）</div>
+  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">Qoo10の配送・CV・請求データは独立したGASではなく、TikTok配送パイプライン＋varisパイプラインを経由して処理される。</div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin-bottom:4px;">STEP 1: 配送データ取込（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Tik配送一時（SS②）</span>
+    <span class="flow-func">Tik①ドライブから取り込む.gs — Tik取込()</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 2: 配送書込&出力（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g3">Tik配送一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">Tik配送（SS①）</span>
+    <span class="flow-func">Tik①配送書き込み.gs</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">TTS / TikTok一覧（SS②）</span>
+    <span class="flow-func">Tik②出力.gs</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 3: varis整理→集計（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g2">varisデータ（SS①）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis整理（SS①）</span>
+    <span class="flow-func">varis整理.gs — varisデータ整理()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis集計表</span>
+    <span class="flow-func">varis集計表出力.gs</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 4: Qoo10 CVシート反映（GAS② — 最終出口）</div>
+  <div class="flow-row" style="background:rgba(244,114,182,0.1);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g3">varis整理（SS②）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3" style="border:2px solid #ec4899;font-weight:700">Qoo10 CVシート（SS②）</span>
+    <span class="flow-func">GAS② Varis反映.gs — varis集計表出力()</span>
+    <span style="font-size:10px;color:#f472b6;margin-left:4px">← 日付行マッチでCV数を書込</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 5: Qoo10請求データ集計（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive Qoo10請求 <span style="font-size:9px;opacity:0.7">1BEEuW...</span></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">支払い管理（SS①）</span>
+    <span class="flow-func">TTS請求集計.gs — 支払い集計()</span>
+    <span style="font-size:10px;color:#fbbf24;margin-left:4px">Qoo10=ピンク色分け</span>
+  </div>
+</div>
+
+<div class="flow-section" style="border-color:#be185d;">
+  <div class="flow-title" style="color:#f472b6;">Qoo10関連GASファイル一覧</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;">
+    <div>
+      <div style="color:#60a5fa;font-weight:700;margin-bottom:4px;">GAS①（Tik管理シート）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">TTS請求集計.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10請求データの集計</div>
+    </div>
+    <div>
+      <div style="color:#34d399;font-weight:700;margin-bottom:4px;">GAS①（モールCV管理元データ）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik①ドライブから取り込む.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik①配送書き込み.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik②出力.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">varis整理.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">varis集計表出力.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">配送取込→varis処理のメインパイプライン</div>
+    </div>
+    <div>
+      <div style="color:#a78bfa;font-weight:700;margin-bottom:4px;">GAS②（楽天Qoo10CV管理）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Varis反映.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10 CVシートへの最終書込</div>
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:6px;background:rgba(100,116,139,0.15);border-radius:4px;font-size:10px;color:#94a3b8;">
+    <strong style="color:#64748b;">⚠ 旧Qoo10専用スクリプト（非アクティブ）:</strong> GAS①の「キュ①～②」は現在未使用。Qoo10データはTik配送パイプライン＋varisパイプラインに統合済み。
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">⚠️ 実行順序の依存関係（順番を間違えるとデータが空になる）</div>
+  <div style="font-size:12px;line-height:1.8;">
+    <div><strong style="color:#34d399">varis系:</strong> GAS① varis整理() → GAS① varis集計表出力() → <strong style="color:#a78bfa">GAS② varis集計表出力()</strong></div>
+    <div><strong style="color:#34d399">楽天系:</strong> GAS① 楽天CSV売上集計() → GAS① 楽天①CSV整理と出力()</div>
+    <div><strong style="color:#34d399">TikTok系:</strong> GAS① Tik取込() → GAS① Tik①配送書込() → GAS① Tik②出力()</div>
+    <div><strong style="color:#60a5fa">TTS系:</strong> GAS① TTS集計取込() → GAS① TTS代理店集計() → GAS① 支払い集計()</div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:20px;font-size:11px;color:#475569;">
+  作成日: 2026/04/09 | 最終更新: 2026/04/09 Amazon/楽天デイリー同期フロー詳細化・タイトル修正 | GAS統括ディレクタースキル準拠
+</div>
+</div>
+</body>
+</html>
+f9; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #334155; }
+
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .cols-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>GAS × スプレッドシート × タブ 相関マップ</h1>
+<p class="subtitle">3つのGASプロジェクトが3つのスプレッドシートと外部データソースを繋ぐパイプライン全体像</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> GAS処理対象タブ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#166534"></div> データ入出力タブ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div> 出力・集計タブ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div> 設定・マスタタブ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#334155"></div> 手動運用タブ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#334155;opacity:0.4"></div> 非表示/旧タブ</div>
+</div>
+
+<!-- ===== 外部データソース ===== -->
+<div class="layer layer-external">
+  <div class="layer-title">💼 外部データソース</div>
+  <div class="cols-2">
+    <div class="ss-card">
+      <div class="ss-header"><span class="ss-name">Apify（TikTok動画スクレイピング）</span></div>
+      <div style="font-size:11px;color:#94a3b8">TikTok動画メタデータ（再生数・いいね・コメント等）を自動収集 → GAS①の「成果物一時」へ</div>
+    </div>
+    <div class="ss-card">
+      <div class="ss-header"><span class="ss-name">Google Drive フォルダ群</span></div>
+      <div style="font-size:11px;color:#94a3b8">
+        TTS Excel → <code style="color:#fbbf24">1Jps4g...</code> | TTS請求 → <code style="color:#fbbf24">1nsxcK...</code><br>
+        Qoo10請求 → <code style="color:#fbbf24">1BEEuW...</code> | 楽天CSV → <code style="color:#fbbf24">1d-FSL...</code>
+      </div>
+    </div>
+    <div class="ss-card">
+      <div class="ss-header"><span class="ss-name">SS間連携（Amazon/楽天デイリー同期）</span></div>
+      <div style="font-size:11px;color:#94a3b8">
+        SS① Amazon → GAS①シート更新Amazon.gs → SS① AMZデイリー<br>
+        SS② 楽天タブ → GAS①シート更新楽天.gs → SS① 楽天デイリー<br>
+        <span style="color:#fbbf24">※ SS①②のタブにはGAS①がCSV/Excelから自動集計した結果が格納される</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS① ===== -->
+<div class="layer layer-gas1">
+  <div class="layer-title">🔵 GAS① — Tik管理シート（TikTok・TTS・Instagram集計、Amazon/楽天同期）</div>
+  <div class="ss-card">
+    <div class="ss-header">
+      <span class="ss-name">Tiktok管理シート</span>
+      <span class="ss-id">1Qulrn5kLK-kUr2ltwykRrQ6RyI7mZqrkrAbVkCyJVVw</span>
+      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/1Qulrn5kLK-kUr2ltwykRrQ6RyI7mZqrkrAbVkCyJVVw/" target="_blank">開く↗</a>
+    </div>
+    <div class="tab-grid">
+      <span class="tab-chip config">商材別日次集計</span>
+      <span class="tab-chip gas-target">AMZデイリー</span>
+      <span class="tab-chip gas-target">楽天デイリー</span>
+      <span class="tab-chip gas-target">TTSデイリー</span>
+      <span class="tab-chip gas-target">Q10デイリー</span>
+      <span class="tab-chip data">全媒体在庫</span>
+      <span class="tab-chip gas-target">代理店稼働状況</span>
+      <span class="tab-chip gas-target">代理店アカ管理</span>
+      <span class="tab-chip gas-target">支払い管理</span>
+      <span class="tab-chip data">在庫管理</span>
+      <span class="tab-chip other">モール利益計算</span>
+      <span class="tab-chip config" style="border-color:#dc2626;color:#fca5a5">GAS更新ログ</span>
+      <span class="tab-chip output">TTS集計</span>
+      <span class="tab-chip other">運用中</span>
+      <span class="tab-chip other">TT リサーチ</span>
+      <span class="tab-chip data">在庫予測シート</span>
+      <span class="tab-chip output">キラトスモール合算</span>
+      <span class="tab-chip output">再生数集計Tik</span>
+      <span class="tab-chip output">再生数集計insta</span>
+      <span class="tab-chip gas-target">再生数一時</span>
+      <span class="tab-chip other hidden">モール跳ね返り</span>
+      <span class="tab-chip other">永野さんメモ</span>
+      <span class="tab-chip other hidden">SEO記事</span>
+      <span class="tab-chip other">使用コード</span>
+      <span class="tab-chip other hidden">（旧）モール利益計算</span>
+      <span class="tab-chip other">Gアカ</span>
+      <span class="tab-chip other">案件情報</span>
+      <span class="tab-chip other">Tセール期限一覧</span>
+      <span class="tab-chip other">セール情報(改</span>
+      <span class="tab-chip other">AMZ改善項目</span>
+      <span class="tab-chip other hidden">サル集計 752801/14</span>
+      <span class="tab-chip other hidden">自社成果物過去</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（Rhino runtime）<a class="ss-link" href="https://script.google.com/home/projects/1GnxjfYEhZZt2ey8GX6rybtOWHuKpra2--vMWNlpzuYNs9D5gsshWU7Xj/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">成果物一時からAPIFY出力.gs</span>
+        <span class="gas-file main">担当者毎に集計APIFY.gs</span>
+        <span class="gas-file main">シート更新Amazon.gs</span>
+        <span class="gas-file main">シート更新楽天.gs</span>
+        <span class="gas-file">メディアのキラト投稿.gs</span>
+        <span class="gas-file main">集計整理2026Tik.gs</span>
+        <span class="gas-file main">集計整理2026インスタ.gs</span>
+        <span class="gas-file main">TTS集計.gs（289行）</span>
+        <span class="gas-file main">TTS代理店集計.gs</span>
+        <span class="gas-file main">TTS請求集計.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS① ===== -->
+<div class="layer layer-gas2">
+  <div class="layer-title">🟢 GAS① — モールCV管理元データ（CSV取込・整理・varis処理・パートナー出力）</div>
+  <div class="ss-card">
+    <div class="ss-header">
+      <span class="ss-name">新モールCV管理元データAmazon</span>
+      <span class="ss-id">1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE</span>
+      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/1yT1vidaJCsmA_WV_j7ExwgOE40d1gzKmXkZa472uwYE/" target="_blank">開く↗</a>
+    </div>
+    <div class="tab-grid">
+      <span class="tab-chip gas-target">Amazon</span>
+      <span class="tab-chip config">★売上管理システム</span>
+      <span class="tab-chip gas-target">Tik配送</span>
+      <span class="tab-chip gas-target">Tik配送_同一名前</span>
+      <span class="tab-chip data">代理店モール共有</span>
+      <span class="tab-chip data">Amazon開発用一時</span>
+      <span class="tab-chip gas-target">CSV整理用</span>
+      <span class="tab-chip other">ログ</span>
+      <span class="tab-chip data">Amazon開発用広告</span>
+      <span class="tab-chip gas-target">キュ配送</span>
+      <span class="tab-chip gas-target">在庫varis</span>
+      <span class="tab-chip gas-target">varisデータ</span>
+      <span class="tab-chip gas-target">varis整理</span>
+      <span class="tab-chip data">親商品別一時</span>
+      <span class="tab-chip output">varis</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（24ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1dfSzqWfDndHC9VV-NMjbJnEIoqPacjnHLExdsRf618GMEZTKYET4HVH8/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">楽天①ドライブから取り込む.gs</span>
+        <span class="gas-file main">楽天①CSV整理と出力.gs</span>
+        <span class="gas-file">楽天①②.gs</span>
+        <span class="gas-file main">Tik①ドライブから取り込む.gs</span>
+        <span class="gas-file main">Tik①配送書き込み.gs</span>
+        <span class="gas-file main">Tik②出力.gs</span>
+        <span class="gas-file">Tik①～②.gs</span>
+        <span class="gas-file">TTS確認用更新.gs</span>
+        <span class="gas-file main">varis整理.gs</span>
+        <span class="gas-file main">varis集計表出力.gs</span>
+        <span class="gas-file">varis全部.gs</span>
+        <span class="gas-file">Ssenjin様出力_キラト.gs</span>
+        <span class="gas-file">Ssenjin様出力_ラッシュフォルテ.gs</span>
+        <span class="gas-file">サル出力.gs</span>
+        <span class="gas-file">Senjin_楽天.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS② ===== -->
+<div class="layer layer-gas3">
+  <div class="layer-title">🟣 GAS② — 楽天Qoo10CV管理（varis集計→CVシート反映）</div>
+  <div class="ss-card">
+    <div class="ss-header">
+      <span class="ss-name">新_楽天Qoo10CV管理</span>
+      <span class="ss-id">15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg</span>
+      <a class="ss-link" href="https://docs.google.com/spreadsheets/d/15wtvBZHZhKBCvR3H2GmDq10yKdacXBVG5TLdNEAaThg/" target="_blank">開く↗</a>
+    </div>
+    <div class="tab-grid">
+      <span class="tab-chip gas-target">Qoo10</span>
+      <span class="tab-chip gas-target">TTS</span>
+      <span class="tab-chip gas-target">楽天</span>
+      <span class="tab-chip data">TTS確認用</span>
+      <span class="tab-chip data">キュ確認用</span>
+      <span class="tab-chip config">RQ売上管理システム</span>
+      <span class="tab-chip gas-target">Tik配送一時</span>
+      <span class="tab-chip data">TikTok一覧</span>
+      <span class="tab-chip data">Tik一覧</span>
+      <span class="tab-chip data">楽天確認用</span>
+      <span class="tab-chip data">キュ整理</span>
+      <span class="tab-chip data">キュ広告一時</span>
+      <span class="tab-chip data">キュ広告整理</span>
+      <span class="tab-chip gas-target">楽天CSV一覧</span>
+      <span class="tab-chip gas-target">楽天CSV整理用</span>
+      <span class="tab-chip data">楽天CSV一時</span>
+      <span class="tab-chip data">楽天広告一時</span>
+      <span class="tab-chip gas-target">varis整理</span>
+    </div>
+    <div class="gas-card">
+      <div class="gas-header">📝 GASプロジェクト（1ファイル）<a class="ss-link" href="https://script.google.com/home/projects/1NvJSVNcXN4p_WnvH6y2cne9dJS-o2hUCPcnwlJDXfzoq9r69Um79SYMq/edit" target="_blank" style="margin-left:8px">エディタ↗</a></div>
+      <div class="gas-files">
+        <span class="gas-file main">Varis反映.gs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== データフロー ===== -->
+<div class="section-title">🔄 データフロー（GAS関数 → タブの読み書き関係）</div>
+
+<div class="flow-section">
+  <div class="flow-title">1. Apify → TikTok投稿データ</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Apify</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">成果物一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">自社投稿</span>
+    <span class="flow-func">成果物一時から出力APIFY.gs</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">自社投稿</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">S~V列 担当者別集計</span>
+    <span class="flow-func">担当者ごと()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">2. 再生数集計（TikTok / Instagram）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">再生数一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">再生数集計Tik</span>
+    <span class="flow-func">集計整理2026Tik()</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-g1">再生数一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">再生数集計insta</span>
+    <span class="flow-func">集計整理2026インスタ()</span>
+  </div>
+</div>
+
+<div class="flow-section" style="border-color:#065f46;">
+  <div class="flow-title" style="color:#34d399;">3. Amazon / 楽天 デイリーデータ同期（SS① → SS①②③ のクロスSS連携）</div>
+  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">GAS①がSS①②のタブから日次データを読み取り、SS①のデイリータブへ同期する。元データはGAS①がCSV/Excelから自動集計して各タブに格納済み。</div>
+
+  <div style="font-size:11px;font-weight:700;color:#34d399;margin-bottom:4px;">Amazon系：SS① Amazon → SS① AMZデイリー</div>
+  <div class="flow-row" style="background:rgba(16,185,129,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive CSV/Excel</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">SS① Amazonタブ</span>
+    <span class="flow-func">GAS① CSV/Excel自動集計</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">SS① AMZデイリー</span>
+    <span class="flow-func">GAS① シート更新Amazon.gs — 更新()</span>
+  </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新モールCV管理元データAmazon（<code style="color:#64748b">1yT1vida...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#86efac;margin:2px 0 8px 8px;">GAS①側: Amazon①②.gs等でCSV/Excelデータを取り込み → SS① AmazonタブAmazon開発用一時Amazon開発用広告に集約</div>
+
+  <div style="font-size:11px;font-weight:700;color:#a78bfa;margin-bottom:4px;">楽天系：SS② 楽天タブ → SS① 楽天デイリー</div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive 楽天CSV <span style="font-size:9px;opacity:0.7">1d-FSL...</span></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS② 楽天CSV一時/楽天広告一時</span>
+    <span class="flow-func">GAS① 楽天①ドライブから取り込む.gs</span>
+  </div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:4px 6px;border-radius:6px;margin-top:2px;">
+    <span class="flow-box flow-g3">SS② 楽天CSV一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS② 楽天CSV整理用</span>
+    <span class="flow-func">GAS① 楽天①CSV整理と出力.gs</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3" style="border:2px solid #a78bfa;font-weight:700">SS② 楽天タブ</span>
+  </div>
+  <div class="flow-row" style="margin-top:4px;">
+    <span class="flow-box flow-g3">SS② 楽天タブ</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">SS① 楽天デイリー</span>
+    <span class="flow-func">GAS① シート更新楽天.gs — 楽天更新()</span>
+  </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新_楽天Qoo10CV管理（<code style="color:#64748b">15wtvBZH...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#c4b5fd;margin:2px 0 0 8px;">GAS①側: 楽天①②.gs がDriveのCSVファイルを取り込み → SS② 楽天CSV一時 → 整理 → 楽天タブに反映</div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">4. TTS集計パイプライン（GAS①内で完結）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive Excel</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">TTS集計</span>
+    <span class="flow-func">TTS集計取込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">代理店アカ管理</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-ext">Drive Excel出力</span>
+    <span class="flow-func">TTS代理店集計()</span>
+  </div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive TTS/Qoo10請求</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">支払い管理</span>
+    <span class="flow-func">支払い集計()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">5. 楽天CSV取込パイプライン（GAS① → SS②）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">楽天CSV一時 / 楽天広告一時</span>
+    <span class="flow-func">楽天CSV売上集計()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">楽天CSV整理用</span>
+    <span class="flow-func">楽天①CSV整理と出力()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">6. TikTok配送データパイプライン（GAS① → SS②）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Tik配送一時</span>
+    <span class="flow-func">Tik取込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">Tik配送</span>
+    <span class="flow-func">Tik①配送書込()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">TTS / TikTok一覧</span>
+    <span class="flow-func">Tik②出力()</span>
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">7. varisパイプライン（GAS① → GAS② のクロスSS連携 ★最重要★）</div>
+  <div class="flow-row" style="background:rgba(245,158,11,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g2">varisデータ（SS①）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis整理（SS①）</span>
+    <span class="flow-func">varisデータ整理()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis集計表（SS①）</span>
+    <span class="flow-func">varis集計表出力()</span>
+  </div>
+  <div class="flow-row" style="margin-top:4px;background:rgba(168,85,247,0.1);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g3">varis整理（SS②）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Qoo10 / 楽天 / TTS（SS②）</span>
+    <span class="flow-func">GAS② varis集計表出力()</span>
+    <span style="font-size:10px;color:#f59e0b;margin-left:4px">← 日付行マッチでCV書込</span>
+  </div>
+</div>
+
+<!-- ===== Qoo10配送処理フロー ===== -->
+<div class="section-title" style="color:#f472b6;border-color:#be185d;">🔍 Qoo10 配送処理フロー（横断ビュー）</div>
+
+<div class="flow-section" style="border-color:#be185d;">
+  <div class="flow-title" style="color:#f472b6;">Qoo10配送データの全体フロー（3つのGASに跨る）</div>
+  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">Qoo10の配送・CV・請求データは独立したGASではなく、TikTok配送パイプライン＋varisパイプラインを経由して処理される。</div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin-bottom:4px;">STEP 1: 配送データ取込（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive CSV/XLSX</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">Tik配送一時（SS②）</span>
+    <span class="flow-func">Tik①ドライブから取り込む.gs — Tik取込()</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 2: 配送書込&出力（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g3">Tik配送一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">Tik配送（SS①）</span>
+    <span class="flow-func">Tik①配送書き込み.gs</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">TTS / TikTok一覧（SS②）</span>
+    <span class="flow-func">Tik②出力.gs</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 3: varis整理→集計（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-g2">varisデータ（SS①）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis整理（SS①）</span>
+    <span class="flow-func">varis整理.gs — varisデータ整理()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g2">varis集計表</span>
+    <span class="flow-func">varis集計表出力.gs</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 4: Qoo10 CVシート反映（GAS② — 最終出口）</div>
+  <div class="flow-row" style="background:rgba(244,114,182,0.1);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-g3">varis整理（SS②）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3" style="border:2px solid #ec4899;font-weight:700">Qoo10 CVシート（SS②）</span>
+    <span class="flow-func">GAS② Varis反映.gs — varis集計表出力()</span>
+    <span style="font-size:10px;color:#f472b6;margin-left:4px">← 日付行マッチでCV数を書込</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#f472b6;margin:8px 0 4px;">STEP 5: Qoo10請求データ集計（GAS①）</div>
+  <div class="flow-row">
+    <span class="flow-box flow-ext">Drive Qoo10請求 <span style="font-size:9px;opacity:0.7">1BEEuW...</span></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">支払い管理（SS①）</span>
+    <span class="flow-func">TTS請求集計.gs — 支払い集計()</span>
+    <span style="font-size:10px;color:#fbbf24;margin-left:4px">Qoo10=ピンク色分け</span>
+  </div>
+</div>
+
+<div class="flow-section" style="border-color:#be185d;">
+  <div class="flow-title" style="color:#f472b6;">Qoo10関連GASファイル一覧</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;">
+    <div>
+      <div style="color:#60a5fa;font-weight:700;margin-bottom:4px;">GAS①（Tik管理シート）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">TTS請求集計.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10請求データの集計</div>
+    </div>
+    <div>
+      <div style="color:#34d399;font-weight:700;margin-bottom:4px;">GAS①（モールCV管理元データ）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik①ドライブから取り込む.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik①配送書き込み.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Tik②出力.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">varis整理.gs</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">varis集計表出力.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">配送取込→varis処理のメインパイプライン</div>
+    </div>
+    <div>
+      <div style="color:#a78bfa;font-weight:700;margin-bottom:4px;">GAS②（楽天Qoo10CV管理）</div>
+      <div class="gas-file main" style="display:inline-block;margin:2px;">Varis反映.gs</div>
+      <div style="color:#94a3b8;font-size:10px;margin-top:2px;">Qoo10 CVシートへの最終書込</div>
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:6px;background:rgba(100,116,139,0.15);border-radius:4px;font-size:10px;color:#94a3b8;">
+    <strong style="color:#64748b;">⚠ 旧Qoo10専用スクリプト（非アクティブ）:</strong> GAS①の「キュ①～②」は現在未使用。Qoo10データはTik配送パイプライン＋varisパイプラインに統合済み。
+  </div>
+</div>
+
+<div class="flow-section">
+  <div class="flow-title">⚠️ 実行順序の依存関係（順番を間違えるとデータが空になる）</div>
+  <div style="font-size:12px;line-height:1.8;">
+    <div><strong style="color:#34d399">varis系:</strong> GAS① varis整理() → GAS① varis集計表出力() → <strong style="color:#a78bfa">GAS② varis集計表出力()</strong></div>
+    <div><strong style="color:#34d399">楽天系:</strong> GAS① 楽天CSV売上集計() → GAS① 楽天①CSV整理と出力()</div>
+    <div><strong style="color:#34d399">TikTok系:</strong> GAS① Tik取込() → GAS① Tik①配送書込() → GAS① Tik②出力()</div>
+    <div><strong style="color:#60a5fa">TTS系:</strong> GAS① TTS集計取込() → GAS① TTS代理店集計() → GAS① 支払い集計()</div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:20px;font-size:11px;color:#475569;">
+  作成日: 2026/04/09 | 最終更新: 2026/04/09 Amazon/楽天デイリー同期フロー詳細化・タイトル修正 | GAS統括ディレクタースキル準拠
+</div>
+</div>
+</body>
+</html>
+ss="tab-chip other hidden">(旧)モール利益計算</span>
       <span class="tab-chip other">Gアカ</span>
       <span class="tab-chip other">案件情報</span>
       <span class="tab-chip other">Tセール期限一覧</span>
@@ -301,20 +1107,46 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
   </div>
 </div>
 
-<div class="flow-section">
-  <div class="flow-title">3. Amazon / 楽天 デイリーデータ同期</div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">外部Amazon SS</span>
+<div class="flow-section" style="border-color:#065f46;">
+  <div class="flow-title" style="color:#34d399;">Σ. Amazon / 楽天 デイリーデータ同期（SS②③ → SS① のクロスSS連携）</div>
+  <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">GAS①がSS②・SS③のタブから日次データを読み取り、SS①のディリータブへ同期する。元データはGAS②がCSV/Excelから自動集計して各タブに格納済み。</div>
+
+  <div style="font-size:11px;font-weight:700;color:#34d399;margin-bottom:4px;">Amazon系：SS② Amazonタブ → SS① AMZデイリー</div>
+  <div class="flow-row" style="background:rgba(16,185,129,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive CSV/Excel</span>
     <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">AMZデイリー</span>
-    <span class="flow-func">更新()</span>
-  </div>
-  <div class="flow-row">
-    <span class="flow-box flow-ext">外部楽天 SS</span>
+    <span class="flow-box flow-g2">SS② Amazonタブ</span>
+    <span class="flow-func">GAS② CSV/Excel自動集計</span>
     <span class="flow-arrow">→</span>
-    <span class="flow-box flow-g1">楽天デイリー</span>
-    <span class="flow-func">楽天更新()</span>
+    <span class="flow-box flow-g1">SS① AMZデイリー</span>
+    <span class="flow-func">GAS① シート更新Amazon.gs — 更新()</span>
   </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新モールCV管理元データAmazon（<code style="color:#64748b">1yT1vida...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#86efac;margin:2px 0 8px 8px;">GAS②側: Amazon①②.gs等でCSV/Excelデータを取り込み → SS② Amazonタブ → 整理 → Amazonタブに反映</div>
+
+  <div style="font-size:11px;font-weight:700;color:#a78bfa;margin-bottom:4px;">楽天系：SS③ 楽天タブ → SS① 楽天デイリー</div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:6px;border-radius:6px;">
+    <span class="flow-box flow-ext">Drive 楽天CSV <span style="font-size:9px;opacity:0.7">1d-FSL...</span></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS③ 楽天CSV一時/楽天広告一時</span>
+    <span class="flow-func">GAS② 楽天①ドライブから取り込む.gs</span>
+  </div>
+  <div class="flow-row" style="background:rgba(168,85,247,0.08);padding:4px 6px;border-radius:6px;margin-top:2px;">
+    <span class="flow-box flow-g3">SS③ 楽天CSV一時</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3">SS③ 楽天CSV整理用</span>
+    <span class="flow-func">GAS② 楽天②CSV整理と出力.gs</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g3" style="border:2px solid #a78bfa;font-weight:700">SS③ 楽天タブ</span>
+  </div>
+  <div class="flow-row" style="margin-top:4px;">
+    <span class="flow-box flow-g3">SS③ 楽天タブ</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box flow-g1">SS① 楽天デイリー</span>
+    <span class="flow-func">GAS① シート更新楽天.gs — 楽天更新()</span>
+  </div>
+  <div style="font-size:10px;color:#94a3b8;margin:4px 0 2px 8px;">対象SS: 新_楽天Qoo10CV管理（<code style="color:#64748b">15wtvBZH...</code>）→ Tik管理シート（<code style="color:#64748b">1Qulrn5k...</code>）</div>
+  <div style="font-size:10px;color:#c4b5fd;margin:2px 0 0 8px;">GAS②側: 楽天①②.gs がDriveのCSVファイルを取り込み → SS③ 楽天CSV一時 → 整理 → 楽天タブに反映</div>
 </div>
 
 <div class="flow-section">
@@ -482,7 +1314,7 @@ h1 { text-align: center; font-size: 22px; margin-bottom: 8px; color: #f1f5f9; }
 </div>
 
 <div style="text-align:center;margin-top:20px;font-size:11px;color:#475569;">
-  作成日: 2026/04/09 ｜ 最終更新: 2026/04/09 Qoo10配送フロー追加 ｜ GAS統括ディレクタースキル準拠
+  作成日: 2026/04/09 ｜ 最終更新: 2026/04/09 Amazon/楽天デイリー同期フロー詳細化・タイトル修正 ｜ GAS統括ディレクタースキル準拠
 </div>
 </div>
 </body>
