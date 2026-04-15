@@ -109,21 +109,22 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <div class="ss-box ss2">
     <h3>SS② モールCV管理元データ</h3>
     <div class="ss-id">SS ID: 1yT1vidaJC...</div>
-    <div class="ss-detail">GAS② 35+ファイル<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 10件（時間ベース）</strong></div>
+    <div class="ss-detail">GAS② 35+ファイル<br>サービス: Drive API・Gmail<br><strong style="color:#f87171;">トリガー: 11件（時間ベース）</strong></div>
     <ul>
       <li>楽天① ドライブから取り込む.gs / ② CSV整理と出力.gs</li>
       <li>Tik① ドライブから取り込む.gs / ② 配送書き込み.gs / ③ 出力.gs</li>
       <li>varis整理.gs / varis集計表出力.gs</li>
-      <li>パートナー出力（Senjin / サル）</li>
+      <li>パートナー出力（Senjin / サル / 3well）</li>
       <li>Qoo10配送ファイル作成.gs / 集計まとめ2.gs / 出荷情報処理.gs</li>
       <li>Amazon開発整理と出力.gs / Amazonポータルデータ取込</li>
       <li>全媒体商材毎.gs / 全媒体在庫.gs / TTS確認用更新.gs</li>
+      <li>全商材売上集計自動.gs / TTS出荷情報アップロード.gs / 3wellさん数値更新.gs</li>
     </ul>
   </div>
   <div class="ss-box ss3">
     <h3>SS③ 楽天Qoo10CV管理</h3>
     <div class="ss-id">SS ID: 15wtvBZHZ...</div>
-    <div class="ss-detail">GAS③ 1ファイル / GAS②からも書込あり<br>サービス: Sheets API<br><strong style="color:#34d399;">トリガー: 1件（varis集計表出力）</strong></div>
+    <div class="ss-detail">GAS③ 1ファイル / GAS②からも書込あり<br>サービス: なし<br><strong style="color:#34d399;">トリガー: 1件（varis集計表出力）</strong></div>
     <ul>
       <li>Varis反映.gs（GAS③唯一のファイル）</li>
       <li>varis整理結果を各モール(Qoo10/楽天/TTS)のCV行に書込</li>
@@ -256,10 +257,11 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   <table>
     <thead><tr><th>関数名</th><th>オーナー</th><th>前回の実行</th><th>エラー率</th><th>推定役割</th></tr></thead>
     <tbody>
-      <tr><td>全媒体商材毎</td><td>自分</td><td>21:01</td><td>0%</td><td>全モール横断の商材別データ集計</td></tr>
+      <tr><td>全媒体商材毎</td><td>自分</td><td>21:01</td><td>1.91%</td><td>全モール横断の商材別データ集計</td></tr>
+      <tr><td>A3well_Amazon</td><td><span class="owner-other">他のユーザー</span></td><td>-</td><td>-</td><td>3wellパートナー向けAmazonデータ処理</td></tr>
       <tr><td>全媒体在庫</td><td>自分</td><td>20:50</td><td>0%</td><td>全モール横断の在庫データ更新</td></tr>
       <tr><td>Amazonポータルデータ取込</td><td>自分</td><td>7:52</td><td>0%</td><td>Amazonポータルからのデータ自動取込</td></tr>
-      <tr><td>Qoo10集計まとめ2</td><td>自分</td><td>9:37</td><td>0%</td><td>Qoo10売上データ集計</td></tr>
+      <tr><td>Qoo10集計まとめ2</td><td>自分</td><td>9:37</td><td>14.29%</td><td>Qoo10売上データ集計</td></tr>
       <tr><td>Qoo10確認用</td><td><span class="owner-other">他のユーザー</span></td><td>10:34</td><td>0%</td><td>Qoo10データ確認・検証用</td></tr>
       <tr><td>キュ配送ファイル作成</td><td>自分</td><td>8:40</td><td>0%</td><td>Qoo10配送ファイルの自動生成</td></tr>
       <tr class="error-row"><td>Amazon開発整理と出力</td><td>自分</td><td>8:26</td><td><span class="error-badge">⚠ 100%</span></td><td>Amazon開発データの整理・出力 ※常時エラー</td></tr>
@@ -269,7 +271,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     </tbody>
   </table>
 </div>
-<div class="note-box">GAS①はトリガー0件（全て手動実行）。GAS③はトリガー1件（varis集計表出力 — 他のユーザー、10:05実行）。</div>
+<div class="note-box">GAS①はトリガー0件（全て手動実行）。GAS②はトリガー11件（A3well_Amazon追加）。GAS③はトリガー1件（varis集計表出力 — 他のユーザー、10:05実行）。</div>
 <div class="flow-section">
   <div class="flow-title qoo10">Qoo10 配送ファイル自動生成（トリガー: キュ配送ファイル作成）</div>
   <div class="flow-steps">
@@ -426,6 +428,8 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
       <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin様（ラッシュフォルテ）</div><div class="gs-file">Ssenjin様出力_ラッシュフォルテ.gs</div></div></div>
       <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">サルさん</div><div class="gs-file">サルさん出力.gs</div></div></div>
       <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin 楽天</div><div class="gs-file">Senjin_楽天.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">Senjin 楽天（ラッシュフォルテ）</div><div class="gs-file">Senjin_楽天_ラッシュフォルテ.gs</div></div></div>
+      <div class="branch-row"><div class="step step-ss"><div class="label">出力</div><div class="name">3wellさん</div><div class="gs-file">3wellさん数値更新.gs</div></div></div>
     </div>
   </div>
 </div>
@@ -462,7 +466,7 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
   </div>
   <div class="reference-subsection">
     <h3>GAS② 非アクティブファイル一覧（deprecated）</h3>
-    <div class="reference-note">キュ①～③.gs, Qoo10確認用更新.gs, Amazon①～②.gs, LPvaris整理.gs</div>
+    <div class="reference-note">未使用削除キュ①～③.gs, 未使用削除キュ①ドライブ.gs/②配送書込/③売上出力, Qoo10確認用更新.gs, 未使用削除Amazon①②.gs, 未使用削除Amazon②CS.gs, 未使用削除LPvaris整理.gs</div>
   </div>
   <div class="reference-subsection">
     <h3>外部スプレッドシートID</h3>
@@ -475,6 +479,6 @@ h1 { text-align: center; font-size: 28px; font-weight: 700; color: #fff; margin-
     </table>
   </div>
 </div>
-<div class="footer">GAS システム相関図 — 最終更新: 2026/04/09 | GAS①②③の全コードはgas-directorスキルで管理</div>
+<div class="footer">GAS システム相関図 — 最終更新: 2026/04/15 | GAS①②③の全コードはgas-directorスキルで管理</div>
 </body>
 </html>
