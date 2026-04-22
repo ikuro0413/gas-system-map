@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>配送関連 GAS マップ</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: #0f1117;
+    color: #e0e0e0;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .scope-note {
+    max-width: 1200px;
+    margin: 0 auto 32px;
+    padding: 12px 20px;
+    background: rgba(37, 244, 238, 0.06);
+    border-left: 3px solid #25f4ee;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #aaa;
+    line-height: 1.7;
+  }
+  .scope-note strong { color: #25f4ee; font-weight: 600; }
+
+  /* ===== Flow Section ===== */
+  .flow-section {
+    max-width: 1200px;
+    margin: 0 auto 48px;
+  }
+  .flow-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    padding-left: 12px;
+    border-left: 4px solid;
+  }
+  .flow-desc {
+    max-width: 1200px;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 16px;
+    padding-left: 16px;
+  }
+  .flow-title.tiktok   { border-color: #25f4ee; }
+  .flow-title.qoo10    { border-color: #a855f7; }
+  .flow-title.tts      { border-color: #facc15; }
+  .flow-title.check    { border-color: #f472b6; }
+
+  /* ===== Step Row ===== */
+  .flow-steps {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .step {
+    flex: 0 0 auto;
+    min-width: 150px;
+    max-width: 220px;
+    padding: 14px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+  }
+  .step .label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .step .name {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .step .detail {
+    font-size: 11px;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+  .step .gs-file {
+    font-size: 10px;
+    opacity: 0.5;
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* Connector */
+  .connector {
+    flex: 0 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .connector .bar {
+    width: 36px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  /* ===== Color Themes ===== */
+  .flow-tiktok .step { background: rgba(37,244,238,0.08); border: 1px solid rgba(37,244,238,0.25); }
+  .flow-tiktok .step .name { color: #25f4ee; }
+  .flow-tiktok .connector .bar { background: rgba(37,244,238,0.3); }
+
+  .flow-qoo10 .step { background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); }
+  .flow-qoo10 .step .name { color: #c084fc; }
+  .flow-qoo10 .connector .bar { background: rgba(168,85,247,0.35); }
+
+  .flow-tts .step { background: rgba(250,204,21,0.1); border: 1px solid rgba(250,204,21,0.3); }
+  .flow-tts .step .name { color: #facc15; }
+  .flow-tts .connector .bar { background: rgba(250,204,21,0.35); }
+
+  .flow-check .step { background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.3); }
+  .flow-check .step .name { color: #f472b6; }
+  .flow-check .connector .bar { background: rgba(244,114,182,0.35); }
+
+  /* ===== Branch ===== */
+  .branch-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+  .branch-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ===== Legend ===== */
+  .legend {
+    max-width: 1200px;
+    margin: 0 auto 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #aaa;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* ===== Section divider ===== */
+  .section-divider {
+    max-width: 1200px;
+    margin: 8px auto 32px;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-label {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.15);
+  }
+  .section-label span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #888;
+    margin-left: 12px;
+  }
+
+  /* ===== Summary Cards ===== */
+  .summary-grid {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .summary-card {
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 4px solid;
+  }
+  .summary-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .summary-card .route {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 10px;
+    font-family: monospace;
+    line-height: 1.6;
+  }
+  .summary-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .summary-card li {
+    font-size: 12px;
+    color: #aaa;
+    padding: 2px 0;
+    padding-left: 12px;
+    position: relative;
+  }
+  .summary-card li::before {
+    content: '\00B7';
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+  .summary-card.tiktok { border-color: #25f4ee; }
+  .summary-card.tiktok h3 { color: #25f4ee; }
+  .summary-card.qoo10  { border-color: #a855f7; }
+  .summary-card.qoo10 h3 { color: #c084fc; }
+  .summary-card.tts    { border-color: #facc15; }
+  .summary-card.tts h3 { color: #facc15; }
+  .summary-card.check  { border-color: #f472b6; }
+  .summary-card.check h3 { color: #f472b6; }
+
+  /* ===== Folder Table ===== */
+  .ss-table {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .ss-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.05);
+    color: #aaa;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .ss-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #ccc;
+  }
+  .ss-table td:first-child { font-weight: 600; }
+  .ss-table code {
+    font-size: 11px;
+    background: rgba(255,255,255,0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<h1>配送関連 GAS マップ</h1>
+<p class="subtitle">TikTok Shop / Qoo10 / TTS 配送データ処理パイプライン</p>
+
+<div class="scope-note">
+  <strong>スコープ:</strong>
+  GAS全体から「配送」に関わるフローのみを抽出したマップ。楽天CSV売上・Amazon/楽天デイリー同期・Apify動画系・Instagram再生数・パートナー出力・Varis CV反映はここには含めない（それらは「GASプロセスマップ.html」参照）。
+</div>
+
+<!-- ===== Legend ===== -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#25f4ee"></div>TikTok 配送（GAS②）</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Qoo10 配送・売上（GAS②）</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#facc15"></div>TikTok Shop 配送・売上（GAS①）</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div>TTS 確認用更新（GAS②）</div>
+</div>
+
+<!-- ============================= -->
+<!-- SECTION: GAS② TikTok配送 -->
+<!-- ============================= -->
+<div class="section-label">GAS② モールCV管理元データ<span>配送処理の中心</span></div>
+
+<!-- FLOW: TikTok配送 -->
+<div class="flow-section">
+  <div class="flow-title tiktok">TikTok 配送データ取込・書込・出力</div>
+  <div class="flow-desc">配送CSV/XLSXをDriveから取り込み、配送一時シート→書込→出力の3ステップで処理。Tik①〜③をまとめて回すランナーも存在。</div>
+  <div class="flow-steps flow-tiktok">
+    <div class="step">
+      <div class="label">外部</div>
+      <div class="name">TikTok CSV/XLSX</div>
+      <div class="detail">配送データファイル</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">G Drive</div>
+      <div class="name">Google Drive</div>
+      <div class="detail">CSV/XLSX格納</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik① 取り込み</div>
+      <div class="detail">SS③「Tik配送一時」に取込 MAX_COLUMNS=55 Drive API v2</div>
+      <div class="gs-file">Tik①ドライブから取り込む.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik② 配送書き込み</div>
+      <div class="detail">配送データ整理・書込</div>
+      <div class="gs-file">Tik②配送書き込み.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">Tik③ 出力</div>
+      <div class="detail">最終出力</div>
+      <div class="gs-file">Tik③出力.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">ランナー</div>
+      <div class="name">Tik①～③</div>
+      <div class="detail">①②③を順番実行</div>
+      <div class="gs-file">Tik①～③.gs</div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW: Qoo10 配送 -->
+<div class="flow-section">
+  <div class="flow-title qoo10">Qoo10 配送・売上集計</div>
+  <div class="flow-desc">Qoo10 APIから配送・売上データを取得し、スプシとDriveへ蓄積→集計処理→最終出力。</div>
+  <div class="flow-steps flow-qoo10">
+    <div class="step">
+      <div class="label">API</div>
+      <div class="name">Qoo10 API</div>
+      <div class="detail">売上・配送データ取得</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">GAS取込・変換</div>
+      <div class="detail">APIデータを処理</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="branch-container">
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">保管</div>
+          <div class="name">スプシ蓄積</div>
+          <div class="detail">SS②に蓄積</div>
+        </div>
+      </div>
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">G Drive</div>
+          <div class="name">Google Drive</div>
+          <div class="detail">ファイル保管</div>
+        </div>
+      </div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">集計処理</div>
+      <div class="detail">データ整理・集計</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">スプシ集計</div>
+      <div class="detail">最終集計出力</div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW: TTS確認用更新 -->
+<div class="flow-section">
+  <div class="flow-title check">TTS 確認用更新（配送・売上検証）</div>
+  <div class="flow-desc">TikTok Shopの配送・売上データを検証目的で更新。TTS集計結果の整合性チェック用。</div>
+  <div class="flow-steps flow-check">
+    <div class="step">
+      <div class="label">入力</div>
+      <div class="name">TTS関連データ</div>
+      <div class="detail">SS②のTTS関連シート</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS②</div>
+      <div class="name">TTS確認用更新</div>
+      <div class="detail">配送・売上データの整合性検証</div>
+      <div class="gs-file">TTS確認用更新.gs</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">出力</div>
+      <div class="name">TTS確認用シート</div>
+      <div class="detail">検証結果をSS②に反映</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================= -->
+<!-- SECTION: GAS① TTS -->
+<!-- ============================= -->
+<div class="section-label">GAS① Tik管理シート<span>TTS（TikTok Shop）配送・売上集計</span></div>
+
+<!-- FLOW: TTS 売上集計 -->
+<div class="flow-section">
+  <div class="flow-title tts">TikTok Shop（TTS）配送・売上集計</div>
+  <div class="flow-desc">TTS管理画面からDLしたExcelを月別フォルダへ格納 → Drive API v3でGoogle Sheets変換 → クリエイター別集計 → 代理店別Excel出力（枝分かれ）。</div>
+  <div class="flow-steps flow-tts">
+    <div class="step">
+      <div class="label">外部</div>
+      <div class="name">TikTok Shop</div>
+      <div class="detail">TTS管理画面</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">手動</div>
+      <div class="name">毎朝手動DL</div>
+      <div class="detail">Excelファイルをダウンロード</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">G Drive</div>
+      <div class="name">YYYY年MM月フォルダ</div>
+      <div class="detail">Excelファイル格納</div>
+      <div class="gs-file">フォルダ: 1Jps4g82...</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="step">
+      <div class="label">GAS①</div>
+      <div class="name">TTS集計取込</div>
+      <div class="detail">Excel→Sheets変換 クリエイター別集計</div>
+      <div class="gs-file">TTS集計.gs (289行)</div>
+    </div>
+    <div class="connector"><div class="bar"></div></div>
+    <div class="branch-container">
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">出力</div>
+          <div class="name">スプシに整理</div>
+          <div class="detail">Tik管理シート内</div>
+        </div>
+      </div>
+      <div class="branch-row">
+        <div class="step">
+          <div class="label">GAS①</div>
+          <div class="name">TTS代理店集計</div>
+          <div class="detail">代理店別Excel＋全データまとめ</div>
+          <div class="gs-file">TTS代理店集計.gs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== Flow Summary Cards ===== -->
+<div class="section-label">配送関連フロー サマリー</div>
+
+<div class="summary-grid">
+  <div class="summary-card tiktok">
+    <h3>TikTok 配送データ</h3>
+    <div class="route">GAS② / SS: 1yT1vida...<br>CSV → Drive → 取込 → 書込 → 出力</div>
+    <ul>
+      <li>Tik①ドライブから取り込む.gs</li>
+      <li>Tik②配送書き込み.gs</li>
+      <li>Tik③出力.gs</li>
+      <li>Tik①～③.gs（一括実行ランナー）</li>
+    </ul>
+  </div>
+
+  <div class="summary-card qoo10">
+    <h3>Qoo10 配送・売上</h3>
+    <div class="route">GAS② / SS: 1yT1vida...<br>API → 取込変換 → 蓄積 → 集計 → 出力</div>
+    <ul>
+      <li>Qoo10 API連携処理</li>
+      <li>売上・配送データを同時取得</li>
+      <li>スプシ＋Drive両方に保管</li>
+      <li>※ 一部ファイルは「未使用削除」プレフィックスで非アクティブ</li>
+    </ul>
+  </div>
+
+  <div class="summary-card tts">
+    <h3>TTS（TikTok Shop）</h3>
+    <div class="route">GAS① / SS: 1Qulrn5k...<br>管理画面 → 手動DL → Drive → 集計</div>
+    <ul>
+      <li>TTS集計.gs (289行)</li>
+      <li>TTS代理店集計.gs（代理店別枝分かれ）</li>
+      <li>Excel→Sheets変換: Drive API v3 + UrlFetchApp</li>
+      <li>フォルダ自動検出（YYYY年MM月）</li>
+    </ul>
+  </div>
+
+  <div class="summary-card check">
+    <h3>TTS 確認用更新</h3>
+    <div class="route">GAS② / SS: 1yT1vida...<br>TTS関連データ → 検証 → 反映</div>
+    <ul>
+      <li>TTS確認用更新.gs</li>
+      <li>配送・売上データの整合性検証用</li>
+      <li>TTS集計結果とのクロスチェック</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== Drive Folder Table ===== -->
+<div class="section-label">配送関連 Driveフォルダ</div>
+
+<table class="ss-table">
+  <thead>
+    <tr><th>用途</th><th>フォルダID</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>TTS Excelファイル格納</td><td><code>1Jps4g82ebKpq2IzZiE7mKb3J8rtNF3Qs</code></td></tr>
+    <tr><td>TTS請求データ（配送売上に紐づく）</td><td><code>1nsxcKhQ8rmUvEpxoAYkPrhKzbzHZLrII</code></td></tr>
+    <tr><td>Qoo10請求データ（配送売上に紐づく）</td><td><code>1BEEuWg9GEQpuQI6JDYlNdHsZ_xXhkROS</code></td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>
